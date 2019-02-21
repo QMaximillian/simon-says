@@ -8,3 +8,12 @@
     transform: rotate(360deg);
   }
 }
+
+/*
+div svg path:nth-child(2){
+  fill: #000000;
+}
+
+div svg path:nth-child(3){
+  fill: #111111 !important;
+} */

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { ReactComponent as Subtract } from './svgs/Subtract.svg'
+import { ReactComponent as GreenPiece } from './svgs/GreenPiece.svg'
+import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
+import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
+import { ReactComponent as BluePiece } from './svgs/BluePiece.svg'
 
 export const GameContainer = () => {
   const [gameArray, setGameArray] = useState([])
@@ -23,7 +26,17 @@ export const GameContainer = () => {
   console.log(gameArray)
   return (
     <>
-    <Subtract onClick={() => console.log("Hello")}/>
+    <div>
+        <GreenPiece
+        onClick={() => console.log("Hello")}/>
+      <RedPiece
+       onClick={() => console.log("Hello")}/>
+      <br/>
+
+      <YellowPiece onClick={() => console.log("Hello")}/>
+      <BluePiece onClick={() => console.log("Hello")}/>
+    </div>
+
     <div onClick={() => {
       setClicks(clicks + 1)
        setGameArray(prevGameArray => ([...prevGameArray, 1]))}}>Green</div>
