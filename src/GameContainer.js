@@ -5,51 +5,83 @@ import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
 import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
 import { ReactComponent as BluePiece } from './svgs/BluePiece.svg'
 
-export const GameContainer = () => {
-  const [gameArray, setGameArray] = useState([])
-  const [clicks, setClicks] = useState(0)
+// Eliminate read-only rule in ESLint for adding methods to prototype class
 
-  const levelOne = [2, 4, 3, 1]
-  // render 4 squares
-  // render a bulletin showing current status of game (level)
-  // contains the levels for the game and the function that each square returns a value into
+/*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
+
+
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length !== array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;
+        }
+        else if (this[i] !== array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;
+        }
+    }
+    return true;
+}
+
+
+export const GameContainer = () => {
+  const [level, setLevel] = useState([1, 2, 3, 4])
+  const [gameArray, setGameArray] = useState([])
+  const [index, setIndex] = useState(-1)
 
   useEffect(() => {
-    console.log(gameArray[clicks - 1], levelOne[clicks - 1])
-    if (gameArray[clicks - 1] === levelOne[clicks - 1]) {
-      // alert("Keep going")
+    console.log(level, "level")
+    console.log(gameArray, "gameArray")
+    if (gameArray.equals(level) && gameArray.length === level.length) {
+      console.log("You beat the level")
+      setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 5)]))
+      setIndex(-1)
+      setGameArray([])
+
+    } else if (gameArray[index] === level[index]) {
+      console.log('right')
+    } else if (gameArray.length === 0){
+        console.log('begin game');
     } else {
-      // alert("You lost")
+      console.log('wrong')
     }
   })
 
-  console.log(gameArray)
+  const handleClick = (number) => {
+    setGameArray(prevGameArray => ([...prevGameArray, number]))
+    setIndex(index + 1)
+  }
+
+
+
   return (
-    <>
-    <div>
-        <GreenPiece
-        onClick={() => console.log("Hello")}/>
-      <RedPiece
-       onClick={() => console.log("Hello")}/>
-      <br/>
+    <div className="simon-says-grid">
 
-      <YellowPiece onClick={() => console.log("Hello")}/>
-      <BluePiece onClick={() => console.log("Hello")}/>
+      <div className="simon-says-circle">
+          <GreenPiece
+            onClick={() => handleClick(1)}
+          />
+          <RedPiece
+            onClick={() => handleClick(2)}
+          />
+          <br/>
+          <YellowPiece onClick={() => handleClick(3)}
+          />
+          <BluePiece onClick={() => handleClick(4)}
+          />
+      </div>
     </div>
-
-    <div onClick={() => {
-      setClicks(clicks + 1)
-       setGameArray(prevGameArray => ([...prevGameArray, 1]))}}>Green</div>
-    <div onClick={() => {
-      setClicks(clicks + 1)
-       setGameArray(prevGameArray => ([...prevGameArray, 2]))}}>Red</div>
-    <div onClick={() => {
-      setClicks(clicks + 1)
-       setGameArray(prevGameArray => ([...prevGameArray, 3]))}}>Yellow</div>
-    <div onClick={() => {
-      setClicks(clicks + 1)
-       setGameArray(prevGameArray => ([...prevGameArray, 4]))}}>Pink</div>
-    </>
 
   )
 }

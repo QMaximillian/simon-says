@@ -9,6 +9,21 @@
   }
 }
 
+.simon-says-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas: repeat(12, 1fr)
+}
+
+.simon-says-circle {
+  grid-column: 4 / span 6;
+  grid-row: 6;
+}
+/* .simon-says-bulletin {
+  grid-column: 4 / span 6;
+  grid-row: 1 / span 3;
+} */
+
 /*
 div svg path:nth-child(2){
   fill: #000000;
