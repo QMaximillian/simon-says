@@ -19,6 +19,15 @@
   grid-column: 4 / span 6;
   grid-row: 6;
 }
+
+.fade {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.blue-piece {
+  fill: blue;
+}
 /* .simon-says-bulletin {
   grid-column: 4 / span 6;
   grid-row: 1 / span 3;

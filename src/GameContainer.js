@@ -39,16 +39,15 @@ export const GameContainer = () => {
   const [level, setLevel] = useState([1, 2, 3, 4])
   const [gameArray, setGameArray] = useState([])
   const [index, setIndex] = useState(-1)
+  const [levelNumber, setLevelNumber] = useState(1)
+  const [fade, setFade] = useState(false)
 
   useEffect(() => {
-    console.log(level, "level")
+    console.log(levelNumber, "levelNumber")
+    console.log(level)
     console.log(gameArray, "gameArray")
     if (gameArray.equals(level) && gameArray.length === level.length) {
-      console.log("You beat the level")
-      setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 5)]))
-      setIndex(-1)
-      setGameArray([])
-
+      handleNextLevel()
     } else if (gameArray[index] === level[index]) {
       console.log('right')
     } else if (gameArray.length === 0){
@@ -58,27 +57,45 @@ export const GameContainer = () => {
     }
   })
 
+  const handleNextLevel = () => {
+    console.log("You beat the level")
+
+    setFade(true)
+    setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
+    setIndex(-1)
+    setGameArray([])
+    setLevelNumber(prevLevelNumber => (prevLevelNumber + 1))
+  }
+
   const handleClick = (number) => {
+    setFade(false)
     setGameArray(prevGameArray => ([...prevGameArray, number]))
     setIndex(index + 1)
   }
 
 
-
   return (
     <div className="simon-says-grid">
-
+      <div className={fade ? 'fade' : ''}>
+        Level {levelNumber}
+        {fade ? "You've reached the next level!": null}
+      </div>
       <div className="simon-says-circle">
           <GreenPiece
-            onClick={() => handleClick(1)}
+            onClick={() => handleClick(1)
+            }
+            onAnimationEnd={() => {}}
           />
           <RedPiece
             onClick={() => handleClick(2)}
+            onAnimationEnd={() => {}}
           />
           <br/>
           <YellowPiece onClick={() => handleClick(3)}
+            onAnimationEnd={() => {}}
           />
           <BluePiece onClick={() => handleClick(4)}
+            onAnimationEnd={() => {}}
           />
       </div>
     </div>
