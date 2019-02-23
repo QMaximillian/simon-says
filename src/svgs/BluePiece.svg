@@ -1,6 +1,6 @@
-<!-- <svg width="241" height="238" viewBox="0 0 241 238" fill="#36D033" xmlns="http://www.w3.org/2000/svg">
+<svg pointer-events="none" width="241" height="238" viewBox="0 0 241 238" fill="#36D033" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d)">
-<path class="blue-piece" d="M5 229V94.833C57.6554 94.833 100.297 52.733 100.297 0.746002H236.296C236.296 126.727 132.708 229 5 229Z" fill="blue" stroke="black" stroke-miterlimit="10"/>
+<path data-value="4" pointer-events="all" class="blue-piece" d="M5 229V94.833C57.6554 94.833 100.297 52.733 100.297 0.746002H236.296C236.296 126.727 132.708 229 5 229Z" fill="blue" stroke="black" stroke-miterlimit="10"/>
 </g>
 <defs>
 <filter id="filter0_d" x="0" y="0" width="241" height="238" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -14,34 +14,4 @@
 <feMerge>
 </filter>
 </defs>
-</svg> -->
-
-<svg	xmlns="http://www.w3.org/2000/svg"
- xmlns:xlink="http://www.w3.org/1999/xlink"
- width="500" height="600">
-    <defs>
-   <filter id="innershadow" x0="-50%" y0="-50%" width="200%" height="200%">
-     <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"></feGaussianBlur>
-     <feOffset dy="2" dx="3"></feOffset>
-     <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"></feComposite>
-
-          <feFlood flood-color="#A60808" flood-opacity="0.75"></feFlood>
-      <feComposite in2="shadowDiff" operator="in"></feComposite>
-      <feComposite in2="SourceGraphic" operator="over" result="firstfilter"></feComposite>
-
-
-         <feGaussianBlur in="firstfilter" stdDeviation="3" result="blur2"></feGaussianBlur>
-     <feOffset dy="-2" dx="-3"></feOffset>
-     <feComposite in2="firstfilter" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"></feComposite>
-
-          <feFlood flood-color="#A60808" flood-opacity="0.75"></feFlood>
-     <feComposite in2="shadowDiff" operator="in"></feComposite>
-     <feComposite in2="firstfilter" operator="over"></feComposite>
-   </filter>
-
- </defs>
-
-     <circle cx="300" cy="200" r="40" filter="url(#innershadow)" fill="tan"/>
-     <circle cx="300" cy="400" r="40"  fill="tan"/>
-
 </svg>

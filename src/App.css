@@ -1,43 +1,25 @@
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .simon-says-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  grid-template-areas: repeat(12, 1fr)
+  grid-template-areas: repeat(12, 1fr);
+  height: 100vh;
 }
 
 .simon-says-circle {
-  grid-column: 4 / span 6;
-  grid-row: 6;
+  grid-column: 4 / span 3;
+  grid-row: 4 / span 2;
 }
 
 .fade {
   opacity: 1;
-  transition: opacity 0.3s;
+
+}
+
+.fade.hide-opacity {
+  opacity: 0;
+  -o-transition: opacity 3s ease-in-out;
 }
 
 .blue-piece {
   fill: blue;
 }
-/* .simon-says-bulletin {
-  grid-column: 4 / span 6;
-  grid-row: 1 / span 3;
-} */
-
-/*
-div svg path:nth-child(2){
-  fill: #000000;
-}
-
-div svg path:nth-child(3){
-  fill: #111111 !important;
-} */

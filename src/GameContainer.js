@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import { ReactComponent as GreenPiece } from './svgs/GreenPiece.svg'
 import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
 import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
 import { ReactComponent as BluePiece } from './svgs/BluePiece.svg'
+import './App.css'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -36,16 +36,24 @@ Array.prototype.equals = function (array) {
 
 
 export const GameContainer = () => {
+
   const [level, setLevel] = useState([1, 2, 3, 4])
   const [gameArray, setGameArray] = useState([])
   const [index, setIndex] = useState(-1)
   const [levelNumber, setLevelNumber] = useState(1)
   const [fade, setFade] = useState(false)
+  const [gameStatus, setGameStatus] = useState(true)
+  const [available, setAvailable] = useState(false)
+
 
   useEffect(() => {
-    console.log(levelNumber, "levelNumber")
-    console.log(level)
+    setAvailable(true)
+  }, [available])
+
+  useEffect(() => {
+    console.log(level, "level")
     console.log(gameArray, "gameArray")
+    console.log(fade, 'fade');
     if (gameArray.equals(level) && gameArray.length === level.length) {
       handleNextLevel()
     } else if (gameArray[index] === level[index]) {
@@ -53,6 +61,7 @@ export const GameContainer = () => {
     } else if (gameArray.length === 0){
         console.log('begin game');
     } else {
+      setGameStatus(false)
       console.log('wrong')
     }
   })
@@ -74,31 +83,36 @@ export const GameContainer = () => {
   }
 
 
+
+  //PLAY MODE
   return (
     <div className="simon-says-grid">
-      <div className={fade ? 'fade' : ''}>
+      <div>
+          {console.log(available)}
         Level {levelNumber}
-        {fade ? "You've reached the next level!": null}
       </div>
-      <div className="simon-says-circle">
+      <div>
+        {fade ? "You've reached the next level!": null}
+        {gameStatus ? null : 'You have lost'}
+      </div>
+      {available ?
+        <div className='simon-says-circle'>
           <GreenPiece
-            onClick={() => handleClick(1)
-            }
-            onAnimationEnd={() => {}}
+            onClick={(event) => handleClick(Number(event.target.dataset.value))}
           />
           <RedPiece
-            onClick={() => handleClick(2)}
-            onAnimationEnd={() => {}}
+            onClick={(event) => handleClick(Number(event.target.dataset.value))}
           />
           <br/>
-          <YellowPiece onClick={() => handleClick(3)}
-            onAnimationEnd={() => {}}
+          <YellowPiece onClick={(event) => handleClick(Number(event.target.dataset.value))}
           />
-          <BluePiece onClick={() => handleClick(4)}
-            onAnimationEnd={() => {}}
+          <BluePiece onClick={(event) => handleClick(Number(event.target.dataset.value))}
           />
-      </div>
+        </div>
+        :
+        <div></div>
+      }
     </div>
-
   )
+
 }
