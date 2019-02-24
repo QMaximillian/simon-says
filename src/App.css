@@ -1,18 +1,31 @@
 .simon-says-grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-areas: repeat(12, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   height: 100vh;
+  justify-items: center;
+
 }
 
 .simon-says-circle {
-  grid-column: 4 / span 3;
-  grid-row: 4 / span 2;
+  grid-column: 2 / span 2;
+  grid-row: 3;
+
+}
+
+.simon-says-bulletin {
+  grid-column: 2 / span 2;
+  font-size: 35px;
+  text-shadow: 2px 2px #ffffff;
+  font-style: italic;
+}
+
+div {
+  text-align: center;
 }
 
 .fade {
   opacity: 1;
-
 }
 
 .fade.hide-opacity {

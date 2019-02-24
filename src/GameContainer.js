@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useSpring, animated } from 'react-spring'
 import { ReactComponent as GreenPiece } from './svgs/GreenPiece.svg'
 import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
 import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
 import { ReactComponent as BluePiece } from './svgs/BluePiece.svg'
+import GameBulletin from './components/GameBulletin'
 import './App.css'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -35,8 +37,7 @@ Array.prototype.equals = function (array) {
 }
 
 
-export const GameContainer = () => {
-
+export const GameContainer = (props) => {
   const [level, setLevel] = useState([1, 2, 3, 4])
   const [gameArray, setGameArray] = useState([])
   const [index, setIndex] = useState(-1)
@@ -45,6 +46,7 @@ export const GameContainer = () => {
   const [gameStatus, setGameStatus] = useState(true)
   const [available, setAvailable] = useState(false)
 
+const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   useEffect(() => {
     setAvailable(true)
@@ -87,28 +89,21 @@ export const GameContainer = () => {
   //PLAY MODE
   return (
     <div className="simon-says-grid">
-      <div>
-          {console.log(available)}
-        Level {levelNumber}
-      </div>
-      <div>
-        {fade ? "You've reached the next level!": null}
-        {gameStatus ? null : 'You have lost'}
-      </div>
+      <GameBulletin levelNumber={levelNumber}/>
       {available ?
-        <div className='simon-says-circle'>
+        <animated.div style={spring} className='simon-says-circle'>
           <GreenPiece
-            onClick={(event) => handleClick(Number(event.target.dataset.value))}
+            onClick={(event) => handleClick(Number(event.target.dataset.id))}
           />
           <RedPiece
-            onClick={(event) => handleClick(Number(event.target.dataset.value))}
+            onClick={(event) => handleClick(Number(event.target.dataset.id))}
           />
           <br/>
-          <YellowPiece onClick={(event) => handleClick(Number(event.target.dataset.value))}
+          <YellowPiece onClick={(event) => handleClick(Number(event.target.dataset.id))}
           />
-          <BluePiece onClick={(event) => handleClick(Number(event.target.dataset.value))}
+          <BluePiece onClick={(event) => handleClick(Number(event.target.dataset.id))}
           />
-        </div>
+        </animated.div>
         :
         <div></div>
       }
