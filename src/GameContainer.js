@@ -45,6 +45,7 @@ export const GameContainer = (props) => {
   const [fade, setFade] = useState(false)
   const [gameStatus, setGameStatus] = useState(true)
   const [available, setAvailable] = useState(false)
+  const [levelUp, setLevelUp] = useState(false);
 
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
@@ -70,7 +71,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   const handleNextLevel = () => {
     console.log("You beat the level")
-
+    setLevelUp(true)
     setFade(true)
     setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
     setIndex(-1)
@@ -79,7 +80,6 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   }
 
   const handleClick = (number) => {
-    setFade(false)
     setGameArray(prevGameArray => ([...prevGameArray, number]))
     setIndex(index + 1)
   }
@@ -89,19 +89,19 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   //PLAY MODE
   return (
     <div className="simon-says-grid">
-      <GameBulletin levelNumber={levelNumber}/>
+      <GameBulletin setLevelUp={setLevelUp} levelUp={levelUp} levelNumber={levelNumber} fade={fade}/>
       {available ?
         <animated.div style={spring} className='simon-says-circle'>
           <GreenPiece
-            onClick={(event) => handleClick(Number(event.target.dataset.id))}
+            onClick={(event) => handleClick(+event.target.dataset.id)}
           />
           <RedPiece
-            onClick={(event) => handleClick(Number(event.target.dataset.id))}
+            onClick={(event) => handleClick(+event.target.dataset.id)}
           />
           <br/>
-          <YellowPiece onClick={(event) => handleClick(Number(event.target.dataset.id))}
+          <YellowPiece onClick={(event) => handleClick(+event.target.dataset.id)}
           />
-          <BluePiece onClick={(event) => handleClick(Number(event.target.dataset.id))}
+          <BluePiece onClick={(event) => handleClick(+event.target.dataset.id)}
           />
         </animated.div>
         :
