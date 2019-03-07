@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring'
-import { ReactComponent as GreenPiece } from './svgs/GreenPiece.svg'
+import { GreenPiece } from './svgs/GreenPiece.js'
 import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
 import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
-import { ReactComponent as BluePiece } from './svgs/BluePiece.svg'
+import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
 
@@ -93,6 +93,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
       {available ?
         <animated.div style={spring} className='simon-says-circle'>
           <GreenPiece
+            handleClick={handleClick}
             onClick={(event) => handleClick(+event.target.dataset.id)}
           />
           <RedPiece
