@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
-import { ReactComponent as YellowPiece } from './svgs/YellowPiece.svg'
-import { ReactComponent as RedPiece } from './svgs/RedPiece.svg'
+import { YellowPiece } from './svgs/YellowPiece.js'
+import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
@@ -84,31 +84,33 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     setIndex(index + 1)
   }
 
-
+  // disable the ability to click on path of svgs
+  // iterate through "level"
+  // if number === svg's id number, change the stroke color to white
+  // return to black in callback
+  // setTimeout before going to next number in level array
+  // when the array is finished reenable ability to click on buttons
 
   //PLAY MODE
   return (
     <div className="simon-says-grid">
-      <GameBulletin setLevelUp={setLevelUp} levelUp={levelUp} levelNumber={levelNumber} fade={fade}/>
-      {available ?
-        <animated.div style={spring} className='simon-says-circle'>
-          <GreenPiece
-            handleClick={handleClick}
-            onClick={(event) => handleClick(+event.target.dataset.id)}
-          />
-          <RedPiece
-            onClick={(event) => handleClick(+event.target.dataset.id)}
-          />
-          <br/>
-          <YellowPiece onClick={(event) => handleClick(+event.target.dataset.id)}
-          />
-          <BluePiece onClick={(event) => handleClick(+event.target.dataset.id)}
-          />
+      <GameBulletin
+        levelUp={levelUp}
+        levelNumber={levelNumber}
+        fade={fade}
+      />
+      {available ? (
+        <animated.div style={spring} className="simon-says-circle">
+          <GreenPiece handleClick={handleClick} />
+          <RedPiece handleClick={handleClick} />
+          <br />
+          <YellowPiece handleClick={handleClick} />
+          <BluePiece handleClick={handleClick} />
         </animated.div>
-        :
-        <div></div>
-      }
+      ) : (
+        <div />
+      )}
     </div>
-  )
+  );
 
 }
