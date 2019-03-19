@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useSpring, animated } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
@@ -6,6 +6,7 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
+import {gameReducer, NEXT_LEVEL, CLICK} from './hooks/gameReducer'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -38,6 +39,17 @@ Array.prototype.equals = function (array) {
 
 
 export const GameContainer = (props) => {
+  const [state, dispatch] = useReducer(gameReducer, {
+    level: [1, 2, 3, 4], 
+    gameArray: [],
+    index: -1,
+    levelNumber: 1,
+    fade: false,
+    gameStatus: true,
+    available: false,
+    levelUp: false
+  })
+
   const [level, setLevel] = useState([1, 2, 3, 4])
   const [gameArray, setGameArray] = useState([])
   const [index, setIndex] = useState(-1)
@@ -58,7 +70,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     console.log(gameArray, "gameArray")
     console.log(fade, 'fade');
     if (gameArray.equals(level) && gameArray.length === level.length) {
-      handleNextLevel()
+      dispatch({type: NEXT_LEVEL})
     } else if (gameArray[index] === level[index]) {
       console.log('right')
     } else if (gameArray.length === 0){
@@ -69,17 +81,18 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     }
   })
 
-  const handleNextLevel = () => {
-    console.log("You beat the level")
-    setLevelUp(true)
-    setFade(true)
-    setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
-    setIndex(-1)
-    setGameArray([])
-    setLevelNumber(prevLevelNumber => (prevLevelNumber + 1))
-  }
+  // const handleNextLevel = () => {
+  //   console.log("You beat the level")
+  //   setLevelUp(true)
+  //   setFade(true)
+  //   setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
+  //   setIndex(-1)
+  //   setGameArray([])
+  //   setLevelNumber(prevLevelNumber => (prevLevelNumber + 1))
+  // }
 
   const handleClick = (number) => {
+    dispatch({type: CLICK, value: number})
     setGameArray(prevGameArray => ([...prevGameArray, number]))
     setIndex(index + 1)
   }
