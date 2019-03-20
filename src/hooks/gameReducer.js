@@ -1,5 +1,6 @@
 export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
+export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
 
 export const gameReducer = (state, action) => {
   switch (action.type) {
@@ -10,12 +11,18 @@ export const gameReducer = (state, action) => {
       levelUp: true,
       index: state.index++,
       gameArray: [],
-      levelNumber: state.levelNumber++
+      levelNumber: ++state.levelNumber
     }
     case CLICK:
     return {
       gameArray: [...state.gameArray, action.value],
-      index: state.index++
+      index: state.index++,
+      levelNumber: state.levelNumber,
+      level: state.level,
+    }
+    case MAIN_GAME_LOADED: 
+    return {
+      available: true
     }
     default:
       return state

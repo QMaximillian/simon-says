@@ -6,7 +6,7 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
-import {gameReducer, NEXT_LEVEL, CLICK} from './hooks/gameReducer'
+import {gameReducer, NEXT_LEVEL, CLICK, MAIN_GAME_LOADED} from './hooks/gameReducer'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -46,55 +46,39 @@ export const GameContainer = (props) => {
     levelNumber: 1,
     fade: false,
     gameStatus: true,
-    available: false,
+    available: true,
     levelUp: false
   })
 
-  const [level, setLevel] = useState([1, 2, 3, 4])
-  const [gameArray, setGameArray] = useState([])
-  const [index, setIndex] = useState(-1)
-  const [levelNumber, setLevelNumber] = useState(1)
-  const [fade, setFade] = useState(false)
-  const [gameStatus, setGameStatus] = useState(true)
-  const [available, setAvailable] = useState(false)
-  const [levelUp, setLevelUp] = useState(false);
-
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
-  useEffect(() => {
-    setAvailable(true)
-  }, [available])
 
   useEffect(() => {
-    console.log(level, "level")
-    console.log(gameArray, "gameArray")
-    console.log(fade, 'fade');
-    if (gameArray.equals(level) && gameArray.length === level.length) {
+    if (state.gameArray.equals(state.level) && state.gameArray.length === state.level.length) {
       dispatch({type: NEXT_LEVEL})
-    } else if (gameArray[index] === level[index]) {
+    } else if (state.gameArray[state.index] === state.level[state.index]) {
       console.log('right')
-    } else if (gameArray.length === 0){
+    } else if (state.gameArray.length === 0){
         console.log('begin game');
     } else {
-      setGameStatus(false)
+      // end the game
       console.log('wrong')
     }
   })
 
   // const handleNextLevel = () => {
   //   console.log("You beat the level")
-  //   setLevelUp(true)
+    {/*setLevelUp(true)
   //   setFade(true)
   //   setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
   //   setIndex(-1)
   //   setGameArray([])
   //   setLevelNumber(prevLevelNumber => (prevLevelNumber + 1))
-  // }
+*/}
+
 
   const handleClick = (number) => {
     dispatch({type: CLICK, value: number})
-    setGameArray(prevGameArray => ([...prevGameArray, number]))
-    setIndex(index + 1)
   }
 
   // disable the ability to click on path of svgs
@@ -105,14 +89,15 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // when the array is finished reenable ability to click on buttons
 
   //PLAY MODE
+  
   return (
     <div className="simon-says-grid">
       <GameBulletin
-        levelUp={levelUp}
-        levelNumber={levelNumber}
-        fade={fade}
+        levelUp={state.levelUp}
+        levelNumber={state.levelNumber}
+        fade={state.fade}
       />
-      {available ? (
+      {state.available ? (
         <animated.div style={spring} className="simon-says-circle">
           <GreenPiece handleClick={handleClick} />
           <RedPiece handleClick={handleClick} />
