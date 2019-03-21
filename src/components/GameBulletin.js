@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSpring, animated } from 'react-spring'
+import { gameReducer } from '../hooks/gameReducer'
 
 
 
@@ -10,9 +11,9 @@ const GameBulletin = ({setLevelUp, levelUp, levelNumber, fade}) => {
     
 
     // useEffect(() => {
-    //   if (levelUp === true) {
-    //     window.setTimeout(function createFade(){ return setLevelUp(false) }, 2000)
-    //   }
+      if (levelUp === true) {
+        window.setTimeout(function createFade(){ return setLevelUp(false) }, 2000)
+      }
 
     //   // if (levelUp === true) {
     //   //   

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useSpring, animated } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
@@ -53,6 +53,8 @@ export const GameContainer = (props) => {
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
+
+
   useEffect(() => {
     if (state.gameArray.equals(state.level) && state.gameArray.length === state.level.length) {
       dispatch({type: NEXT_LEVEL})
@@ -65,16 +67,6 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
       console.log('wrong')
     }
   })
-
-  // const handleNextLevel = () => {
-  //   console.log("You beat the level")
-    {/*setLevelUp(true)
-  //   setFade(true)
-  //   setLevel(prevGameArray => ([...prevGameArray, Math.floor(Math.random() * 4) + 1]))
-  //   setIndex(-1)
-  //   setGameArray([])
-  //   setLevelNumber(prevLevelNumber => (prevLevelNumber + 1))
-*/}
 
 
   const handleClick = (number) => {

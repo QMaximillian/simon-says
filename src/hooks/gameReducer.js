@@ -11,7 +11,8 @@ export const gameReducer = (state, action) => {
       levelUp: true,
       index: state.index++,
       gameArray: [],
-      levelNumber: ++state.levelNumber
+      levelNumber: ++state.levelNumber,
+      available: state.available
     }
     case CLICK:
     return {
@@ -19,6 +20,7 @@ export const gameReducer = (state, action) => {
       index: state.index++,
       levelNumber: state.levelNumber,
       level: state.level,
+      available: state.available,
     }
     case MAIN_GAME_LOADED: 
     return {
