@@ -6,7 +6,7 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
-import {gameReducer, NEXT_LEVEL, CLICK, MAIN_GAME_LOADED} from './hooks/gameReducer'
+import {gameReducer, NEXT_LEVEL, CLICK, RESET_LEVEL_UP} from './hooks/gameReducer'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -56,8 +56,10 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
   useEffect(() => {
+    console.log(state.level)
     if (state.gameArray.equals(state.level) && state.gameArray.length === state.level.length) {
       dispatch({type: NEXT_LEVEL})
+      dispatch({type: RESET_LEVEL_UP})
     } else if (state.gameArray[state.index] === state.level[state.index]) {
       console.log('right')
     } else if (state.gameArray.length === 0){
