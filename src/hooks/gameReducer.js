@@ -13,12 +13,11 @@ export const playModeReducer = (state, action) => {
     // playMode
     case NEXT_LEVEL:
     return {
+      ...state,
       level: [...state.level, Math.floor(Math.random() * 4) + 1],
-      fade: true,
       levelUp: false,
-      gameArray: [],
       levelNumber: ++state.levelNumber,
-      available: state.available
+
     };
     case CLICK:
     return {
@@ -31,7 +30,8 @@ export const playModeReducer = (state, action) => {
     };
     case MAIN_GAME_LOADED: 
     return {
-      available: true
+      available: true,
+      gameArray: []
     };
     case RESET_LEVEL_UP:
     return {

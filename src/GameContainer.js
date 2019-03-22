@@ -6,7 +6,15 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
-import {playModeReducer, watchModeReducer, NEXT_LEVEL, CLICK, RESET_LEVEL_UP, LIGHT_UP_GREEN} from './hooks/gameReducer'
+import {
+  playModeReducer,
+  NEXT_LEVEL,
+  CLICK,
+  RESET_LEVEL_UP,
+  LIGHT_UP_GREEN,
+  LIGHT_UP_YELLOW,
+  LIGHT_UP_RED,
+  LIGHT_UP_BLUE} from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -61,18 +69,18 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   useEffect(() => {
 
-    if (state.gameArray.equals(state.level) && state.gameArray.length === state.level.length) {
+    if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
       dispatch({type: RESET_LEVEL_UP})
       console.log('bob')
-    } else if (state.gameArray[state.index] === state.level[state.index]) {
-      console.log('right')
-      console.log(
-        state.index
-      );
-    } else if (state.gameArray.length === 0){
-        console.log('begin game');
-    } else {
+    } 
+    else if (state.gameArray.length == 0 && state.levelNumber == 1){
+      console.log('begin game')
+    } 
+    else if (state.gameArray[state.index] == state.level[state.index]) {
+      console.log([].length)
+    }
+    else {
       // end the game
       console.log('wrong')
     }
@@ -89,27 +97,27 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
-  function * createDispatchGenerator(id) {
+  function createDispatchArray(arr) {
     // helper
     var dispatchArray = []
-      switch (id) {
-        case 1:
-          dispatchArray.push(dispatch({type: LIGHT_UP_GREEN}))
-        break;
-        case 2:
-        break;
-        case 3:
-        break;
-        case 4:
-        break;
-        default:
-        break;
-      }
-    dispatch({ type: LIGHT_UP_GREEN })  
-  }
-  const handlePlay = () => {
-  
-  }
+    var newArr = [...arr].map(num => {
+        switch(num) {
+          case 1:
+            dispatchArray.push(dispatch({ type: LIGHT_UP_GREEN }))
+          case 2:
+            dispatchArray.push(dispatch({ type: LIGHT_UP_RED }))
+          case 3:
+            dispatchArray.push(dispatch({ type: LIGHT_UP_YELLOW }))
+          case 4:
+            dispatchArray.push(dispatch({ type: LIGHT_UP_BLUE }))
+          default:
+          break;
+        }
+      })
+
+    }
+
+
 
 
   //PLAY MODE
