@@ -6,7 +6,7 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
-import {gameReducer, NEXT_LEVEL, CLICK, RESET_LEVEL_UP} from './hooks/gameReducer'
+import {gameReducer, NEXT_LEVEL, CLICK, RESET_LEVEL_UP, LIGHT_UP_GREEN} from './hooks/gameReducer'
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -47,7 +47,9 @@ export const GameContainer = (props) => {
     fade: false,
     gameStatus: true,
     available: true,
-    levelUp: false
+    levelUp: false,
+    lightUpGreen: false,
+    watchMode: false
   })
 
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
@@ -81,28 +83,53 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
+  const handlePlay = () => {
+    dispatch({type: LIGHT_UP_GREEN})
+    console.log(state.gameArray)
+  }
 
   //PLAY MODE
-  
-  return (
-    <div className="simon-says-grid">
-      <GameBulletin
-        levelUp={state.levelUp}
-        levelNumber={state.levelNumber}
-        fade={state.fade}
-      />
-      {state.available ? (
-        <animated.div style={spring} className="simon-says-circle">
-          <GreenPiece handleClick={handleClick} />
-          <RedPiece handleClick={handleClick} />
-          <br />
-          <YellowPiece handleClick={handleClick} />
-          <BluePiece handleClick={handleClick} />
-        </animated.div>
-      ) : (
-        <div />
-      )}
-    </div>
-  );
-
+  if (state.watchMode) {
+    return (
+      <div className="simon-says-grid">
+        <GameBulletin
+          levelUp={state.levelUp}
+          levelNumber={state.levelNumber}
+          fade={state.fade}
+        />
+        {state.available ? (
+          <animated.div style={spring} className="simon-says-circle">
+            <GreenPiece handleClick={handleClick} lightUp={state.lightUpGreen} />
+            <RedPiece handleClick={handleClick} />
+            <br />
+            <YellowPiece handleClick={handleClick} />
+            <BluePiece handleClick={handleClick} />
+          </animated.div>
+        ) : (
+            <div />
+          )}
+      </div>
+    );
+  } else {
+    return (
+      <div className="simon-says-grid">
+        <GameBulletin
+          levelUp={state.levelUp}
+          levelNumber={state.levelNumber}
+          fade={state.fade}
+        />
+        {state.available ? (
+          <animated.div style={spring} className="simon-says-circle">
+            <GreenPiece handleClick={handleClick} />
+            <RedPiece handleClick={handleClick} />
+            <br />
+            <YellowPiece handleClick={handleClick} />
+            <BluePiece handleClick={handleClick} />
+          </animated.div>
+        ) : (
+          <div />
+        )}
+      </div>
+    );
+  }
 }

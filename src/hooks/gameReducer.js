@@ -2,6 +2,7 @@ export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
 export const RESET_LEVEL_UP = 'RESET_LEVEL_UP'
+export const LIGHT_UP_GREEN = 'LIGHT_UP_GREEN'
 
 export const gameReducer = (state, action) => {
   switch (action.type) {
@@ -14,7 +15,7 @@ export const gameReducer = (state, action) => {
       gameArray: [],
       levelNumber: ++state.levelNumber,
       available: state.available
-    }
+    };
     case CLICK:
     return {
       gameArray: [...state.gameArray, action.value],
@@ -22,11 +23,11 @@ export const gameReducer = (state, action) => {
       levelNumber: state.levelNumber,
       level: state.level,
       available: state.available,
-    }
+    };
     case MAIN_GAME_LOADED: 
     return {
       available: true
-    }
+    };
     case RESET_LEVEL_UP:
     return {
       level: state.level,
@@ -35,6 +36,16 @@ export const gameReducer = (state, action) => {
       gameArray: [],
       available: state.available,
       levelNumber: state.levelNumber
+    };
+    case LIGHT_UP_GREEN:
+    return {
+      level: state.level,
+      levelUp: false,
+      fade: false,
+      gameArray: state.gameArray,
+      available: state.available,
+      levelNumber: state.levelNumber,
+      lightUp: true,
     };
     default:
       return state
