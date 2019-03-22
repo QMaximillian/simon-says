@@ -2,16 +2,20 @@ export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
 export const RESET_LEVEL_UP = 'RESET_LEVEL_UP'
-export const LIGHT_UP_GREEN = 'LIGHT_UP_GREEN'
+export const LIGHT_UP_GREEN = "LIGHT_UP_GREEN";
+export const LIGHT_UP_RED = "LIGHT_UP_RED";
+export const LIGHT_UP_BLUE = "LIGHT_UP_BLUE";
+export const LIGHT_UP_YELLOW = "LIGHT_UP_YELLOW";
 
-export const gameReducer = (state, action) => {
+
+export const playModeReducer = (state, action) => {
   switch (action.type) {
+    // playMode
     case NEXT_LEVEL:
     return {
       level: [...state.level, Math.floor(Math.random() * 4) + 1],
       fade: true,
       levelUp: false,
-      index: state.index++,
       gameArray: [],
       levelNumber: ++state.levelNumber,
       available: state.available
@@ -19,10 +23,11 @@ export const gameReducer = (state, action) => {
     case CLICK:
     return {
       gameArray: [...state.gameArray, action.value],
-      index: state.index++,
+      index: ++state.index,
       levelNumber: state.levelNumber,
       level: state.level,
       available: state.available,
+      levelUp: false,
     };
     case MAIN_GAME_LOADED: 
     return {
@@ -32,21 +37,42 @@ export const gameReducer = (state, action) => {
     return {
       level: state.level,
       levelUp: true,
+      index: -1,
       fade: true,
       gameArray: [],
       available: state.available,
       levelNumber: state.levelNumber
     };
+
+    // watchMode
     case LIGHT_UP_GREEN:
-    return {
-      level: state.level,
-      levelUp: false,
-      fade: false,
-      gameArray: state.gameArray,
-      available: state.available,
-      levelNumber: state.levelNumber,
-      lightUp: true,
-    };
+      return {
+        lightUpGreen: true,
+        lightUpRed: false,
+        lightUpYellow: false,
+        lightUpBlue: false
+      };
+    case LIGHT_UP_RED:
+      return {
+        lightUpGreen: false,
+        lightUpRed: true,
+        lightUpYellow: false,
+        lightUpBlue: false
+      };
+    case LIGHT_UP_BLUE:
+      return {
+        lightUpGreen: false,
+        lightUpRed: false,
+        lightUpYellow: false,
+        lightUpBlue: true
+      };
+    case LIGHT_UP_YELLOW:
+      return {
+        lightUpGreen: false,
+        lightUpRed: false,
+        lightUpYellow: true,
+        lightUpBlue: false
+      };
     default:
       return state
   }
