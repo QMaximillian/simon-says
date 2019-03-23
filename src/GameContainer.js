@@ -72,9 +72,9 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
-    else if (state.gameArray.length >= 0) {
-      
-      console.log(createDispatchArray(state.gameArray))
+    else if (state.level.length > 0) {
+      // console.log(state.level)
+      console.log(createDispatchArray(state.level))
     }
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
@@ -103,8 +103,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   const createDispatchArray = (arr) => {
     // helper
     var dispatchArray = []
-    
-    arr.forEach(num => {
+    arr.map(num => {
         if (num == 1) {
           dispatchArray.push(dispatch({ type: LIGHT_UP_GREEN }))
         } else if (num == 2) {
@@ -114,9 +113,9 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
         } else {
           dispatchArray.push(dispatch({ type: LIGHT_UP_BLUE }))
         }
+      
     })
-  
-    return dispatchArray
+
   }
 
 
