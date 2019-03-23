@@ -6,6 +6,7 @@ export const LIGHT_UP_GREEN = "LIGHT_UP_GREEN";
 export const LIGHT_UP_RED = "LIGHT_UP_RED";
 export const LIGHT_UP_BLUE = "LIGHT_UP_BLUE";
 export const LIGHT_UP_YELLOW = "LIGHT_UP_YELLOW";
+export const RESET_LIGHT_UP = "RESET_LIGHT_UP";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
 
@@ -82,17 +83,34 @@ export const playModeReducer = (state, action) => {
         lightUpYellow: true,
         lightUpBlue: false
       };
+    case RESET_LIGHT_UP:
+      return {
+        ...state,
+        lightUpGreen: false,
+        lightUpRed: false,
+        lightUpYellow: false,
+        lightUpBlue: false
+      }
     case PLAY_MODE:
       return {
         ...state,
         watchMode: false,
-        playMode: true
+        playMode: true,
+        lightUpGreen: false,
+        lightUpRed: false,
+        lightUpYellow: false,
+        lightUpBlue: false
       }
     case WATCH_MODE: 
       return {
         ...state,
         watchMode: true,
-        playMode: false
+        playMode: false,
+        lightUpGreen: false,
+        lightUpRed: false,
+        lightUpYellow: false,
+        lightUpBlue: false
+
       }
     default:
       return state

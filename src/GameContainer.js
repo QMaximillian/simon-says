@@ -16,7 +16,8 @@ import {
   LIGHT_UP_RED,
   LIGHT_UP_BLUE,
   PLAY_MODE,
-  WATCH_MODE
+  WATCH_MODE,
+  RESET_LIGHT_UP
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -76,8 +77,6 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
-      console.log(state.gameArray.length)
-      console.log(state.level.length)
     } 
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
@@ -89,11 +88,11 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
       console.log('wrong')
     }
 
-    if (state.watchMode) {
-      dispatchIntervals(state.level)
-      dispatch({ type: PLAY_MODE })
+    if (state.watchMode && state.available) {
+      createDispatchIntervals(state.level)
+      // dispatch({ type: PLAY_MODE })
     }
-  })
+  }, [state.gameArray, state.watchMode])
 
 
   const handleClick = (number) => {
@@ -106,32 +105,46 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
-  const dispatchIntervals = (arr) => {
+  function createDispatchIntervals(arr) {
     // helper
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] == 1) {
-          console.log('yes')
-          setInterval(dispatch({ type: LIGHT_UP_GREEN }), 2000)
-        } 
-        else if (arr[i] == 2) {
-          setInterval(dispatch({ type: LIGHT_UP_RED }), 2000)
-        } 
-        else if (arr[i] == 3) {
-          setInterval(dispatch({ type: LIGHT_UP_YELLOW }), 2000)
-        } 
-        else if (arr[i] == 4){
-          setInterval(dispatch({ type: LIGHT_UP_BLUE }), 2000)
-        } else {
-          return 'duh'
-        }
+    
+    var dispatchArray = []
+
+    arr.forEach((num) => {
+      if (num == 1) {
+        dispatchArray.push({ type: LIGHT_UP_GREEN }, { type: RESET_LIGHT_UP})
       }
+      else if (num == 2) {
+        dispatchArray.push({ type: LIGHT_UP_RED }, { type: RESET_LIGHT_UP})
+      }
+      else if (num == 3) {
+        dispatchArray.push({ type: LIGHT_UP_YELLOW }, { type: RESET_LIGHT_UP})
+      }
+      else if (num == 4) {
+        dispatchArray.push({ type: LIGHT_UP_BLUE }, { type: RESET_LIGHT_UP})
+      }
+    })
+    const rob = dispatchIntervals(dispatchArray)
+    rob.next()
+    rob.next()
+    rob.next()
+    console.log(rob.next())
   }
 
 
+  function* dispatchIntervals(arr) {
+    // iterate through the generator (StackOverflow post should be helpful)
+    // https://stackoverflow.com/questions/25900371/how-to-iterate-over-the-results-of-a-generator-function
+    // setTimeout or async/await possible?
+     yield dispatch(arr[0])
+     yield dispatch(arr[1])
+     yield dispatch(arr[2])
+  }
 
 
   //PLAY MODE
   if (state.watchMode) {
+
     return (
       <div className="simon-says-grid">
         <GameBulletin
@@ -139,20 +152,18 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
           levelNumber={state.levelNumber}
           fade={state.fade}
         />
-        {state.available ? (
-          <animated.div style={spring} className="simon-says-circle">
+        
+          <div className="simon-says-circle">
             <GreenPiece handleClick={handleClick} lightUp={state.lightUpGreen} />
-            <RedPiece handleClick={handleClick} />
+            <RedPiece handleClick={handleClick} lightUp={state.lightUpRed}/>
             <br />
-            <YellowPiece handleClick={handleClick} />
-            <BluePiece handleClick={handleClick} />
-          </animated.div>
-        ) : (
-            <div />
-          )}
+            <YellowPiece handleClick={handleClick} lightUp={state.lightUpYellow} />
+            <BluePiece handleClick={handleClick} lightUp={state.lightUpBlue} />
+          </div>
       </div>
     );
   } else {
+    console.log(state)
     return (
       <div className="simon-says-grid">
         <GameBulletin
