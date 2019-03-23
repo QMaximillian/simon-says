@@ -14,7 +14,10 @@ import {
   LIGHT_UP_GREEN,
   LIGHT_UP_YELLOW,
   LIGHT_UP_RED,
-  LIGHT_UP_BLUE} from "./hooks/gameReducer";
+  LIGHT_UP_BLUE,
+  PLAY_MODE,
+  WATCH_MODE
+} from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -60,6 +63,8 @@ export const GameContainer = (props) => {
     lightUpRed: false,
     lightUpYellow: false,
     lightUpBlue: false,
+    watchMode: true,
+    playMode: false
   })
 
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
@@ -71,23 +76,24 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
+      console.log(state.gameArray.length)
+      console.log(state.level.length)
     } 
-    else if (state.level.length > 0) {
-      // console.log(state.level)
-      console.log(createDispatchArray(state.level))
-    }
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
       dispatch({type: RESET_LEVEL_UP})
     } 
     else if (state.gameArray[state.index] == state.level[state.index]) {
       console.log('right')
-    }
-    else {
-      // end the game
+    } else {
       console.log('wrong')
     }
-  }, [state.gameArray])
+
+    if (state.watchMode) {
+      dispatchIntervals(state.level)
+      dispatch({ type: PLAY_MODE })
+    }
+  })
 
 
   const handleClick = (number) => {
@@ -100,22 +106,25 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
-  const createDispatchArray = (arr) => {
+  const dispatchIntervals = (arr) => {
     // helper
-    var dispatchArray = []
-    arr.map(num => {
-        if (num == 1) {
-          dispatchArray.push(dispatch({ type: LIGHT_UP_GREEN }))
-        } else if (num == 2) {
-          dispatchArray.push(dispatch({ type: LIGHT_UP_RED }))
-        } else if (num == 3) {
-          dispatchArray.push(dispatch({ type: LIGHT_UP_YELLOW }))
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == 1) {
+          console.log('yes')
+          setInterval(dispatch({ type: LIGHT_UP_GREEN }), 2000)
+        } 
+        else if (arr[i] == 2) {
+          setInterval(dispatch({ type: LIGHT_UP_RED }), 2000)
+        } 
+        else if (arr[i] == 3) {
+          setInterval(dispatch({ type: LIGHT_UP_YELLOW }), 2000)
+        } 
+        else if (arr[i] == 4){
+          setInterval(dispatch({ type: LIGHT_UP_BLUE }), 2000)
         } else {
-          dispatchArray.push(dispatch({ type: LIGHT_UP_BLUE }))
+          return 'duh'
         }
-      
-    })
-
+      }
   }
 
 
