@@ -69,22 +69,25 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   useEffect(() => {
 
-    if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
-      dispatch({type: NEXT_LEVEL})
-      dispatch({type: RESET_LEVEL_UP})
-      console.log('bob')
-    } 
-    else if (state.gameArray.length == 0 && state.levelNumber == 1){
+    if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
+    else if (state.gameArray.length >= 0) {
+      
+      console.log(createDispatchArray(state.gameArray))
+    }
+    else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
+      dispatch({type: NEXT_LEVEL})
+      dispatch({type: RESET_LEVEL_UP})
+    } 
     else if (state.gameArray[state.index] == state.level[state.index]) {
-      console.log([].length)
+      console.log('right')
     }
     else {
       // end the game
       console.log('wrong')
     }
-  })
+  }, [state.gameArray])
 
 
   const handleClick = (number) => {
@@ -97,25 +100,24 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
-  function createDispatchArray(arr) {
+  const createDispatchArray = (arr) => {
     // helper
     var dispatchArray = []
-    var newArr = [...arr].map(num => {
-        switch(num) {
-          case 1:
-            dispatchArray.push(dispatch({ type: LIGHT_UP_GREEN }))
-          case 2:
-            dispatchArray.push(dispatch({ type: LIGHT_UP_RED }))
-          case 3:
-            dispatchArray.push(dispatch({ type: LIGHT_UP_YELLOW }))
-          case 4:
-            dispatchArray.push(dispatch({ type: LIGHT_UP_BLUE }))
-          default:
-          break;
+    
+    arr.forEach(num => {
+        if (num == 1) {
+          dispatchArray.push(dispatch({ type: LIGHT_UP_GREEN }))
+        } else if (num == 2) {
+          dispatchArray.push(dispatch({ type: LIGHT_UP_RED }))
+        } else if (num == 3) {
+          dispatchArray.push(dispatch({ type: LIGHT_UP_YELLOW }))
+        } else {
+          dispatchArray.push(dispatch({ type: LIGHT_UP_BLUE }))
         }
-      })
-
-    }
+    })
+  
+    return dispatchArray
+  }
 
 
 
