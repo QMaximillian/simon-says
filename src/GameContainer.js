@@ -89,8 +89,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     }
 
     if (state.watchMode && state.available) {
-      createDispatchIntervals(state.level)
-      // dispatch({ type: PLAY_MODE })
+      playSeq(dispatchLightUp(state.level))
     }
   }, [state.gameArray, state.watchMode])
 
@@ -105,41 +104,40 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // return to black in callback
   // setTimeout before going to next number in level array
   // when the array is finished reenable ability to click on buttons
-  function createDispatchIntervals(arr) {
+  function dispatchLightUp(arr) {
     // helper
-    
+    var dispatcher;
     var dispatchArray = []
 
     arr.forEach((num) => {
       if (num == 1) {
-        dispatchArray.push({ type: LIGHT_UP_GREEN }, { type: RESET_LIGHT_UP})
+        dispatchArray.push({ type: LIGHT_UP_GREEN })
       }
       else if (num == 2) {
-        dispatchArray.push({ type: LIGHT_UP_RED }, { type: RESET_LIGHT_UP})
+        dispatchArray.push({ type: LIGHT_UP_RED })
       }
       else if (num == 3) {
-        dispatchArray.push({ type: LIGHT_UP_YELLOW }, { type: RESET_LIGHT_UP})
+        dispatchArray.push({ type: LIGHT_UP_YELLOW })
       }
       else if (num == 4) {
-        dispatchArray.push({ type: LIGHT_UP_BLUE }, { type: RESET_LIGHT_UP})
+        dispatchArray.push({ type: LIGHT_UP_BLUE })
       }
     })
-    const rob = dispatchIntervals(dispatchArray)
-    rob.next()
-    rob.next()
-    rob.next()
-    console.log(rob.next())
+
+    return dispatchArray
   }
 
-
-  function* dispatchIntervals(arr) {
-    // iterate through the generator (StackOverflow post should be helpful)
-    // https://stackoverflow.com/questions/25900371/how-to-iterate-over-the-results-of-a-generator-function
-    // setTimeout or async/await possible?
-     yield dispatch(arr[0])
-     yield dispatch(arr[1])
-     yield dispatch(arr[2])
-  }
+  var playSeq = (sequence) =>{
+  let i = 0;
+   console.log(sequence)
+  var interval = setInterval( () => {
+    dispatch(sequence[i]);
+    i++;
+    if(i >= sequence.length){
+      clearInterval(interval);
+    }
+  }, 1200)
+};
 
 
   //PLAY MODE
