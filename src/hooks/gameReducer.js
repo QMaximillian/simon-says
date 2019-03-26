@@ -17,38 +17,38 @@ export const playModeReducer = (state, action) => {
   switch (action.type) {
     // playMode
     case NEXT_LEVEL:
-    return {
-      ...state,
-      level: [...state.level, Math.floor(Math.random() * 4) + 1],
-      levelUp: false,
-      levelNumber: ++state.levelNumber,
-
-    };
+      return {
+        ...state,
+        level: [...state.level, Math.floor(Math.random() * 4) + 1],
+        levelUp: false,
+        levelNumber: ++state.levelNumber,
+      };
+    case RESET_LEVEL_UP:
+      return {
+        ...state,
+        level: state.level,
+        levelUp: true,
+        index: -1,
+        fade: true,
+        gameArray: [],
+        available: state.available,
+        levelNumber: state.levelNumber
+      };
     case CLICK:
-    return {
-      gameArray: [...state.gameArray, action.value],
-      index: ++state.index,
-      levelNumber: state.levelNumber,
-      level: state.level,
-      available: state.available,
-      levelUp: false,
-    };
+      return {
+        ...state,
+        gameArray: [...state.gameArray, action.value],
+        index: ++state.index,
+        levelNumber: state.levelNumber,
+        level: state.level,
+        available: state.available,
+        levelUp: false,
+      };
     case MAIN_GAME_LOADED: 
     return {
       available: true,
       gameArray: []
     };
-    case RESET_LEVEL_UP:
-    return {
-      level: state.level,
-      levelUp: true,
-      index: -1,
-      fade: true,
-      gameArray: [],
-      available: state.available,
-      levelNumber: state.levelNumber
-    };
-
     // watchMode
     case LIGHT_UP_GREEN:
       return {

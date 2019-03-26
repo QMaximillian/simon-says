@@ -74,16 +74,20 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
   useEffect(() => {
+    console.log(state.playMode, "PLAY_MODE")
+    console.log(state.watchMode, "WATCH_MODE");
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
       dispatch({type: RESET_LEVEL_UP})
+      dispatch({type: WATCH_MODE})
     } 
     else if (state.gameArray[state.index] == state.level[state.index]) {
       console.log('right')
-    } else {
+    } 
+    else {
       console.log('wrong')
     }
 
@@ -128,7 +132,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   }
 
 
-  var playSeq = (sequence) => {
+  function playSeq(sequence) {
   let i = 0;
    console.log(sequence)
   var interval = setInterval(() => {
@@ -162,7 +166,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
           </div>
       </div>
     );
-  } else {
+  } else if (state.playMode) {
     console.log(state)
     return (
       <div className="simon-says-grid">
@@ -184,5 +188,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
         )}
       </div>
     );
+  } else {
+    return <div>HOW ARE YOU HERE</div>
   }
 }

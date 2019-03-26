@@ -18,7 +18,7 @@ export const BluePiece = ({ handleClick, lightUp }) => {
             className="blue-piece"
             d="M5 229V94.833C57.6554 94.833 100.297 52.733 100.297 0.746002H236.296C236.296 126.727 132.708 229 5 229Z"
             fill="blue"
-            stroke={lightUp ? "white": "black"}
+            stroke={lightUp ? "gold": "black"}
             strokeMiterlimit="10"
           />
         </g>
