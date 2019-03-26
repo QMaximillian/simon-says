@@ -96,21 +96,12 @@ export const playModeReducer = (state, action) => {
         ...state,
         watchMode: false,
         playMode: true,
-        lightUpGreen: false,
-        lightUpRed: false,
-        lightUpYellow: false,
-        lightUpBlue: false
       }
     case WATCH_MODE: 
       return {
         ...state,
         watchMode: true,
         playMode: false,
-        lightUpGreen: false,
-        lightUpRed: false,
-        lightUpYellow: false,
-        lightUpBlue: false
-
       }
     default:
       return state

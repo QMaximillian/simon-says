@@ -74,7 +74,6 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
   useEffect(() => {
-
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
@@ -91,7 +90,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     if (state.watchMode && state.available) {
       playSeq(dispatchLightUp(state.level))
     }
-  }, [state.gameArray, state.watchMode])
+  }, [state.gameArray, state.watchMode, state.playMode])
 
 
   const handleClick = (number) => {
@@ -106,7 +105,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   // when the array is finished reenable ability to click on buttons
   function dispatchLightUp(arr) {
     // helper
-    var dispatcher;
+
     var dispatchArray = []
 
     arr.forEach((num) => {
@@ -123,20 +122,23 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
         dispatchArray.push({ type: LIGHT_UP_BLUE })
       }
     })
+    dispatchArray.push({type: RESET_LIGHT_UP}, {type: PLAY_MODE})
 
     return dispatchArray
   }
 
-  var playSeq = (sequence) =>{
+
+  var playSeq = (sequence) => {
   let i = 0;
    console.log(sequence)
-  var interval = setInterval( () => {
+  var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
     if(i >= sequence.length){
       clearInterval(interval);
     }
-  }, 1200)
+  }, 1000)
+    
 };
 
 

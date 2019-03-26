@@ -1,7 +1,6 @@
 import React from 'react'
 
 export const BluePiece = ({ handleClick, lightUp }) => {
-
     return (
       <svg
         onClick={event => handleClick(+event.target.dataset.id)}
