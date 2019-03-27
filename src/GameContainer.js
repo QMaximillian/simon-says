@@ -88,6 +88,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
       dispatch({type: RESET_LEVEL_UP})
+      dispatch({type: WATCH_MODE})
     } 
     else if (state.gameArray[state.index] == state.level[state.index]) {
       console.log('right')
@@ -147,7 +148,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   //PLAY MODE
 
-    const { watchMode  } = state
+    const { playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
     return (
       <div className="simon-says-grid">
         <GameBulletin
@@ -155,14 +156,30 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
           levelNumber={state.levelNumber}
           fade={state.fade}
         />
-          <div className="simon-says-circle">
-          <GreenPiece lightUp={state.lightUpGreen} handleClick={watchMode ? null : handleClick} />
-          <RedPiece lightUp={state.lightUpRed} handleClick={watchMode ? null : handleClick}/>
-            <br />
-            <div onClick={() => dispatch({type: WATCH_MODE})}>START</div>
-          <YellowPiece lightUp={state.lightUpYellow} handleClick={watchMode ? null : handleClick}/>
-          <BluePiece lightUp={state.lightUpBlue} handleClick={watchMode ? null : handleClick}/>
-          </div>
+        <div className="simon-says-circle">
+          <GreenPiece
+            lightUp={lightUpGreen}
+            handleClick={handleClick}
+            playMode={playMode}
+          />
+          <RedPiece
+            lightUp={lightUpRed}
+            handleClick={handleClick}
+            playMode={playMode}
+          />
+          <br />
+          <div onClick={() => dispatch({ type: WATCH_MODE })}>{watchMode || playMode ? '' : 'START'}</div>
+          <YellowPiece
+            lightUp={lightUpYellow}
+            handleClick={handleClick}
+            playMode={playMode}
+          />
+          <BluePiece
+            lightUp={lightUpBlue}
+            handleClick={handleClick}
+            playMode={playMode}
+          />
+        </div>
       </div>
-    )
+    );
 }
