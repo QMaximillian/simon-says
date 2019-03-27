@@ -9,6 +9,7 @@ export const YELLOW_ON = "YELLOW_ON";
 export const COLOR_BUTTON_OFF = "COLOR_BUTTON_OFF";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
+export const GAME_OVER = "GAME_OVER";
 
 
 
@@ -47,6 +48,7 @@ export const playModeReducer = (state, action) => {
       };
     case MAIN_GAME_LOADED: 
     return {
+      ...state,
       available: true,
       gameArray: []
     };
@@ -103,6 +105,10 @@ export const playModeReducer = (state, action) => {
         ...state,
         watchMode: true,
         playMode: false,
+      }
+    case GAME_OVER: 
+      return {
+        ...action.value
       }
     default:
       return state

@@ -17,11 +17,12 @@ const GameBulletin = ({ levelUp, levelNumber, fade }) => {
     <>
     <animated.div style={props} className="simon-says-bulletin">
       <h4>LEVEL {levelNumber}</h4>
-    </animated.div>
+    
       {transitions.map(({item, key, props }) =>
         item && <animated.div key={key}>LEVEL UP</animated.div>
     
       )} 
+      </animated.div>
     </>
   )
 }

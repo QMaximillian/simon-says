@@ -18,11 +18,13 @@ import {
   PLAY_MODE,
   WATCH_MODE,
   COLOR_BUTTON_OFF,
+  GAME_OVER
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
+/*eslint eqeqeq: 0*/
 
 
 Array.prototype.equals = function (array) {
@@ -59,8 +61,9 @@ Array.prototype.equals = function (array) {
 // Mess around with React Spring animations for desired effects 
 
 export const GameContainer = (props) => {
-  const [state, dispatch] = useReducer(playModeReducer, {
-    level: [1, 2, 3, 4], 
+
+  const initialState = {
+    level: [1, 2, 3, 4],
     gameArray: [],
     index: -1,
     levelNumber: 1,
@@ -74,9 +77,11 @@ export const GameContainer = (props) => {
     watchMode: false,
     playMode: false,
     gameOver: false
-  })
+  }
 
-const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
+  const [state, dispatch] = useReducer(playModeReducer, initialState)
+
+  const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
 
@@ -86,15 +91,20 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
       console.log('begin game')
     } 
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
-      dispatch({type: NEXT_LEVEL})
-      dispatch({type: RESET_LEVEL_UP})
-      dispatch({type: WATCH_MODE})
+      dispatch({ type: NEXT_LEVEL })
+      dispatch({ type: RESET_LEVEL_UP })
+      dispatch({ type: WATCH_MODE })
     } 
-    else if (state.gameArray[state.index] == state.level[state.index]) {
+    else if (state.playMode && state.gameArray[state.index] == state.level[state.index]) {
       console.log('right')
-    } 
+    }
+    else if (state.playMode && state.gameArray[state.index] != state.level[state.index]
+    ) {
+      console.log("wrong");
+      dispatch({ type: GAME_OVER, value: initialState })
+    }
     else {
-      console.log('wrong')
+      console.log('bob')
     }
 
     if (state.watchMode && state.available) {
@@ -105,6 +115,7 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   function handleClick(number) {
     return dispatch({type: CLICK, value: number})
+    console.log(state.gameArray)
   }
 
   function dispatchLightUp(arr) {
