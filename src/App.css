@@ -10,12 +10,13 @@
 
 .simon-says-circle {
   grid-column: 2 / span 2;
-  grid-row: 3;
+  grid-row: 4;
 
 }
 
 .simon-says-bulletin {
   grid-column: 2 / span 2;
+  grid-row: 1;
   font-size: 35px;
   text-shadow: 2px 2px #ffffff;
   font-style: italic;
@@ -36,4 +37,9 @@ div {
 
 .blue-piece {
   fill: blue;
+}
+
+.start-button {
+  grid-column: 3 / span 2;
+  grid-row: 4;
 }

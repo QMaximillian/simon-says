@@ -17,7 +17,7 @@ import {
   BLUE_ON,
   PLAY_MODE,
   WATCH_MODE,
-  COLOR_BUTTON_OFF
+  COLOR_BUTTON_OFF,
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -49,6 +49,14 @@ Array.prototype.equals = function (array) {
     return true;
 }
 
+// TO-DO
+
+// Create start button to begin game and restart button to begin game again
+// Add audio for each button to play during playMode and when clicked
+// Pass down correct and wrong button press feedback to GameBulletin to alert player
+// Find effect that makes it look like button is being pressed and is visually noticeable
+// memoize dispatch array function to just add new value without creating a new array for each watchMode
+// Mess around with React Spring animations for desired effects 
 
 export const GameContainer = (props) => {
   const [state, dispatch] = useReducer(playModeReducer, {
@@ -57,13 +65,13 @@ export const GameContainer = (props) => {
     index: -1,
     levelNumber: 1,
     fade: false,
-    available: false,
+    available: true,
     levelUp: false,
     lightUpGreen: false,
     lightUpRed: false,
     lightUpYellow: false,
     lightUpBlue: false,
-    watchMode: true,
+    watchMode: false,
     playMode: false,
     gameOver: false
   })
@@ -76,12 +84,10 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
   useEffect(() => {
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
-
     } 
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
       dispatch({type: RESET_LEVEL_UP})
-      dispatch({type: WATCH_MODE})
     } 
     else if (state.gameArray[state.index] == state.level[state.index]) {
       console.log('right')
@@ -134,13 +140,14 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     if(i >= sequence.length){
       clearInterval(interval);
     }
-  }, 1000)
+  }, 500)
     
 };
 
 
   //PLAY MODE
-  if (state.watchMode) {
+
+    const { watchMode  } = state
     return (
       <div className="simon-says-grid">
         <GameBulletin
@@ -148,41 +155,14 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
           levelNumber={state.levelNumber}
           fade={state.fade}
         />
-        {state.available ? (
           <div className="simon-says-circle">
-            <GreenPiece lightUp={state.lightUpGreen} />
-            <RedPiece lightUp={state.lightUpRed}/>
+          <GreenPiece lightUp={state.lightUpGreen} handleClick={watchMode ? null : handleClick} />
+          <RedPiece lightUp={state.lightUpRed} handleClick={watchMode ? null : handleClick}/>
             <br />
-            <YellowPiece lightUp={state.lightUpYellow} />
-            <BluePiece lightUp={state.lightUpBlue} />
+            <div onClick={() => dispatch({type: WATCH_MODE})}>START</div>
+          <YellowPiece lightUp={state.lightUpYellow} handleClick={watchMode ? null : handleClick}/>
+          <BluePiece lightUp={state.lightUpBlue} handleClick={watchMode ? null : handleClick}/>
           </div>
-        ) : (
-          <div/>
-        )}
       </div>
-    );
-  } else if (state.playMode) {
-    return (
-      <div className="simon-says-grid">
-        <GameBulletin
-          levelUp={state.levelUp}
-          levelNumber={state.levelNumber}
-          fade={state.fade}
-        />
-        {state.available ? (
-          <animated.div style={spring} className="simon-says-circle">
-            <GreenPiece handleClick={handleClick} />
-            <RedPiece handleClick={handleClick} />
-            <br />
-            <YellowPiece handleClick={handleClick} />
-            <BluePiece handleClick={handleClick} />
-          </animated.div>
-        ) : (
-          <div />
-        )}
-      </div>
-    );
-  } else {
-    return <div>HOW ARE YOU HERE</div>
-  }
+    )
 }

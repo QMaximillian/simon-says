@@ -13,6 +13,7 @@ export const WATCH_MODE = "WATCH_MODE";
 
 
 
+
 export const playModeReducer = (state, action) => {
   switch (action.type) {
     // playMode
