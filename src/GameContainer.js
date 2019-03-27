@@ -11,13 +11,13 @@ import {
   NEXT_LEVEL,
   CLICK,
   RESET_LEVEL_UP,
-  LIGHT_UP_GREEN,
-  LIGHT_UP_YELLOW,
-  LIGHT_UP_RED,
-  LIGHT_UP_BLUE,
+  GREEN_ON,
+  YELLOW_ON,
+  RED_ON,
+  BLUE_ON,
   PLAY_MODE,
   WATCH_MODE,
-  RESET_LIGHT_UP
+  COLOR_BUTTON_OFF
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -57,15 +57,15 @@ export const GameContainer = (props) => {
     index: -1,
     levelNumber: 1,
     fade: false,
-    gameStatus: true,
-    available: true,
+    available: false,
     levelUp: false,
     lightUpGreen: false,
     lightUpRed: false,
     lightUpYellow: false,
     lightUpBlue: false,
     watchMode: true,
-    playMode: false
+    playMode: false,
+    gameOver: false
   })
 
 const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
@@ -74,10 +74,9 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
   useEffect(() => {
-    console.log(state.playMode, "PLAY_MODE")
-    console.log(state.watchMode, "WATCH_MODE");
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
+
     } 
     else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({type: NEXT_LEVEL})
@@ -94,19 +93,13 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
     if (state.watchMode && state.available) {
       playSeq(dispatchLightUp(state.level))
     }
-  }, [state.gameArray, state.watchMode, state.playMode])
+  }, [state.gameArray, state.watchMode, state.playMode, state.available])
 
 
-  const handleClick = (number) => {
-    dispatch({type: CLICK, value: number})
+  function handleClick(number) {
+    return dispatch({type: CLICK, value: number})
   }
 
-  // disable the ability to click on path of svgs
-  // iterate through "level"
-  // if number === svg's id number, change the stroke color to white
-  // return to black in callback
-  // setTimeout before going to next number in level array
-  // when the array is finished reenable ability to click on buttons
   function dispatchLightUp(arr) {
     // helper
 
@@ -114,19 +107,19 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
     arr.forEach((num) => {
       if (num == 1) {
-        dispatchArray.push({ type: LIGHT_UP_GREEN })
+        dispatchArray.push({ type: GREEN_ON }, {type: COLOR_BUTTON_OFF})
       }
       else if (num == 2) {
-        dispatchArray.push({ type: LIGHT_UP_RED })
+        dispatchArray.push({ type: RED_ON }, { type: COLOR_BUTTON_OFF })
       }
       else if (num == 3) {
-        dispatchArray.push({ type: LIGHT_UP_YELLOW })
+        dispatchArray.push({ type: YELLOW_ON }, { type: COLOR_BUTTON_OFF })
       }
       else if (num == 4) {
-        dispatchArray.push({ type: LIGHT_UP_BLUE })
+        dispatchArray.push({ type: BLUE_ON }, { type: COLOR_BUTTON_OFF })
       }
     })
-    dispatchArray.push({type: RESET_LIGHT_UP}, {type: PLAY_MODE})
+    dispatchArray.push({type: PLAY_MODE})
 
     return dispatchArray
   }
@@ -148,7 +141,6 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
   //PLAY MODE
   if (state.watchMode) {
-
     return (
       <div className="simon-says-grid">
         <GameBulletin
@@ -156,18 +148,20 @@ const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
           levelNumber={state.levelNumber}
           fade={state.fade}
         />
-        
+        {state.available ? (
           <div className="simon-says-circle">
-            <GreenPiece handleClick={handleClick} lightUp={state.lightUpGreen} />
-            <RedPiece handleClick={handleClick} lightUp={state.lightUpRed}/>
+            <GreenPiece lightUp={state.lightUpGreen} />
+            <RedPiece lightUp={state.lightUpRed}/>
             <br />
-            <YellowPiece handleClick={handleClick} lightUp={state.lightUpYellow} />
-            <BluePiece handleClick={handleClick} lightUp={state.lightUpBlue} />
+            <YellowPiece lightUp={state.lightUpYellow} />
+            <BluePiece lightUp={state.lightUpBlue} />
           </div>
+        ) : (
+          <div/>
+        )}
       </div>
     );
   } else if (state.playMode) {
-    console.log(state)
     return (
       <div className="simon-says-grid">
         <GameBulletin

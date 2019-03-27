@@ -2,11 +2,11 @@ export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
 export const RESET_LEVEL_UP = 'RESET_LEVEL_UP'
-export const LIGHT_UP_GREEN = "LIGHT_UP_GREEN";
-export const LIGHT_UP_RED = "LIGHT_UP_RED";
-export const LIGHT_UP_BLUE = "LIGHT_UP_BLUE";
-export const LIGHT_UP_YELLOW = "LIGHT_UP_YELLOW";
-export const RESET_LIGHT_UP = "RESET_LIGHT_UP";
+export const GREEN_ON = "GREEN_ON";
+export const RED_ON = "RED_ON";
+export const BLUE_ON = "BLUE_ON";
+export const YELLOW_ON = "YELLOW_ON";
+export const COLOR_BUTTON_OFF = "COLOR_BUTTON_OFF";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
 
@@ -50,7 +50,7 @@ export const playModeReducer = (state, action) => {
       gameArray: []
     };
     // watchMode
-    case LIGHT_UP_GREEN:
+    case GREEN_ON:
       return {
         ...state,
         lightUpGreen: true,
@@ -59,7 +59,7 @@ export const playModeReducer = (state, action) => {
         lightUpBlue: false,
 
       };
-    case LIGHT_UP_RED:
+    case RED_ON:
       return {
         ...state,
         lightUpGreen: false,
@@ -67,7 +67,7 @@ export const playModeReducer = (state, action) => {
         lightUpYellow: false,
         lightUpBlue: false
       };
-    case LIGHT_UP_BLUE:
+    case BLUE_ON:
       return {
         ...state,
         lightUpGreen: false,
@@ -75,7 +75,7 @@ export const playModeReducer = (state, action) => {
         lightUpYellow: false,
         lightUpBlue: true
       };
-    case LIGHT_UP_YELLOW:
+    case YELLOW_ON:
       return {
         ...state,
         lightUpGreen: false,
@@ -83,7 +83,7 @@ export const playModeReducer = (state, action) => {
         lightUpYellow: true,
         lightUpBlue: false
       };
-    case RESET_LIGHT_UP:
+    case COLOR_BUTTON_OFF:
       return {
         ...state,
         lightUpGreen: false,
