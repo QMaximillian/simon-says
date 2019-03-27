@@ -99,16 +99,19 @@ export const playModeReducer = (state, action) => {
         ...state,
         watchMode: false,
         playMode: true,
-      }
+        gameOver: false
+      };
     case WATCH_MODE: 
       return {
         ...state,
         watchMode: true,
         playMode: false,
+        
       }
     case GAME_OVER: 
       return {
-        ...action.value
+        ...action.value,
+        gameOver: true
       }
     default:
       return state

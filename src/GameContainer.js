@@ -58,7 +58,8 @@ Array.prototype.equals = function (array) {
 // Pass down correct and wrong button press feedback to GameBulletin to alert player
 // Find effect that makes it look like button is being pressed and is visually noticeable
 // memoize dispatch array function to just add new value without creating a new array for each watchMode
-// Mess around with React Spring animations for desired effects 
+// Mess around with React Spring animations for desired effects
+// Decrease amount of time between intervals every 5 or 10 levels 
 
 export const GameContainer = (props) => {
 
@@ -152,14 +153,14 @@ export const GameContainer = (props) => {
     if(i >= sequence.length){
       clearInterval(interval);
     }
-  }, 500)
+  }, 200)
     
 };
 
 
   //PLAY MODE
 
-    const { playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
+    const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
     return (
       <div className="simon-says-grid">
         <GameBulletin
@@ -179,7 +180,7 @@ export const GameContainer = (props) => {
             playMode={playMode}
           />
           <br />
-          <div onClick={() => dispatch({ type: WATCH_MODE })}>{watchMode || playMode ? '' : 'START'}</div>
+          <div onClick={() => dispatch({ type: WATCH_MODE })}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}
