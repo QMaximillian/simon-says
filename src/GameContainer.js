@@ -59,8 +59,8 @@ Array.prototype.equals = function (array) {
 // Find effect that makes it look like button is being pressed and is visually noticeable
 // memoize dispatch array function to just add new value without creating a new array for each watchMode
 // Mess around with React Spring animations for desired effects
-// Decrease amount of time between intervals every 5 or 10 levels 
-// Add a single restart button to save you if you make a single mistake
+// Decrease amount of time between intervals every 5 or 10 levels ✅ 
+// EXTRA: Add a single restart button to save you if you make a single mistake
 
 export const GameContainer = (props) => {
 
@@ -91,7 +91,7 @@ export const GameContainer = (props) => {
 
 
   useEffect(() => {
-    if (state.gameArray.length == 0 && state.levelNumber == 1){
+    if (state.watchMode && state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
     else if (state.playMode && state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
@@ -183,6 +183,7 @@ export const GameContainer = (props) => {
           levelUp={state.levelUp}
           levelNumber={state.levelNumber}
           fade={state.fade}
+          gameOver={state.gameOver}
         />
         <div className="simon-says-circle">
           <GreenPiece
