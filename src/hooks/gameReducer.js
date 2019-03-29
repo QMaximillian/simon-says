@@ -60,7 +60,7 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-
+        greenAudioPlay: true,
       };
     case RED_ON:
       return {

@@ -78,7 +78,9 @@ export const GameContainer = (props) => {
     lightUpBlue: false,
     watchMode: false,
     playMode: false,
-    gameOver: false
+    gameOver: false,
+    greenAudioPlay: false,
+
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -92,7 +94,7 @@ export const GameContainer = (props) => {
     if (state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
-    else if (state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
+    else if (state.playMode && state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
@@ -146,7 +148,20 @@ export const GameContainer = (props) => {
 
 
   function playSeq(sequence) {
-  let i = 0;
+    const { levelNumber } = state
+    let i = 0;
+    let intervalTime;
+
+  if (levelNumber < 10) {
+    intervalTime = 1000
+  } 
+  else if (levelNumber < 20) {
+    intervalTime = 500;
+  } 
+  else {
+    intervalTime = 200;
+  }
+
    console.log(sequence)
   var interval = setInterval(() => {
     dispatch(sequence[i]);
@@ -154,7 +169,7 @@ export const GameContainer = (props) => {
     if(i >= sequence.length){
       clearInterval(interval);
     }
-  }, 200)
+  }, intervalTime)
     
 };
 
