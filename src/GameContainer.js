@@ -158,6 +158,8 @@ export const GameContainer = (props) => {
   }
 
   function onKeyPressed(event) {
+  // switch statement (include other possible keypress combinations?)
+  // allow user to use a lifeline to see the sequence one more time
     if (event.keyCode == 13) {
       if (state.playMode || state.watchMode) return
       dispatch({ type: WATCH_MODE });
