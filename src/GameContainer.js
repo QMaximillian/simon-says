@@ -21,6 +21,7 @@ import {
   GAME_OVER,
   RESET_GAME
 } from "./hooks/gameReducer";
+import { stat } from 'fs';
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -92,6 +93,8 @@ export const GameContainer = (props) => {
 
 
   useEffect(() => {
+    document.addEventListener('keydown', onKeyPressed)
+
     if (state.watchMode && state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
@@ -114,6 +117,13 @@ export const GameContainer = (props) => {
 
     if (state.watchMode && state.available) {
       playSeq(dispatchLightUp(state.level))
+    }
+
+    return function cleanup() {
+      document.removeEventListener(
+        "keydown",
+        onKeyPressed
+      );
     }
   }, [state.gameArray, state.watchMode, state.playMode, state.available])
 
@@ -147,6 +157,12 @@ export const GameContainer = (props) => {
     return dispatchArray
   }
 
+  function onKeyPressed(event) {
+    if (event.keyCode == 13) {
+      if (state.playMode || state.watchMode) return
+      dispatch({ type: WATCH_MODE });
+    }
+  }
 
   function playSeq(sequence) {
     const { levelNumber } = state
@@ -170,8 +186,7 @@ export const GameContainer = (props) => {
     if(i >= sequence.length){
       clearInterval(interval);
     }
-  }, intervalTime)
-    
+  }, intervalTime)  
 };
 
 
@@ -185,7 +200,7 @@ export const GameContainer = (props) => {
           levelNumber={state.levelNumber}
           fade={state.fade}
           gameOver={state.gameOver}
-          resetGame={() => dispatch({type: RESET_GAME, value: initialState})}
+          resetGame={function() { dispatch({type: RESET_GAME, value: initialState})}}
         />
         <div className="simon-says-circle">
           <GreenPiece
@@ -199,7 +214,10 @@ export const GameContainer = (props) => {
             playMode={playMode}
           />
           <br />
-          <div onClick={() => dispatch({ type: WATCH_MODE })}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
+          <div 
+            onKeyDown={onKeyPressed}
+            tabIndex="0"
+            onClick={function () { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}

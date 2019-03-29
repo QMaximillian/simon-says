@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import { useSpring, animated, useTransition } from "react-spring";
 import '../App.css'
@@ -29,6 +29,19 @@ const GameBulletin = ({ levelUp, levelNumber, fade, gameOver, resetGame }) => {
 }
 
 const HighScoreList = ({ resetGame }) => {
+
+  const [text, setText] = useState('')
+
+function handleChange(event) {
+    if (event.target.value > 3) {
+      setText(event.target.value) 
+    }
+    else {
+      alert('You can only enter initials')
+    }
+    console.log(text)
+}
+
   return ReactDOM.createPortal(
      <aside className="c-modal-cover">
        <div className="c-modal">
@@ -42,6 +55,7 @@ const HighScoreList = ({ resetGame }) => {
          <div onClick={resetGame}>
            Close me
          </div>
+         <input onChange={handleChange}></input>
        </div>
      </aside>, document.body)
 }
