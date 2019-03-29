@@ -10,6 +10,7 @@ export const COLOR_BUTTON_OFF = "COLOR_BUTTON_OFF";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
 export const GAME_OVER = "GAME_OVER";
+export const RESET_GAME = "RESET_GAME"
 
 
 
@@ -113,6 +114,10 @@ export const playModeReducer = (state, action) => {
         ...action.value,
         gameOver: true
       }
+    case RESET_GAME:
+        return {
+          ...action.value
+        }
     default:
       return state
   }

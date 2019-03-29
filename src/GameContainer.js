@@ -18,7 +18,8 @@ import {
   PLAY_MODE,
   WATCH_MODE,
   COLOR_BUTTON_OFF,
-  GAME_OVER
+  GAME_OVER,
+  RESET_GAME
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -150,17 +151,17 @@ export const GameContainer = (props) => {
   function playSeq(sequence) {
     const { levelNumber } = state
     let i = 0;
-    let intervalTime;
+    let intervalTime = 200;
 
-  if (levelNumber < 10) {
-    intervalTime = 1000
-  } 
-  else if (levelNumber < 20) {
-    intervalTime = 500;
-  } 
-  else {
-    intervalTime = 200;
-  }
+  // if (levelNumber < 10) {
+  //   intervalTime = 1000
+  // } 
+  // else if (levelNumber < 20) {
+  //   intervalTime = 500;
+  // } 
+  // else {
+  //   intervalTime = 200;
+  // }
 
    console.log(sequence)
   var interval = setInterval(() => {
@@ -184,6 +185,7 @@ export const GameContainer = (props) => {
           levelNumber={state.levelNumber}
           fade={state.fade}
           gameOver={state.gameOver}
+          resetGame={() => dispatch({type: RESET_GAME, value: initialState})}
         />
         <div className="simon-says-circle">
           <GreenPiece
