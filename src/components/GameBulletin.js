@@ -33,13 +33,7 @@ const HighScoreList = ({ resetGame }) => {
   const [text, setText] = useState('')
 
 function handleChange(event) {
-    if (event.target.value > 3) {
-      setText(event.target.value) 
-    }
-    else {
-      alert('You can only enter initials')
-    }
-    console.log(text)
+  setText(event.target.value)
 }
 
   return ReactDOM.createPortal(
@@ -53,9 +47,10 @@ function handleChange(event) {
             GAME OVER
          </div>
          <div onClick={resetGame}>
-           Close me
+           PLAY AGAIN?
          </div>
-         <input onChange={handleChange}></input>
+         <label>Enter Your Initials</label>
+         <input maxLength={3} onChange={handleChange}></input>
        </div>
      </aside>, document.body)
 }

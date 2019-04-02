@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { useSpring, animated } from 'react-spring'
+// import { useSpring } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
@@ -21,7 +21,6 @@ import {
   GAME_OVER,
   RESET_GAME
 } from "./hooks/gameReducer";
-import { stat } from 'fs';
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
@@ -87,7 +86,7 @@ export const GameContainer = (props) => {
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
 
-  const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
+  // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
 
 
 
@@ -130,7 +129,6 @@ export const GameContainer = (props) => {
 
   function handleClick(number) {
     return dispatch({type: CLICK, value: number})
-    console.log(state.gameArray)
   }
 
   function dispatchLightUp(arr) {
@@ -160,14 +158,32 @@ export const GameContainer = (props) => {
   function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
-    if (event.keyCode == 13) {
-      if (state.playMode || state.watchMode) return
-      dispatch({ type: WATCH_MODE });
-    }
+    const { keyCode } = event
+    const { playMode, watchMode } = state
+  switch (true) {
+    case keyCode == 13:
+      console.log(event.keyCode);
+      return playMode || watchMode ? null : dispatch({ type: WATCH_MODE });
+    case keyCode == 81:
+      return playMode ? dispatch({ type: CLICK, value: 1 }) : null;
+    case keyCode ==  87:
+      return playMode ? dispatch({ type: CLICK, value: 2 }) : null;
+    case keyCode ==  83:
+      return playMode ? dispatch({ type: CLICK, value: 4 }) : null;
+    case keyCode == 65:
+      return state.playMode ? dispatch({ type: CLICK, value: 3 }) : null;
+    default:
+      return;
+  }
+  
+  // if (event.keyCode == 13) {
+  //     if (state.playMode || state.watchMode) return
+  //     dispatch({ type: WATCH_MODE });
+  //   }
   }
 
   function playSeq(sequence) {
-    const { levelNumber } = state
+    // const { levelNumber } = state
     let i = 0;
     let intervalTime = 200;
 
