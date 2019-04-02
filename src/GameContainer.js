@@ -93,7 +93,7 @@ export const GameContainer = (props) => {
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyPressed)
-
+    console.log(state)
     if (state.watchMode && state.gameArray.length == 0 && state.levelNumber == 1){
       console.log('begin game')
     } 
@@ -160,26 +160,28 @@ export const GameContainer = (props) => {
   // allow user to use a lifeline to see the sequence one more time
     const { keyCode } = event
     const { playMode, watchMode } = state
-  switch (true) {
-    case keyCode == 13:
-      console.log(event.keyCode);
-      return playMode || watchMode ? null : dispatch({ type: WATCH_MODE });
-    case keyCode == 81:
-      return playMode ? dispatch({ type: CLICK, value: 1 }) : null;
-    case keyCode ==  87:
-      return playMode ? dispatch({ type: CLICK, value: 2 }) : null;
-    case keyCode ==  83:
-      return playMode ? dispatch({ type: CLICK, value: 4 }) : null;
-    case keyCode == 65:
-      return state.playMode ? dispatch({ type: CLICK, value: 3 }) : null;
-    default:
-      return;
-  }
-  
-  // if (event.keyCode == 13) {
-  //     if (state.playMode || state.watchMode) return
-  //     dispatch({ type: WATCH_MODE });
-  //   }
+
+    function dispatchClickAction(svgId){
+      return playMode ? dispatch({ type: CLICK, value: svgId }) : null;
+    }
+
+    switch (true) {
+      case keyCode == 13:
+        console.log(event.keyCode);
+        return playMode || watchMode ? null : dispatch({ type: WATCH_MODE });
+      case keyCode == 81:
+        return dispatchClickAction(1);
+      case keyCode == 87:
+        return dispatchClickAction(2);
+      case keyCode == 65:
+        return dispatchClickAction(3);
+      case keyCode == 83:
+        return dispatchClickAction(4);
+      case keyCode == 82:
+        return dispatch({type: RESET_GAME, value: initialState})
+      default:
+        return;
+    }
   }
 
   function playSeq(sequence) {
