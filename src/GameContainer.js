@@ -103,19 +103,24 @@ export const GameContainer = (props) => {
       dispatch({ type: WATCH_MODE })
     } 
     else if (state.playMode && state.gameArray[state.index] == state.level[state.index]) {
-      console.log('right')
+      // console.log('right')
     }
     else if (state.playMode && state.gameArray[state.index] != state.level[state.index]
     ) {
-      console.log("wrong");
+      // console.log("wrong");
       dispatch({ type: GAME_OVER, value: initialState })
     }
     else {
-      console.log('bob')
+      // console.log('bob')
     }
 
     if (state.watchMode && state.available) {
       playSeq(dispatchLightUp(state.level))
+    }
+
+    if (state.playMode && state.lightUpGreen) {
+      console.log(state.playMode, state.lightUpGreen)
+      setInterval(() => function(){ return dispatch({type: COLOR_BUTTON_OFF}) }, 1000)
     }
 
     return function cleanup() {
@@ -162,7 +167,12 @@ export const GameContainer = (props) => {
     const { playMode, watchMode } = state
 
     function dispatchClickAction(svgId){
-      return playMode ? dispatch({ type: CLICK, value: svgId }) : null;
+      var dispatchArray = []
+      if (playMode) {
+        dispatchArray.push({ type: CLICK, value: svgId }, { type: GREEN_ON }, { type: COLOR_BUTTON_OFF })
+      }
+
+      playSeq(dispatchArray)
     }
 
     switch (true) {
