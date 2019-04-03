@@ -141,23 +141,42 @@ export const GameContainer = (props) => {
 
     var dispatchArray = []
 
+    // arr.forEach((num) => {
+    //   if (num == 1) {
+    //     dispatchArray.push({ type: GREEN_ON }, {type: COLOR_BUTTON_OFF})
+    //   }
+    //   else if (num == 2) {
+    //     dispatchArray.push({ type: RED_ON }, { type: COLOR_BUTTON_OFF })
+    //   }
+    //   else if (num == 3) {
+    //     dispatchArray.push({ type: YELLOW_ON }, { type: COLOR_BUTTON_OFF })
+    //   }
+    //   else if (num == 4) {
+    //     dispatchArray.push({ type: BLUE_ON }, { type: COLOR_BUTTON_OFF })
+    //   }
+    // })
+
     arr.forEach((num) => {
-      if (num == 1) {
-        dispatchArray.push({ type: GREEN_ON }, {type: COLOR_BUTTON_OFF})
-      }
-      else if (num == 2) {
-        dispatchArray.push({ type: RED_ON }, { type: COLOR_BUTTON_OFF })
-      }
-      else if (num == 3) {
-        dispatchArray.push({ type: YELLOW_ON }, { type: COLOR_BUTTON_OFF })
-      }
-      else if (num == 4) {
-        dispatchArray.push({ type: BLUE_ON }, { type: COLOR_BUTTON_OFF })
-      }
+        dispatchArray.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF })
     })
     dispatchArray.push({type: PLAY_MODE})
 
     return dispatchArray
+  }
+
+  function getColor(id) {
+    switch (true) {
+      case id == 1:
+        return GREEN_ON
+      case id == 2:
+        return RED_ON
+      case id == 3:
+        return YELLOW_ON
+      case id == 4:
+        return BLUE_ON
+      default:
+        break;
+    }
   }
 
   function onKeyPressed(event) {
@@ -166,27 +185,13 @@ export const GameContainer = (props) => {
     const { keyCode } = event
     const { playMode, watchMode } = state
 
-    function getColor(svgId) {
-      switch(true) {
-        case 1:
-          return GREEN_ON
-        case 2:
-          return RED_ON
-        case 3:
-          return YELLOW_ON
-        case 4:
-          return BLUE_ON
-        default:
-          break;
-      }
-    }
     function dispatchClickAction(svgId){
       var dispatchArray = []
 
       if (playMode && svgId) {
           dispatchArray.push(
             { type: CLICK, value: svgId },
-            { type: getColor() },
+            { type: getColor(svgId) },
             { type: COLOR_BUTTON_OFF }
           )
       }
