@@ -166,12 +166,30 @@ export const GameContainer = (props) => {
     const { keyCode } = event
     const { playMode, watchMode } = state
 
+    function getColor(svgId) {
+      switch(true) {
+        case 1:
+          return GREEN_ON
+        case 2:
+          return RED_ON
+        case 3:
+          return YELLOW_ON
+        case 4:
+          return BLUE_ON
+        default:
+          break;
+      }
+    }
     function dispatchClickAction(svgId){
       var dispatchArray = []
-      if (playMode) {
-        dispatchArray.push({ type: CLICK, value: svgId }, { type: GREEN_ON }, { type: COLOR_BUTTON_OFF })
-      }
 
+      if (playMode && svgId) {
+          dispatchArray.push(
+            { type: CLICK, value: svgId },
+            { type: getColor() },
+            { type: COLOR_BUTTON_OFF }
+          )
+      }
       playSeq(dispatchArray)
     }
 
