@@ -4,6 +4,7 @@ import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
+import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
 import {
@@ -237,6 +238,7 @@ export const GameContainer = (props) => {
     const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
     return (
       <div className="simon-says-grid">
+        <Legend />
         <GameBulletin
           levelUp={state.levelUp}
           levelNumber={state.levelNumber}
