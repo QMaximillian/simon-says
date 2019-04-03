@@ -141,21 +141,6 @@ export const GameContainer = (props) => {
 
     var dispatchArray = []
 
-    // arr.forEach((num) => {
-    //   if (num == 1) {
-    //     dispatchArray.push({ type: GREEN_ON }, {type: COLOR_BUTTON_OFF})
-    //   }
-    //   else if (num == 2) {
-    //     dispatchArray.push({ type: RED_ON }, { type: COLOR_BUTTON_OFF })
-    //   }
-    //   else if (num == 3) {
-    //     dispatchArray.push({ type: YELLOW_ON }, { type: COLOR_BUTTON_OFF })
-    //   }
-    //   else if (num == 4) {
-    //     dispatchArray.push({ type: BLUE_ON }, { type: COLOR_BUTTON_OFF })
-    //   }
-    // })
-
     arr.forEach((num) => {
         dispatchArray.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF })
     })
@@ -211,10 +196,14 @@ export const GameContainer = (props) => {
       case keyCode == 83:
         return dispatchClickAction(4);
       case keyCode == 82:
-        return dispatch({type: RESET_GAME, value: initialState})
+        return resetGame()
       default:
         return;
     }
+  }
+
+  function resetGame(){
+    dispatch({ type: RESET_GAME, value: initialState })
   }
 
   function playSeq(sequence) {
@@ -253,7 +242,7 @@ export const GameContainer = (props) => {
           levelNumber={state.levelNumber}
           fade={state.fade}
           gameOver={state.gameOver}
-          resetGame={function() { dispatch({type: RESET_GAME, value: initialState})}}
+          resetGame={resetGame}
         />
         <div className="simon-says-circle">
           <GreenPiece
@@ -270,7 +259,7 @@ export const GameContainer = (props) => {
           <div 
             onKeyDown={onKeyPressed}
             tabIndex="0"
-            onClick={function () { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
+            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}
