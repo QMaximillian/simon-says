@@ -116,7 +116,7 @@ export const GameContainer = (props) => {
     }
 
     if (state.watchMode && state.available) {
-      playSeq(dispatchLightUp(state.level))
+      playSeq(dispatchLightUpPattern(state.level))
     }
 
     if (state.playMode && state.lightUpGreen) {
@@ -141,17 +141,28 @@ export const GameContainer = (props) => {
     dispatch({ type: RESET_GAME, value: initialState })
   }
 
-  function dispatchLightUp(arr) {
-    // helper
-
-    var dispatchArray = []
+  function dispatchLightUpPattern(arr) {
+    var dispatchArray = [];
 
     arr.forEach((num) => {
-        dispatchArray.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF })
-    })
-    dispatchArray.push({type: PLAY_MODE})
+        dispatchArray.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF });
+    });
+    dispatchArray.push({type: PLAY_MODE});
 
-    return dispatchArray
+    return dispatchArray;
+  }
+
+  function dispatchClickAction(svgId) {
+    var dispatchArray = [];
+
+    if (playMode && svgId) {
+      dispatchArray.push(
+        { type: CLICK, value: svgId },
+        { type: getColor(svgId) },
+        { type: COLOR_BUTTON_OFF }
+      );
+    }
+    playSeq(dispatchArray, 100);
   }
 
   function getColor(id) {
@@ -167,19 +178,6 @@ export const GameContainer = (props) => {
       default:
         break;
     }
-  }
-
-  function dispatchClickAction(svgId) {
-    var dispatchArray = []
-
-    if (playMode && svgId) {
-      dispatchArray.push(
-        { type: CLICK, value: svgId },
-        { type: getColor(svgId) },
-        { type: COLOR_BUTTON_OFF }
-      )
-    }
-    playSeq(dispatchArray, 100)
   }
 
   function onKeyPressed(event) {
@@ -216,19 +214,16 @@ export const GameContainer = (props) => {
 
   
 
-  function playSeq(sequence, intervalTime = 500) {
-    // const { levelNumber } = state
+  function playSeq(sequence, intervalTime = 1000) {
+    const { levelNumber } = state
     let i = 0;
 
-  // if (levelNumber < 10) {
-  //   intervalTime = 1000
-  // } 
-  // else if (levelNumber < 20) {
-  //   intervalTime = 500;
-  // } 
-  // else {
-  //   intervalTime = 200;
-  // }
+  if (levelNumber > 10) {
+    intervalTime = 500;
+  } 
+  else if (levelNumber > 20) {
+    intervalTime = 200;
+  }
 
    console.log(sequence)
   var interval = setInterval(() => {
