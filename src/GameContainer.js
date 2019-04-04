@@ -93,36 +93,32 @@ export const GameContainer = (props) => {
 
 
   useEffect(() => {
+    const { playMode, watchMode, gameArray, levelNumber, level, index, available } = state
     document.addEventListener('keydown', onKeyPressed)
+
     console.log(state)
-    if (state.watchMode && state.gameArray.length == 0 && state.levelNumber == 1){
+    if (watchMode && gameArray.length == 0 && levelNumber == 1){
       console.log('begin game')
     } 
-    else if (state.playMode && state.gameArray.equals(state.level) && state.gameArray.length == state.level.length) {
+    else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
     } 
-    else if (state.playMode && state.gameArray[state.index] == state.level[state.index]) {
+    else if (playMode && gameArray[index] == level[index]) {
       // console.log('right')
     }
-    else if (state.playMode && state.gameArray[state.index] != state.level[state.index]
+    else if (playMode && gameArray[index] != level[index]
     ) {
       // console.log("wrong");
       dispatch({ type: GAME_OVER, value: initialState })
     }
-    else {
-      // console.log('bob')
+
+    
+    if (watchMode && available) {
+      playSeq(dispatchLightUpPattern(level))
     }
 
-    if (state.watchMode && state.available) {
-      playSeq(dispatchLightUpPattern(state.level))
-    }
-
-    if (state.playMode && state.lightUpGreen) {
-      console.log(state.playMode, state.lightUpGreen)
-      setInterval(() => function(){ return dispatch({type: COLOR_BUTTON_OFF}) }, 1000)
-    }
 
     return function cleanup() {
       document.removeEventListener(
