@@ -183,25 +183,32 @@ export const GameContainer = (props) => {
       }
       playSeq(dispatchArray)
     }
-
-    switch (true) {
-      case keyCode == 13:
-        console.log(event.keyCode);
-        return playMode || watchMode ? null : dispatch({ type: WATCH_MODE });
-      case keyCode == 81:
-        return dispatchClickAction(1);
-      case keyCode == 87:
-        return dispatchClickAction(2);
-      case keyCode == 65:
-        return dispatchClickAction(3);
-      case keyCode == 83:
-        return dispatchClickAction(4);
-      case keyCode == 82:
-        return resetGame()
-      default:
-        return;
+  
+    if (keyCode == 13) {
+      return playMode || watchMode
+        ? null
+        : dispatch({ type: WATCH_MODE });
     }
-  }
+
+    if (keyCode == 82) {
+      resetGame()
+    }
+
+    if (playMode) {
+      switch (true) {
+          case keyCode == 81:
+            return dispatchClickAction(1);
+          case keyCode == 87:
+            return dispatchClickAction(2);
+          case keyCode == 65:
+            return dispatchClickAction(3);
+          case keyCode == 83:
+            return dispatchClickAction(4);
+        default:
+          return;
+      }
+    }
+}
 
   function resetGame(){
     dispatch({ type: RESET_GAME, value: initialState })
