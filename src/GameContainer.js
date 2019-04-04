@@ -62,7 +62,7 @@ Array.prototype.equals = function (array) {
 // memoize dispatch array function to just add new value without creating a new array for each watchMode
 // Mess around with React Spring animations for desired effects
 // Decrease amount of time between intervals every 5 or 10 levels ✅ 
-// EXTRA: Add a single restart button to save you if you make a single mistake
+// EXTRA: Add a single replay button to save you if you make a single mistake
 
 export const GameContainer = (props) => {
 
@@ -134,7 +134,11 @@ export const GameContainer = (props) => {
 
 
   function handleClick(number) {
-    return dispatch({type: CLICK, value: number})
+    dispatchClickAction(number)
+  }
+
+  function resetGame() {
+    dispatch({ type: RESET_GAME, value: initialState })
   }
 
   function dispatchLightUp(arr) {
@@ -165,24 +169,24 @@ export const GameContainer = (props) => {
     }
   }
 
+  function dispatchClickAction(svgId) {
+    var dispatchArray = []
+
+    if (playMode && svgId) {
+      dispatchArray.push(
+        { type: CLICK, value: svgId },
+        { type: getColor(svgId) },
+        { type: COLOR_BUTTON_OFF }
+      )
+    }
+    playSeq(dispatchArray, 100)
+  }
+
   function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
     const { keyCode } = event
     const { playMode, watchMode } = state
-
-    function dispatchClickAction(svgId){
-      var dispatchArray = []
-
-      if (playMode && svgId) {
-          dispatchArray.push(
-            { type: CLICK, value: svgId },
-            { type: getColor(svgId) },
-            { type: COLOR_BUTTON_OFF }
-          )
-      }
-      playSeq(dispatchArray)
-    }
   
     if (keyCode == 13) {
       return playMode || watchMode
@@ -208,16 +212,13 @@ export const GameContainer = (props) => {
           return;
       }
     }
-}
-
-  function resetGame(){
-    dispatch({ type: RESET_GAME, value: initialState })
   }
 
-  function playSeq(sequence) {
+  
+
+  function playSeq(sequence, intervalTime = 500) {
     // const { levelNumber } = state
     let i = 0;
-    let intervalTime = 200;
 
   // if (levelNumber < 10) {
   //   intervalTime = 1000
@@ -268,7 +269,7 @@ export const GameContainer = (props) => {
           <div 
             onKeyDown={onKeyPressed}
             tabIndex="0"
-            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? '' : gameOver ? 'TRY AGAIN' : 'START'}</div>
+            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}</div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}
