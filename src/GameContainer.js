@@ -260,6 +260,7 @@ export const GameContainer = (props) => {
           <div 
             onKeyDown={onKeyPressed}
             tabIndex="0"
+
             onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}</div>
           <YellowPiece
             lightUp={lightUpYellow}

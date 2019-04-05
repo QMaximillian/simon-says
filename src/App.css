@@ -35,10 +35,9 @@ div {
   -o-transition: opacity 3s ease-in-out;
 }
 
-.blue-piece {
-  fill: blue;
+.black {
+  background-color: black
 }
-
 .start-button {
   grid-column: 3 / span 2;
   grid-row: 4;
@@ -103,7 +102,7 @@ div {
   padding-top: .25em;
 }
 
-.u-hide-visually {
+/* .u-hide-visually {
   border: 0 !important;
   clip: rect(0 0 0 0) !important;
   height: 1px !important;
@@ -113,4 +112,25 @@ div {
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important;
+} */
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }

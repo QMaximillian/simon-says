@@ -5,6 +5,10 @@ export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
     return (
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
         <g filter="url(#filter0_d)">
+        
+        
+        
+        
         <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" d="M236.296 1V135.167C183.641 135.167 140.999 177.267 140.999 229.254H5.00003C5.00003 103.273 108.588 1 236.296 1Z" fill="lime"
         stroke={lightUp ? "gold": "black"} strokeMiterlimit="10"/>
         </g>
