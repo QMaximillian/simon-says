@@ -56,13 +56,19 @@ Array.prototype.equals = function (array) {
 // TO-DO
 
 // Create start button to begin game and restart button to begin game again ✅ 
-// Add audio for each button to play during playMode and when clicked
-// Pass down correct and wrong button press feedback to GameBulletin to alert player
-// Find effect that makes it look like button is being pressed and is visually noticeable
+
+// Find effect that makes it look like button is being pressed and is visually noticeable ✅ 
 // memoize dispatch array function to just add new value without creating a new array for each watchMode
 // Mess around with React Spring animations for desired effects
 // Decrease amount of time between intervals every 5 or 10 levels ✅ 
-// EXTRA: Add a single replay button to save you if you make a single mistake
+// EXTRA: Add a single replay button to save you if you make a single mistake ✅
+
+// Add audio for each button to play during playMode and when clicked
+// Pass down correct and wrong button press feedback to GameBulletin to alert player
+// CSS Styling to clean up interface
+// React Spring animations for level updates
+// soothing calm background color
+// Rails backend for high scores
 
 export const GameContainer = (props) => {
 
@@ -257,11 +263,10 @@ export const GameContainer = (props) => {
             playMode={playMode}
           />
           <br />
-          <div 
-            onKeyDown={onKeyPressed}
+          {/* <div 
             tabIndex="0"
-
-            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}</div>
+            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}
+            </div> */}
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}

@@ -6,7 +6,7 @@ export const YellowPiece = ({ handleClick, lightUp, playMode }) => {
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none" xmlns="http://www.w3.org/2000/svg">
 
         <g filter="url(#filter0_d)">
-                <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="3" pointerEvents="all" d="M236.296 229.254V95.087C183.641 95.087 140.999 52.987 140.999 1.00003H5.00003C5.00003 126.981 108.588 229.254 236.296 229.254Z" fill="yellow" stroke={lightUp ? "gold": "black"} strokeMiterlimit="10"/>
+                <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="3" pointerEvents="all" d="M236.296 229.254V95.087C183.641 95.087 140.999 52.987 140.999 1.00003H5.00003C5.00003 126.981 108.588 229.254 236.296 229.254Z" fill="yellow" stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px"/>
         </g>
         <defs>
             

@@ -3,10 +3,10 @@ import React from 'react'
 export const RedPiece = ({ handleClick, lightUp, playMode }) => {
 
     return (
-        <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238">
 
         <g filter="url(#filter0_d)">
-                <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="2" pointerEvents="all" d="M4.99996 1V135.167C57.6554 135.167 100.297 177.267 100.297 229.254H236.296C236.296 103.273 132.708 1 4.99996 1Z" fill="red" stroke={lightUp ? "gold": "black"} strokeMiterlimit="10"/>
+                <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="2" pointerEvents="all" d="M4.99996 1V135.167C57.6554 135.167 100.297 177.267 100.297 229.254H236.296C236.296 103.273 132.708 1 4.99996 1Z" fill="red" stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px"/>
         </g>
         
         <defs>
