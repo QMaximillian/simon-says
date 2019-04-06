@@ -20,7 +20,8 @@ import {
   WATCH_MODE,
   COLOR_BUTTON_OFF,
   GAME_OVER,
-  RESET_GAME
+  RESET_GAME,
+  LEGEND_TOGGLE
 } from "./hooks/gameReducer";
 
 // Eliminate read-only rule in ESLint for adding methods to prototype class
@@ -87,8 +88,8 @@ export const GameContainer = (props) => {
     watchMode: false,
     playMode: false,
     gameOver: false,
+    toggleLegend: false,
     greenAudioPlay: false,
-
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -237,13 +238,18 @@ export const GameContainer = (props) => {
   }, intervalTime)  
 };
 
+function handleLegendToggle() {
+  dispatch({type: LEGEND_TOGGLE})
+}
+
 
   //PLAY MODE
 
     const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
     return (
       <div className="simon-says-grid">
-        <Legend />
+        
+        {state.toggleLegend ? <Legend handleLegendToggle={handleLegendToggle}/> : <button onClick={handleLegendToggle}>Legend</button> }
         <GameBulletin
           levelUp={state.levelUp}
           levelNumber={state.levelNumber}
@@ -251,7 +257,7 @@ export const GameContainer = (props) => {
           gameOver={state.gameOver}
           resetGame={resetGame}
         />
-        <div className="simon-says-circle">
+        <div style={{overflow: 'visible'}}className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}

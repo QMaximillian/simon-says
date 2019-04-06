@@ -1,7 +1,9 @@
 import React from 'react'
 
-function Legend(){
+function Legend(props){
     return (
+    <>
+    <button onClick={props.handleLegendToggle}>Toggle Legend</button>
       <div>
         <div>Legend</div>
         <label>Q</label>
@@ -17,6 +19,7 @@ function Legend(){
         <label>Enter</label>
             <div>Start Game</div>
       </div>
+    </>
     );
 }
 
