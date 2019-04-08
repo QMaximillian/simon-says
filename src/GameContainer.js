@@ -24,6 +24,7 @@ import {
   LEGEND_TOGGLE
 } from "./hooks/gameReducer";
 
+
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
@@ -89,7 +90,7 @@ export const GameContainer = (props) => {
     playMode: false,
     gameOver: false,
     toggleLegend: false,
-    greenAudioPlay: false,
+    audioToggles: {}
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -183,7 +184,7 @@ export const GameContainer = (props) => {
     }
   }
 
-  function onKeyPressed(event) {
+function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
     const { keyCode } = event
@@ -213,11 +214,11 @@ export const GameContainer = (props) => {
           return;
       }
     }
-  }
+}
 
   
 
-  function playSeq(sequence, intervalTime = 1000) {
+function playSeq(sequence, intervalTime = 1000) {
     const { levelNumber } = state
     let i = 0;
 
@@ -246,6 +247,7 @@ function handleLegendToggle() {
   //PLAY MODE
 
     const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
+    const { toggleGreenAudio } = state.audioToggles
     return (
       <div className="simon-says-grid">
         
@@ -259,6 +261,7 @@ function handleLegendToggle() {
         />
         <div style={{overflow: 'visible'}}className="simon-says-circle">
           <GreenPiece
+            toggleAudio={toggleGreenAudio}
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}

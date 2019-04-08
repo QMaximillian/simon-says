@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
+export const GreenPiece = ({ toggleAudio, handleClick, lightUp, playMode }) => {
+    let audio = new Audio('../audio/Button4.wav')
+    
+    // useEffect(() => {  
+    //     if (toggleAudio) {
+    //         return audio.play()
+    //     } else {
+    //         return audio.pause()
+    //     }
+    // }, [toggleAudio])
 
     return (
+    <>
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
         <g filter="url(#filter0_d)" >
         
@@ -24,5 +34,6 @@ export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
         </filter>
         </defs>
         </svg>
+    </>
     )
 }

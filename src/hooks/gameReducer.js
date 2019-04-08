@@ -1,3 +1,4 @@
+// var button4 = require('../audio/Button4.wav')
 export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
@@ -62,7 +63,10 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-        greenAudioPlay: true,
+        audioToggles: {
+          ...state.audioToggles,
+          toggleGreenAudio: true
+        }
       };
     case RED_ON:
       return {
@@ -94,7 +98,11 @@ export const playModeReducer = (state, action) => {
         lightUpGreen: false,
         lightUpRed: false,
         lightUpYellow: false,
-        lightUpBlue: false
+        lightUpBlue: false,
+        audioToggles: {
+          ...state.audioToggles,
+          toggleGreenAudio: false
+        }
       }
     case PLAY_MODE:
       return {
