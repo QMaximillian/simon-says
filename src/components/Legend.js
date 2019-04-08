@@ -39,6 +39,10 @@ function Legend(props){
         return null;
     }  
 }   
+//https://spectrum.chat/next-js/general/looping-using-es6-map-in-styled-jsx~69e52ff1-6938-44c7-8f54-99150508e863
+//define grid holding these keyboard key values
+// iterate through all keys defining their grid positioning using JSX
+// Allow max 5 per row
 
 const LegendContainer = styled.div`
   gridColumn: 1;
