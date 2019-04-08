@@ -246,12 +246,12 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow } = state
+    const { gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
     const { toggleGreenAudio } = state.audioToggles
     return (
       <div className="simon-says-grid">
         
-        {state.toggleLegend ? <Legend handleLegendToggle={handleLegendToggle}/> : <button onClick={handleLegendToggle}>Legend</button> }
+        {state.toggleLegend ? <Legend handleLegendToggle={handleLegendToggle} toggleLegend={toggleLegend}/> : <button onClick={handleLegendToggle}>Legend</button> }
         <GameBulletin
           levelUp={state.levelUp}
           levelNumber={state.levelNumber}
