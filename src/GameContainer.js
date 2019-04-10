@@ -25,6 +25,7 @@ import {
 } from "./hooks/gameReducer";
 
 
+
 // Eliminate read-only rule in ESLint for adding methods to prototype class
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
@@ -90,18 +91,17 @@ export const GameContainer = (props) => {
     playMode: false,
     gameOver: false,
     toggleLegend: false,
-    audioToggles: {}
+    greenAudio: false
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
 
-  // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000})
-
-
+  // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000}
 
 
   useEffect(() => {
-    const { playMode, watchMode, gameArray, levelNumber, level, index, available } = state
+    const { playMode, watchMode, gameArray, levelNumber, level, index, available, greenAudioUrl } = state
+    
     document.addEventListener('keydown', onKeyPressed)
 
 
@@ -248,9 +248,8 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { fade, levelNumber, levelUp, gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
-    const { toggleGreenAudio } = state.audioToggles
-    console.log(state.audioToggles)
+    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+
     return (
       <div className="simon-says-grid">
         {toggleLegend ? <Legend handleLegendToggle={handleLegendToggle} toggleLegend={toggleLegend}/> : <button onClick={handleLegendToggle}>Legend</button> }
@@ -263,10 +262,10 @@ function handleLegendToggle() {
         />
         <div style={{ overflow: "visible" }} className="simon-says-circle">
           <GreenPiece
-            toggleAudio={toggleGreenAudio}
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
+            greenAudio={greenAudio}
           />
           <RedPiece
             lightUp={lightUpRed}

@@ -1,4 +1,5 @@
 // var button4 = require('../audio/Button4.wav')
+import { useState, useEffect } from 'react'
 export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
@@ -63,11 +64,8 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-        audioToggles: {
-          ...state.audioToggles,
-          toggleGreenAudio: true
+        greenAudio: true
         }
-      };
     case RED_ON:
       return {
         ...state,
@@ -99,10 +97,7 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-        audioToggles: {
-          ...state.audioToggles,
-          toggleGreenAudio: false
-        }
+        greenAudio: false
       }
     case PLAY_MODE:
       return {
@@ -136,3 +131,16 @@ export const playModeReducer = (state, action) => {
       return state
   }
 }
+
+export const useAudio = url => {
+  const [audio] = useState(new Audio(url));
+  const [playing, setPlaying] = useState(false);
+
+  const toggle = (lol) => setPlaying(lol);
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause();
+  }, [playing]);
+
+  return [playing, toggle];
+};

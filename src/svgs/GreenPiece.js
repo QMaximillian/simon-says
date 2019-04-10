@@ -1,30 +1,25 @@
 import React, { useEffect } from 'react'
-import audio from "../audio/Button4.wav";
+import { useAudio } from '../hooks/gameReducer'
+import greenSound from "../audio/Button4.wav";
 
-export const GreenPiece = ({ toggleAudio, handleClick, lightUp, playMode }) => {
-    
-    useEffect(() => { 
-        let audio = new Audio(audio); 
-        if (toggleAudio) {
-            async function playAudio(){
-                console.log(audio)
-                const response = await audio.play()  
-                return response          
-            }
-            console.log(playAudio())
-            // playAudio()       
+
+export const GreenPiece = ({ greenAudio, handleClick, lightUp, playMode }) => {
+
+
+        const [playing, toggle] = useAudio(greenSound)
+
+    useEffect(() => {
+        if (greenAudio) {
+            toggle(true)
+        } else {
+            toggle(false)
         }
-    }, [toggleAudio])
+    })
 
-    console.log(toggleAudio);
     return (
     <>
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
         <g filter="url(#filter0_d)" >
-        
-        
-        
-        
         <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" d="M236.296 1V135.167C183.641 135.167 140.999 177.267 140.999 229.254H5.00003C5.00003 103.273 108.588 1 236.296 1Z" fill="lime"
                     stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px"/>
         </g>
