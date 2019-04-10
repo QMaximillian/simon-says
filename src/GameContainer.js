@@ -104,6 +104,7 @@ export const GameContainer = (props) => {
     const { playMode, watchMode, gameArray, levelNumber, level, index, available } = state
     document.addEventListener('keydown', onKeyPressed)
 
+
     console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
       console.log('begin game')
@@ -184,6 +185,7 @@ export const GameContainer = (props) => {
     }
   }
 
+
 function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
@@ -248,6 +250,7 @@ function handleLegendToggle() {
 
     const { fade, levelNumber, levelUp, gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
     const { toggleGreenAudio } = state.audioToggles
+    console.log(state.audioToggles)
     return (
       <div className="simon-says-grid">
         {toggleLegend ? <Legend handleLegendToggle={handleLegendToggle} toggleLegend={toggleLegend}/> : <button onClick={handleLegendToggle}>Legend</button> }

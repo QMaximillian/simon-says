@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react'
+import audio from "../audio/Button4.wav";
 
 export const GreenPiece = ({ toggleAudio, handleClick, lightUp, playMode }) => {
-    let audio = new Audio('../audio/Button4.wav')
     
-    // useEffect(() => {  
-    //     if (toggleAudio) {
-    //         return audio.play()
-    //     } else {
-    //         return audio.pause()
-    //     }
-    // }, [toggleAudio])
+    useEffect(() => { 
+        let audio = new Audio(audio); 
+        if (toggleAudio) {
+            async function playAudio(){
+                console.log(audio)
+                const response = await audio.play()  
+                return response          
+            }
+            console.log(playAudio())
+            // playAudio()       
+        }
+    }, [toggleAudio])
 
+    console.log(toggleAudio);
     return (
     <>
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
