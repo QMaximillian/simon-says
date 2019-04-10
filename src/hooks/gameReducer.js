@@ -136,11 +136,9 @@ export const useAudio = url => {
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
 
-  const toggle = (lol) => setPlaying(lol);
-
   useEffect(() => {
     playing ? audio.play() : audio.pause();
   }, [playing]);
 
-  return [playing, toggle];
+  return [playing, setPlaying];
 };

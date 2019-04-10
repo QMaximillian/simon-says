@@ -4,8 +4,10 @@ import { GameContainer } from './GameContainer'
 
 const App = (props) => {
     return (
-      <GameContainer />
-    )
+      <div style={{backgroundColor: 'blue'}}>
+        <GameContainer />
+      </div>
+    );
 }
 
 export default App

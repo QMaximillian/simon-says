@@ -5,6 +5,7 @@ import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
+import SineWave from './components/SineWave.js'
 import GameBulletin from './components/GameBulletin'
 import './App.css'
 import {
@@ -252,7 +253,15 @@ function handleLegendToggle() {
 
     return (
       <div className="simon-says-grid">
-        {toggleLegend ? <Legend handleLegendToggle={handleLegendToggle} toggleLegend={toggleLegend}/> : <button onClick={handleLegendToggle}>Legend</button> }
+        <SineWave columnStart={1} columnEnd={6} gridStart={3} />
+        {toggleLegend ? (
+          <Legend
+            handleLegendToggle={handleLegendToggle}
+            toggleLegend={toggleLegend}
+          />
+        ) : (
+          <button onClick={handleLegendToggle}>Legend</button>
+        )}
         <GameBulletin
           levelUp={levelUp}
           levelNumber={levelNumber}

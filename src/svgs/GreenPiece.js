@@ -6,13 +6,13 @@ import greenSound from "../audio/Button4.wav";
 export const GreenPiece = ({ greenAudio, handleClick, lightUp, playMode }) => {
 
 
-        const [playing, toggle] = useAudio(greenSound)
+        const [playing, setPlaying] = useAudio(greenSound)
 
     useEffect(() => {
         if (greenAudio) {
-            toggle(true)
+            setPlaying(true)
         } else {
-            toggle(false)
+            setPlaying(false)
         }
     })
 
