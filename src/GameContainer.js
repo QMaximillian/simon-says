@@ -74,7 +74,7 @@ Array.prototype.equals = function (array) {
 // soothing calm background color
 // Rails backend for high scores
 
-export const GameContainer = (props) => {
+function GameContainer(props) {
 
   const initialState = {
     level: [1, 2, 3, 4],
@@ -101,7 +101,7 @@ export const GameContainer = (props) => {
 
 
   useEffect(() => {
-    const { playMode, watchMode, gameArray, levelNumber, level, index, available, greenAudioUrl } = state
+    const { playMode, watchMode, gameArray, levelNumber, level, index, available } = state
     
     document.addEventListener('keydown', onKeyPressed)
 
@@ -249,7 +249,7 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, watchMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
 
     return (
       <div className="simon-says-grid">
@@ -300,3 +300,5 @@ function handleLegendToggle() {
       </div>
     );
 }
+
+export default GameContainer 

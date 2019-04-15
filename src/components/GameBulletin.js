@@ -50,7 +50,7 @@ function handleChange(event) {
            PLAY AGAIN?
          </div>
          <label>Enter Your Initials</label>
-         <input maxLength={3} onChange={handleChange}></input>
+         <input maxLength={3} onChange={handleChange} value={text}></input>
        </div>
      </aside>, document.body)
 }

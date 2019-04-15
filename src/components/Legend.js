@@ -1,4 +1,4 @@
-import React from 'react'
+
 /** @jsx jsx */ import {css, jsx} from '@emotion/core'
 
 import { KeyboardQ } from '../svgs/KeyboardSVGS'
@@ -60,11 +60,6 @@ const legendContainer = css`
 const legend = css`
     grid-column: 1 / span 5;
     grid-row: 1;
-`
-
-const legend2 = css`
-grid-column: 2;
-grid-row: 2;
 `
 
 const toggleButton = css`
