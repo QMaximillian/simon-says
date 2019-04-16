@@ -92,7 +92,6 @@ function GameContainer(props) {
     playMode: false,
     gameOver: false,
     toggleLegend: false,
-    greenAudio: false
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -253,7 +252,7 @@ function handleLegendToggle() {
 
     return (
       <div className="simon-says-grid">
-        <SineWave columnStart={1} columnEnd={6} gridStart={3} />
+        {/* <SineWave columnStart={1} columnEnd={6} gridStart={3} /> */}
         {toggleLegend ? (
           <Legend
             handleLegendToggle={handleLegendToggle}
@@ -274,7 +273,6 @@ function handleLegendToggle() {
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
-            greenAudio={greenAudio}
           />
           <RedPiece
             lightUp={lightUpRed}

@@ -64,8 +64,7 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-        greenAudio: true
-        }
+      }
     case RED_ON:
       return {
         ...state,
@@ -97,7 +96,6 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
-        greenAudio: false
       }
     case PLAY_MODE:
       return {

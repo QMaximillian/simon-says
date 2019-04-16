@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAudio } from '../hooks/gameReducer'
+import redSound from "../audio/Button1.wav";
 
 export const RedPiece = ({ handleClick, lightUp, playMode }) => {
+
+    const [playing, setPlaying] = useAudio(redSound);
+
+    useEffect(() => {
+
+        lightUp ? setPlaying(true) : setPlaying(false);
+    });
 
     return (
         <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238">

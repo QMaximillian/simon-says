@@ -10,7 +10,7 @@ export const GreenPiece = ({ greenAudio, handleClick, lightUp, playMode }) => {
 
     useEffect(() => {
         console.log(playing)
-        greenAudio ? setPlaying(true) : setPlaying(false)
+        lightUp ? setPlaying(true) : setPlaying(false)
     })
 
     return (
