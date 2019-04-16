@@ -9,6 +9,8 @@ import SineWave from './components/SineWave.js'
 import GameBulletin from './components/GameBulletin'
 import redSound from "./audio/Button1.wav";
 import greenSound from "./audio/Button4.wav";
+import yellowSound from "./audio/Button6.wav";
+import blueSound from "./audio/Button2.wav";
 import './App.css'
 import {
   playModeReducer,
@@ -250,7 +252,7 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+    const {fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
 
     return (
       <div className="simon-says-grid">
@@ -292,11 +294,13 @@ function handleLegendToggle() {
             lightUp={lightUpYellow}
             handleClick={handleClick}
             playMode={playMode}
+            sound={yellowSound}
           />
           <BluePiece
             lightUp={lightUpBlue}
             handleClick={handleClick}
             playMode={playMode}
+            sound={blueSound}
           />
         </div>
       </div>

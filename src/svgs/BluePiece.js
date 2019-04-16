@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAudio } from '../hooks/gameReducer'
 
-export const BluePiece = ({ handleClick, lightUp, playMode }) => {
-    return (
+export const BluePiece = ({ sound, handleClick, lightUp, playMode }) => {
+    
+  const [setPlaying] = useAudio(sound);
+
+  useEffect(() => {
+    lightUp ? setPlaying(true) : setPlaying(false);
+  });
+  
+  return (
       <svg
         onClick={
           playMode

@@ -6,12 +6,11 @@ import { useAudio } from '../hooks/gameReducer'
 export const GreenPiece = ({ sound, handleClick, lightUp, playMode }) => {
 
 
-         const [playing, setPlaying] = useAudio(sound);
+         const [setPlaying] = useAudio(sound);
 
        
 
     useEffect(() => {
-        console.log(playing)
         lightUp ? setPlaying(true) : setPlaying(false)
     })
 

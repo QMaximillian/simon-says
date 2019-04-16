@@ -4,10 +4,9 @@ import { useAudio } from '../hooks/gameReducer'
 export const RedPiece = ({ handleClick, lightUp, playMode, sound }) => {
     
 
-      const [playing, setPlaying] = useAudio(sound);
+      const [setPlaying] = useAudio(sound);
 
-    useEffect(() => {
-        
+    useEffect(() => { 
         lightUp ? setPlaying(true) : setPlaying(false);
     });
 
