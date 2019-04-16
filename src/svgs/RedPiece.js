@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useAudio } from '../hooks/gameReducer'
-import redSound from "../audio/Button1.wav";
 
-export const RedPiece = ({ handleClick, lightUp, playMode }) => {
+export const RedPiece = ({ handleClick, lightUp, playMode, sound }) => {
+    
 
-    const [playing, setPlaying] = useAudio(redSound);
+      const [playing, setPlaying] = useAudio(sound);
 
     useEffect(() => {
-
+        
         lightUp ? setPlaying(true) : setPlaying(false);
     });
 

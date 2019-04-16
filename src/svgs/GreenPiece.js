@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { useAudio } from '../hooks/gameReducer'
-import greenSound from "../audio/Button4.wav";
 
 
-export const GreenPiece = ({ greenAudio, handleClick, lightUp, playMode }) => {
+
+export const GreenPiece = ({ sound, handleClick, lightUp, playMode }) => {
 
 
-        const [playing, setPlaying] = useAudio(greenSound)
+         const [playing, setPlaying] = useAudio(sound);
+
+       
 
     useEffect(() => {
         console.log(playing)

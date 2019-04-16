@@ -7,6 +7,8 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import SineWave from './components/SineWave.js'
 import GameBulletin from './components/GameBulletin'
+import redSound from "./audio/Button1.wav";
+import greenSound from "./audio/Button4.wav";
 import './App.css'
 import {
   playModeReducer,
@@ -273,11 +275,13 @@ function handleLegendToggle() {
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
+            sound={greenSound}
           />
           <RedPiece
             lightUp={lightUpRed}
             handleClick={handleClick}
             playMode={playMode}
+            sound={redSound}
           />
           <br />
           {/* <div 
