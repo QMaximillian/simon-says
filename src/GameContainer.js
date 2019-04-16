@@ -253,7 +253,7 @@ function handleLegendToggle() {
 
     return (
       <div className="simon-says-grid">
-        <SineWave columnStart={1} columnEnd={6} gridStart={3} />
+        <SineWave />
         {toggleLegend ? (
           <Legend
             handleLegendToggle={handleLegendToggle}
@@ -269,7 +269,7 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        <div style={{ overflow: "visible" }} className="simon-says-circle">
+        <div style={{ zIndex: 1}} className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}

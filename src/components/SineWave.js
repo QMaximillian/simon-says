@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
-/** @jsx jsx */ import {css, jsx} from '@emotion/core'
+import React from 'react'
+import { useEffect, useRef } from 'react'
+
 import { TweenMax, TweenLite, Sine } from 'gsap'
-import CustomEase from 'gsap/CustomEase'
+// import CustomEase from 'gsap/CustomEase'
+import '../App.css'
 
 // function SineWave({ columnStart, columnEnd, gridStart }){
 
@@ -65,47 +67,104 @@ import CustomEase from 'gsap/CustomEase'
     
 // }
 
-function SineWave({ columnStart, columnEnd, gridStart }){
+function SineWave(props){
 
-    TweenLite.defaultEase = Sine.easeInOut;
-    TweenLite.set("g", { y: window.innerHeight / 2 });
+    
 
-    var svg = document.querySelector(".sine");
-    var wave = document.querySelector(".wave");
+var sineElement = useRef(null)
+var waveElement = useRef(null)
+    
+    useEffect(() => {
+      console.log(waveElement)
+      console.log(sineElement)
 
-    var width = 800; // length of wave
-    // var sinus = new CustomEase(
-    //   "sinus",
-    //   "M0,0 C0.4,0 0.3,1 0.5,1 0.7,1 0.6,0 1,0"
-    // );
 
-    var amplitude = 100; // changes the height of the sine wave
-    var frequency = 20; // changes how close the sine waves are to each other
-    var segments = 1000; // basically frames
-    var interval = width / segments;
+              TweenLite.defaultEase = Sine.easeInOut;
+                TweenLite.set("g", { y: window.innerHeight / 10 });
+                var width = 800; // length of wave
 
-    for (var i = 0; i <= segments; i++) {
-      var norm = 1 - i / segments;
-      var point = wave.points.appendItem(svg.createSVGPoint());
+                      var amplitude = 100; // changes the height of the sine wave
+                      var frequency = 20; // changes how close the sine waves are to each other
+                      var segments = 1000; // basically frames
+                      var interval = width / segments;
+                for (var i = 0; i <= segments; i++) {
+                  var norm = 1 - i / segments;
+                  var point = waveElement.points.appendItem(sineElement.createSVGPoint());
 
-      point.x = i * interval;
-      point.y = amplitude / 2;
+                  point.x = i * interval;
+                  point.y = amplitude / 2;
 
-      TweenMax.to(point, 0.5, {
-        y: -point.y,
-        repeat: -1,
-        yoyo: true
-      }).progress(norm * frequency);
-    }
+                  TweenMax.to(point, 0.5, {
+                    y: -point.y,
+                    repeat: -1,
+                    yoyo: true
+                  }).progress(norm * frequency);
+                }
+              }, [waveElement, sineElement]) 
 
+    // return <div className="firstSineWave" ref={div => myElement = div}>Hello</div>
     return (
-      <svg className="sine">
-        <g>
-          <line id="line" x1="0" x2="100%" />
-          <polyline className="wave" />
-        </g>
+      <svg 
+        style={{
+          gridColumn: '1 / span 5',
+          gridRow: '2 / span 3',
+          zIndex: -1, 
+          display: 'flex'      
+        }}
+        ref={svg => sineElement = svg}>
+         <g>
+           <line 
+              style={{
+                strokeWidth: 1,
+                stroke: '#3c3c3c',
+              }}
+              id="line" x1="0" x2="100%" 
+            />
+            <polyline 
+              style={{
+                fill: 'none',
+                strokeWidth: 4,
+                strokeLinecap: 'round',
+                strokeLinejoin: 'round',
+                stroke: '#56acf4',
+              }}
+            ref={polyline => waveElement = polyline}
+          />
+         </g>
       </svg>
     );
 }
 
 export default SineWave
+
+// TweenLite.defaultEase = Sine.easeInOut;
+//       TweenLite.set("g", { y: window.innerHeight / 2 });
+
+//       var svg = document.querySelector(".sine");
+//       var wave = document.querySelector(".wave");
+
+//       var width = 800; // length of wave
+//       // var sinus = new CustomEase(
+//       //   "sinus",
+//       //   "M0,0 C0.4,0 0.3,1 0.5,1 0.7,1 0.6,0 1,0"
+//       // );
+
+//       var amplitude = 100; // changes the height of the sine wave
+//       var frequency = 20; // changes how close the sine waves are to each other
+//       var segments = 1000; // basically frames
+//       var interval = width / segments;
+
+//       for (var i = 0; i <= segments; i++) {
+//         var norm = 1 - i / segments;
+//         var point = wave.points.appendItem(svg.createSVGPoint());
+
+//         point.x = i * interval;
+//         point.y = amplitude / 2;
+
+//         TweenMax.to(point, 0.5, {
+//           y: -point.y,
+//           repeat: -1,
+//           yoyo: true
+//         }).progress(norm * frequency);
+//       }
+//     })
