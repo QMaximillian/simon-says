@@ -67,7 +67,7 @@ import '../App.css'
     
 // }
 
-function SineWave(props){
+function SineWave({className, ...props}){
 
     
 
@@ -108,14 +108,13 @@ var waveElement = useRef(null)
         // width={window.innerWidth}
         // height={200}
         viewBox={`0, 0, ${window.innerWidth} ${window.innerHeight}`}
-        style={{
-          gridColumn: '1 / span 8',
-          gridRow: '4',
-          justifyContent: 'center',
-          alignContent: 'center',
-          // zIndex: -1, 
-          display: 'flex'      
-        }}
+        className={className}
+        // style={{
+        //   gridColumn: '1 / span 8',
+        //   gridRow: '4',
+        //   zIndex: -1, 
+        //   display: 'flex'      
+        // }}
         ref={svg => sineElement = svg}>
          <g>
             <polyline 

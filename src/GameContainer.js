@@ -253,7 +253,7 @@ function handleLegendToggle() {
 
     return (
       <div className="simon-says-grid">
-        <SineWave />
+        <SineWave className="first-sine-wave"/>
         {toggleLegend ? (
           <Legend
             handleLegendToggle={handleLegendToggle}
