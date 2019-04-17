@@ -80,8 +80,8 @@ var waveElement = useRef(null)
 
 
               TweenLite.defaultEase = Sine.easeInOut;
-                TweenLite.set("g", { y: window.innerHeight / 10 });
-                var width = 800; // length of wave
+                TweenLite.set("g", { y: window.innerHeight / 15});
+                var width = 1000; // length of wave
 
                       var amplitude = 100; // changes the height of the sine wave
                       var frequency = 20; // changes how close the sine waves are to each other
@@ -101,15 +101,18 @@ var waveElement = useRef(null)
                   }).progress(norm * frequency);
                 }
               }, [waveElement, sineElement]) 
-
+              
     // return <div className="firstSineWave" ref={div => myElement = div}>Hello</div>
     return (
       <svg 
+        // width={window.innerWidth}
+        // height={200}
+        viewBox={`0, 0, ${window.innerWidth} ${window.innerHeight}`}
         style={{
-          gridColumn: '1 / span 5',
+          gridColumn: '1 / span 3',
           gridRow: '2 / span 3',
-          zIndex: -1, 
-          display: 'flex'      
+          // zIndex: -1, 
+          // display: 'flex'      
         }}
         ref={svg => sineElement = svg}>
          <g>
