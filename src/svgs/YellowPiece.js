@@ -3,10 +3,10 @@ import { useAudio } from '../hooks/gameReducer'
 
 export const YellowPiece = ({ sound, handleClick, lightUp, playMode }) => {
 
-    const [setPlaying] = useAudio(sound);
+  const [playing, setPlaying] = useAudio(sound);
 
     useEffect(() => {
-      lightUp ? setPlaying(true) : setPlaying(false);
+      lightUp || playing ? setPlaying(true) : setPlaying(false);
     })
 
     return (

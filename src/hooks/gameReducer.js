@@ -138,5 +138,5 @@ export const useAudio = url => {
     playing ? audio.play() : audio.pause();
   }, [playing]);
 
-  return [setPlaying];
+  return [playing, setPlaying];
 };

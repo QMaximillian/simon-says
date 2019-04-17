@@ -67,7 +67,6 @@ Array.prototype.equals = function (array) {
 // Create start button to begin game and restart button to begin game again ✅ 
 
 // Find effect that makes it look like button is being pressed and is visually noticeable ✅ 
-// memoize dispatch array function to just add new value without creating a new array for each watchMode
 // Mess around with React Spring animations for desired effects
 // Decrease amount of time between intervals every 5 or 10 levels ✅ 
 // EXTRA: Add a single replay button to save you if you make a single mistake ✅
@@ -78,6 +77,15 @@ Array.prototype.equals = function (array) {
 // React Spring animations for level updates
 // soothing calm background color
 // Rails backend for high scores
+
+// 04/17/19
+
+// Get SineWave on either side of the page on 3 rows throughout page
+// Get SineWave's to appear behind the Simon Says SVG components
+// Figure out soothing background color/animation
+// Fix SVG spacing so stroke doesn't look cutoff
+// memoize dispatch array function to just add new value without creating a new array for each watchMode
+// useState for SVGPiece to play own sound based on props
 
 function GameContainer(props) {
 
@@ -224,12 +232,12 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 1000) {
+function playSeq(sequence, intervalTime = 2000) {
     const { levelNumber } = state
     let i = 0;
 
   if (levelNumber > 10) {
-    intervalTime = 500;
+    intervalTime = 1000;
   } 
   else if (levelNumber > 20) {
     intervalTime = 200;
@@ -272,7 +280,7 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        <div style={{ overflow: "visible" }} className="simon-says-circle">
+        <div className="simon-says-circle">
           {/* <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}
@@ -280,14 +288,14 @@ function handleLegendToggle() {
             sound={greenSound}
           /> */}
           <SVGPiece
-            lightUpGreen={lightUpGreen}
+            lightUp={lightUpGreen}
             sound={greenSound}
           >
-          {() => (
-              <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
+          {(lightUp) => (
+              <svg pointerEvents="none" width="250" height="238" viewBox="0 0 241 238" fill="none">
                     <g filter="url(#filter0_d)" >
                         <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" d="M236.296 1V135.167C183.641 135.167 140.999 177.267 140.999 229.254H5.00003C5.00003 103.273 108.588 1 236.296 1Z" fill="lime"
-                          stroke={lightUpGreen ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px" />
+                          stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="10px" />
                     </g>
                     <defs>
                       <filter id="filter0_d" x="0.500031" y="0.5" width="240.296" height="237.254" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
@@ -302,30 +310,132 @@ function handleLegendToggle() {
                     </defs>
               </svg>
             )}
-          </SVGPiece>
-          <RedPiece
+          </SVGPiece> 
+          <SVGPiece
             lightUp={lightUpRed}
-            handleClick={handleClick}
-            playMode={playMode}
             sound={redSound}
-          />
+          >
+            {(lightUp) => (<svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238">
+
+              <g filter="url(#filter0_d)">
+                <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="2" pointerEvents="all" d="M4.99996 1V135.167C57.6554 135.167 100.297 177.267 100.297 229.254H236.296C236.296 103.273 132.708 1 4.99996 1Z" fill="red" stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px" />
+              </g>
+
+              <defs>
+                <filter id="filter0_d" x="0.499939" y="0.5" width="240.296" height="237.254" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                  <feOffset dy="4" />
+                  <feGaussianBlur stdDeviation="2" />
+                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+                </filter>
+              </defs>
+            </svg>
+            )
+            }
+
+          </SVGPiece>
           <br />
           {/* <div 
             tabIndex="0"
             onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}
             </div> */}
-          <YellowPiece
+          <SVGPiece
             lightUp={lightUpYellow}
-            handleClick={handleClick}
-            playMode={playMode}
             sound={yellowSound}
-          />
-          <BluePiece
+          >
+          {(lightUp) => (
+              <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <g filter="url(#filter0_d)">
+                  <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="3" pointerEvents="all" d="M236.296 229.254V95.087C183.641 95.087 140.999 52.987 140.999 1.00003H5.00003C5.00003 126.981 108.588 229.254 236.296 229.254Z" fill="yellow" stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px" />
+                </g>
+                <defs>
+
+                  <filter id="filter0_d" x="0.500031" y="0.500031" width="240.296" height="237.254" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                    <feOffset dy="4" />
+                    <feGaussianBlur stdDeviation="2" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+                  </filter>
+                </defs>
+              </svg>
+          )}
+
+          </SVGPiece>
+          <SVGPiece
             lightUp={lightUpBlue}
-            handleClick={handleClick}
-            playMode={playMode}
             sound={blueSound}
-          />
+          >
+          {(lightUp) => (
+              <svg
+                onClick={
+                  playMode
+                    ? event => handleClick(Number(event.target.dataset.id))
+                    : null
+                }
+                pointerEvents="none"
+                width="241"
+                height="238"
+                viewBox="0 0 241 238"
+                fill="#36D033"
+              >
+                <g filter="url(#filter0_d)">
+                  <path
+                    data-id="4"
+                    pointerEvents="all"
+                    className="button"
+                    d="M5 229V94.833C57.6554 94.833 100.297 52.733 100.297 0.746002H236.296C236.296 126.727 132.708 229 5 229Z"
+                    fill="blue" // {/*lightUp ? "white" : "blue"*/}
+                    stroke={lightUp ? "gold" : "black"}
+                    strokeWidth="8px"
+                    strokeMiterlimit="10"
+                  />
+                </g>
+                <defs>
+                  <filter
+                    id="filter0_d"
+                    x="0"
+                    y="0"
+                    width="241"
+                    height="238"
+                    filterUnits="userSpaceOnUse"
+                    colorInterpolationFilters="sRGB"
+                  >
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    />
+                    <feOffset dy="4" />
+                    <feGaussianBlur stdDeviation="2" />
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow"
+                      result="shape"
+                    />
+                    <feMerge />
+                  </filter>
+                </defs>
+              </svg>
+          )}
+          </SVGPiece>
         </div>
       </div>
     );

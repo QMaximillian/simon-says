@@ -3,17 +3,16 @@ import { useAudio } from '../hooks/gameReducer'
 
 
 
-export const SVGPiece = ({lightUpGreen, sound, ...props}) => {
+export const SVGPiece = ({lightUp, sound, ...props}) => {
 
 
-    const [setPlaying] = useAudio(sound);
+    const [playing, setPlaying] = useAudio(sound);
 
 
 
     useEffect(() => {
-
-        lightUpGreen ? setPlaying(true) : setPlaying(false)
+        lightUp || playing ? setPlaying(true) : setPlaying(false)
     })
 
-    return props.children(lightUpGreen, sound)
+    return props.children(lightUp, sound)
 }
