@@ -109,20 +109,15 @@ var waveElement = useRef(null)
         // height={200}
         viewBox={`0, 0, ${window.innerWidth} ${window.innerHeight}`}
         style={{
-          gridColumn: '1 / span 3',
-          gridRow: '2 / span 3',
+          gridColumn: '1 / span 8',
+          gridRow: '4',
+          justifyContent: 'center',
+          alignContent: 'center',
           // zIndex: -1, 
-          // display: 'flex'      
+          display: 'flex'      
         }}
         ref={svg => sineElement = svg}>
          <g>
-           <line 
-              style={{
-                strokeWidth: 1,
-                stroke: '#3c3c3c',
-              }}
-              id="line" x1="0" x2="100%" 
-            />
             <polyline 
               style={{
                 fill: 'none',
