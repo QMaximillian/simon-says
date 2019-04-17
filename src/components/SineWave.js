@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 /** @jsx jsx */ import {css, jsx} from '@emotion/core'
 import { TweenMax, TweenLite, Sine } from 'gsap'
-import CustomEase from 'gsap/CustomEase'
+// import CustomEase from 'gsap/CustomEase'
 
 // function SineWave({ columnStart, columnEnd, gridStart }){
 
