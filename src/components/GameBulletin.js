@@ -17,6 +17,7 @@ const GameBulletin = ({ levelUp, levelNumber, fade, gameOver, resetGame }) => {
     return (
       <>
         <animated.div style={props} className="simon-says-bulletin">
+        {console.log(props)}
           <h4>LEVEL {levelNumber}</h4>
           {transitions.map(
             ({ item, key, props }) =>

@@ -4,7 +4,7 @@ import GameContainer from './GameContainer'
 
 const App = (props) => {
     return (
-      <div>
+      <div className="top-level-styles">
         <GameContainer />
       </div>
     );
