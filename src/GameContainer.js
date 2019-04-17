@@ -109,7 +109,6 @@ function GameContainer(props) {
     document.addEventListener('keydown', onKeyPressed)
 
 
-    console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
       console.log('begin game')
     } 

@@ -4,7 +4,7 @@ import GameContainer from './GameContainer'
 
 const App = (props) => {
     return (
-      <div style={{backgroundColor: 'blue'}}>
+      <div>
         <GameContainer />
       </div>
     );
