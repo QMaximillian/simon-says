@@ -286,6 +286,7 @@ function handleLegendToggle() {
             tabIndex="0"
             onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}
             </div> */}
+          {/* <SineWave className="second-sine-wave" /> */}
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}

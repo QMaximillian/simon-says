@@ -29,6 +29,11 @@ div {
   grid-row: 4;
 }
 
+/* .second-sine-wave {
+  grid-column: 1 / span 6;
+  grid-row: 7;
+} */
+
 .fade {
   opacity: 1;
 }

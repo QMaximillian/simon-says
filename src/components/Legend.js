@@ -64,8 +64,9 @@ const legend = css`
 
 const toggleButton = css`
     grid-column: 1;
-    grid-row: 1;  
-
+    grid-row: 1;
+    width: 50px;
+    height: 50px;
 `
 
 const greenKey = css`
