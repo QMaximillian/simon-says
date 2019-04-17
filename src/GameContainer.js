@@ -84,6 +84,8 @@ Array.prototype.equals = function (array) {
 // Get SineWave's to appear behind the Simon Says SVG components
 // Figure out soothing background color/animation
 // Fix SVG spacing so stroke doesn't look cutoff
+
+// 04/18/19
 // memoize dispatch array function to just add new value without creating a new array for each watchMode
 // useState for SVGPiece to play own sound based on props
 
