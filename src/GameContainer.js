@@ -7,10 +7,6 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import SineWave from './components/SineWave.js'
 import GameBulletin from './components/GameBulletin'
-import redSound from "./audio/Button1.wav";
-import greenSound from "./audio/Button4.wav";
-import yellowSound from "./audio/Button6.wav";
-import blueSound from "./audio/Button2.wav";
 import './App.css'
 import {
   playModeReducer,
@@ -78,15 +74,6 @@ Array.prototype.equals = function (array) {
 // soothing calm background color
 // Rails backend for high scores
 
-// 04/17/19
-
-// Get SineWave on either side of the page on 3 rows throughout page
-// Get SineWave's to appear behind the Simon Says SVG components
-// Figure out soothing background color/animation
-// Fix SVG spacing so stroke doesn't look cutoff
-// memoize dispatch array function to just add new value without creating a new array for each watchMode
-// useState for SVGPiece to play own sound based on props
-
 function GameContainer(props) {
 
   const initialState = {
@@ -105,6 +92,7 @@ function GameContainer(props) {
     playMode: false,
     gameOver: false,
     toggleLegend: false,
+    greenAudio: false
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -118,6 +106,7 @@ function GameContainer(props) {
     document.addEventListener('keydown', onKeyPressed)
 
 
+    console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
       console.log('begin game')
     } 
@@ -260,11 +249,11 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const {fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
 
     return (
       <div className="simon-says-grid">
-        {/* <SineWave columnStart={1} columnEnd={6} gridStart={3} /> */}
+        <SineWave className="first-sine-wave"/>
         {toggleLegend ? (
           <Legend
             handleLegendToggle={handleLegendToggle}
@@ -280,18 +269,17 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        <div style={{ overflow: "visible" }} className="simon-says-circle">
+        <div style={{ zIndex: 1}} className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
-            sound={greenSound}
+            greenAudio={greenAudio}
           />
           <RedPiece
             lightUp={lightUpRed}
             handleClick={handleClick}
             playMode={playMode}
-            sound={redSound}
           />
           <br />
           {/* <div 
@@ -302,13 +290,11 @@ function handleLegendToggle() {
             lightUp={lightUpYellow}
             handleClick={handleClick}
             playMode={playMode}
-            sound={yellowSound}
           />
           <BluePiece
             lightUp={lightUpBlue}
             handleClick={handleClick}
             playMode={playMode}
-            sound={blueSound}
           />
         </div>
       </div>
