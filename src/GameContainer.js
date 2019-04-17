@@ -78,6 +78,15 @@ Array.prototype.equals = function (array) {
 // soothing calm background color
 // Rails backend for high scores
 
+// 04/17/19
+
+// Get SineWave on either side of the page on 3 rows throughout page
+// Get SineWave's to appear behind the Simon Says SVG components
+// Figure out soothing background color/animation
+// Fix SVG spacing so stroke doesn't look cutoff
+// memoize dispatch array function to just add new value without creating a new array for each watchMode
+// useState for SVGPiece to play own sound based on props
+
 function GameContainer(props) {
 
   const initialState = {
