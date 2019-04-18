@@ -1,14 +1,15 @@
 
 /** @jsx jsx */ import {css, jsx} from '@emotion/core'
-
+import ReactDOM from 'react-dom';
 import { KeyboardQ } from '../svgs/KeyboardSVGS'
 
 
 function Legend(props){
-        return (
+     return(
           <div css={legendContainer}>
             <button
               css={toggleButton}
+              className="button-primary"
               onClick={props.handleLegendToggle}
             >
               Close Legend
@@ -42,7 +43,7 @@ function Legend(props){
               <label>Enter</label>
             </div>
           </div>
-        );      
+        )     
 }   
 //https://spectrum.chat/next-js/general/looping-using-es6-map-in-styled-jsx~69e52ff1-6938-44c7-8f54-99150508e863
 //define grid holding these keyboard key values

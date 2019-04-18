@@ -253,10 +253,10 @@ function handleLegendToggle() {
     return (
       <div className="simon-says-grid">
         {toggleLegend ? (
-          <Legend
+            <Legend
             handleLegendToggle={handleLegendToggle}
             toggleLegend={toggleLegend}
-          />
+            />
         ) : (
           <button className="button-primary" onClick={handleLegendToggle}>LEGEND</button>
         )}
