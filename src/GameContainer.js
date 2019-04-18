@@ -21,7 +21,7 @@ import {
   COLOR_BUTTON_OFF,
   GAME_OVER,
   RESET_GAME,
-  LEGEND_TOGGLE
+  MODAL_TOGGLE,
 } from "./hooks/gameReducer";
 
 
@@ -90,8 +90,8 @@ function GameContainer(props) {
     watchMode: false,
     playMode: false,
     gameOver: false,
-    toggleLegend: false,
-    greenAudio: false
+    greenAudio: false,
+    showLegendModal: false,
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -224,10 +224,10 @@ function playSeq(sequence, intervalTime = 1000) {
     const { levelNumber } = state
     let i = 0;
 
-  if (levelNumber > 10) {
+  if (levelNumber >= 5) {
     intervalTime = 500;
   } 
-  else if (levelNumber > 20) {
+  else if (levelNumber >= 10) {
     intervalTime = 200;
   }
 
@@ -242,23 +242,24 @@ function playSeq(sequence, intervalTime = 1000) {
 };
 
 function handleLegendToggle() {
-  dispatch({type: LEGEND_TOGGLE})
+  dispatch({type: MODAL_TOGGLE})
+
 }
 
 
   //PLAY MODE
 
-    const { greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+    const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
 
     return (
       <div className="simon-says-grid">
-        {toggleLegend ? (
+        {showLegendModal ? (
             <Legend
             handleLegendToggle={handleLegendToggle}
-            toggleLegend={toggleLegend}
+            show={showLegendModal}
             />
         ) : (
-          <button className="button-primary" onClick={handleLegendToggle}>LEGEND</button>
+          <button className="button-primary legend-open-button" onClick={handleLegendToggle}>LEGEND</button>
         )}
         <GameBulletin
           levelUp={levelUp}

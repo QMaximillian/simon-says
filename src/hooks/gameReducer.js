@@ -13,7 +13,7 @@ export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
 export const GAME_OVER = "GAME_OVER";
 export const RESET_GAME = "RESET_GAME"
-export const LEGEND_TOGGLE = "LEGEND_TOGGLE"
+export const MODAL_TOGGLE = "MODAL_TOGGLE"
 
 
 
@@ -120,10 +120,10 @@ export const playModeReducer = (state, action) => {
         return {
           ...action.value
         }
-    case LEGEND_TOGGLE:
+    case MODAL_TOGGLE:
         return {
           ...state,
-          toggleLegend: !state.toggleLegend
+          showLegendModal: !state.showLegendModal
         }
     default:
       return state

@@ -11,6 +11,9 @@
   background: palevioletred;
   color: #00FFFF;
   font-style: 'italic';
+}
+
+.legend-open-button {
   grid-column: 1 / span 2;
   grid-row: 1;
 }
@@ -149,4 +152,33 @@ div {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  /* background: rgba(0, 0, 0, 0.6); */
+}
+
+.modal-main {
+  border-radius: 5px;
+  border: 5px solid grey;
+  position:fixed;
+  background: white;
+  width: 30%;
+  height: 30%;
+  top: 20%;
+  left: 20%;
+  transform: translate(-50%,-50%);
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
 }

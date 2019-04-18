@@ -1,18 +1,19 @@
-
 /** @jsx jsx */ import {css, jsx} from '@emotion/core'
-import ReactDOM from 'react-dom';
 import { KeyboardQ } from '../svgs/KeyboardSVGS'
 
 
-function Legend(props){
+function Legend({ show, handleLegendToggle, ...props}){
+  console.log(show)
+
      return(
+       <div className={show ? 'modal display-block' : 'modal display-none'}>
+        <section className="modal-main">
           <div css={legendContainer}>
             <button
-              css={toggleButton}
               className="button-primary"
-              onClick={props.handleLegendToggle}
+              onClick={handleLegendToggle}
             >
-              Close Legend
+              X
             </button>
             <div css={legend}>Legend</div>
             <div css={greenKey}>
@@ -43,6 +44,8 @@ function Legend(props){
               <label>Enter</label>
             </div>
           </div>
+          </section>
+       </div>
         )     
 }   
 //https://spectrum.chat/next-js/general/looping-using-es6-map-in-styled-jsx~69e52ff1-6938-44c7-8f54-99150508e863
@@ -61,12 +64,6 @@ const legendContainer = css`
 const legend = css`
     grid-column: 1 / span 5;
     grid-row: 1;
-`
-
-const toggleButton = css`
-    grid-column: 1;
-    grid-row: 1;  
-
 `
 
 const greenKey = css`
