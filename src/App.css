@@ -13,6 +13,41 @@
   font-style: 'italic';
 }
 
+.x-modal {
+  grid-column: 1;
+  grid-row: 1;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  
+}
+
+.x-modal:hover {
+  opacity: 1;
+  color: cyan;
+}
+
+.x-modal:before, .x-modal:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+
+.x-modal:before {
+  transform: rotate(45deg);
+}
+
+.x-modal:after {
+  transform: rotate(-45deg);
+}
+
+
+
 .legend-open-button {
   grid-column: 1 / span 2;
   grid-row: 1;

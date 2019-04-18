@@ -9,12 +9,10 @@ function Legend({ show, handleLegendToggle, ...props}){
        <div className={show ? 'modal display-block' : 'modal display-none'}>
         <section className="modal-main">
           <div css={legendContainer}>
-            <button
-              className="button-primary"
+            <div
+              className="x-modal"
               onClick={handleLegendToggle}
-            >
-              X
-            </button>
+            />
             <div css={legend}>Legend</div>
             <div css={greenKey}>
               <label>Green</label>
