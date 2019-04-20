@@ -249,7 +249,7 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow, toggleLegend} = state
+    const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
     return (
       <div className="simon-says-grid">
