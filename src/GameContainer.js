@@ -77,6 +77,7 @@ function GameContainer(props) {
 
   const initialState = {
     level: [1, 2, 3, 4],
+    gameDispatch: [],
     gameArray: [],
     index: -1,
     levelNumber: 1,
@@ -125,8 +126,12 @@ function GameContainer(props) {
 
     
     if (watchMode && available) {
-      playSeq(dispatchLightUpPattern(level))
+            dispatchLightUpPatternWithState()
+
     }
+
+
+
 
 
     return function cleanup() {
@@ -146,15 +151,19 @@ function GameContainer(props) {
     dispatch({ type: RESET_GAME, value: initialState })
   }
 
-  function dispatchLightUpPattern(arr) {
-    var dispatchArray = [];
 
-    arr.forEach((num) => {
-        dispatchArray.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF });
-    });
-    dispatchArray.push({type: PLAY_MODE});
+  function dispatchLightUpPatternWithState() {
 
-    return dispatchArray;
+    const { gameDispatch, level } = state
+    
+    if (level.length > 4) {
+      gameDispatch.push({type: getColor(level[level.length - 1])}, {type: COLOR_BUTTON_OFF}) 
+    } else {
+      level.forEach((num) => {
+          gameDispatch.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF });
+      });
+    }
+    playSeq(gameDispatch)
   }
 
   function dispatchClickAction(svgId) {
@@ -198,9 +207,9 @@ function onKeyPressed(event) {
         : dispatch({ type: WATCH_MODE });
     }
 
-    if (keyCode == 82) {
-      resetGame()
-    }
+    if (keyCode == 82) resetGame()
+
+    if (keyCode == 76) handleLegendToggle()
 
     if (playMode) {
       switch (true) {
@@ -221,7 +230,7 @@ function onKeyPressed(event) {
   
 
 function playSeq(sequence, intervalTime = 1000) {
-    const { levelNumber } = state
+    const { levelNumber, gameDispatch } = state
     let i = 0;
 
   if (levelNumber >= 5) {
@@ -235,15 +244,20 @@ function playSeq(sequence, intervalTime = 1000) {
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
+
+    // if (state.gameDispatch.length == i) {
+    //   console.log(gameDispatch, i)
+    //   dispatch({ type: PLAY_MODE });
+    // }
     if(i >= sequence.length){
-      clearInterval(interval);
+      dispatch({ type: PLAY_MODE })
+      clearInterval(interval)
     }
   }, intervalTime)  
 };
 
 function handleLegendToggle() {
   dispatch({type: MODAL_TOGGLE})
-
 }
 
 
