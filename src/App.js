@@ -4,8 +4,7 @@ import GameContainer from './GameContainer'
 
 const App = (props) => {
     return (
-      // <div className="top-level-styles">
-      <div style={{ backgroundImage: 'linear-gradient(cyan, teal)'}}>
+      <div className="top-level-styles">
         <GameContainer />
       </div>
     );

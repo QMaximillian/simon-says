@@ -6,6 +6,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #00FFFF;
+  opacity: .8;
+  height: 100vh;
+  width: 100vw;
+  background-image: 'linear-gradient(cyan, teal)';
+  box-sizing: border-box;
+
 }
 
 code {
