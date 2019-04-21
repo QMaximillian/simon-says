@@ -14,25 +14,21 @@ export const GreenPiece = ({ sound, handleClick, lightUp, playMode }) => {
         lightUp ? setPlaying(true) : setPlaying(false)
     })
 
+    // return (
+
+    //     <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
+
+    //     <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" fill="lime"
+    //                 stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px"/>
+    //     </svg>
+    // )
+
     return (
-    <>
-        <svg pointerEvents="none" width="241" height="238" viewBox="0 0 241 238" fill="none">
-        <g filter="url(#filter0_d)" >
-        <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" d="M236.296 1V135.167C183.641 135.167 140.999 177.267 140.999 229.254H5.00003C5.00003 103.273 108.588 1 236.296 1Z" fill="lime"
-                    stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px"/>
-        </g>
-        <defs>
-        <filter id="filter0_d" x="0.500031" y="0.5" width="240.296" height="237.254" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-        <feOffset dy="4"/>
-        <feGaussianBlur stdDeviation="2"/>
-        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-        </filter>
-        </defs>
+        <svg width="252" height="251" viewBox="0 0 252 251" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null} data-id="1" pointerEvents="all" fill="lime"
+                stroke={lightUp ? "gold" : "black"} strokeMiterlimit="10" strokeWidth="8px" 
+                d="M241.296 11V145.167C188.641 145.167 145.999 187.267 145.999 239.254H10C10 113.273 113.588 11 241.296 11Z" fill="lime" />
+            <path d="M241.296 11V145.167C188.641 145.167 145.999 187.267 145.999 239.254H10C10 113.273 113.588 11 241.296 11Z" stroke="black" stroke-width="8" stroke-miterlimit="10" />
         </svg>
-    </>
     )
 }
