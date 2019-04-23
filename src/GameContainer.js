@@ -7,7 +7,6 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
-
 import './App.css'
 import {
   playModeReducer,
@@ -109,9 +108,9 @@ function GameContainer(props) {
     document.addEventListener('keydown', onKeyPressed)
 
 
-    console.log(state)
+    // console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
-      console.log('begin game')
+      // console.log('begin game')
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
       dispatch({ type: NEXT_LEVEL })
@@ -232,7 +231,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
+function playSeq(sequence, intervalTime = 500) {
     const { levelNumber} = state
     let i = 0;
 
@@ -243,7 +242,7 @@ function playSeq(sequence, intervalTime = 100) {
     intervalTime = 200;
   }
 
-   console.log(sequence)
+  //  console.log(sequence)
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;

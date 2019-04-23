@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
-import { useAudio } from '../hooks/gameReducer'
+// import { useAudio } from '../hooks/gameReducer'
+import sound from '../audio/FirstNote.wav'
 
+export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
 
-
-export const GreenPiece = ({ sound, handleClick, lightUp, playMode }) => {
-
-
-         const [setPlaying] = useAudio(sound);
+    const audio = new Audio(sound)
 
        
 
     useEffect(() => {
-        lightUp ? setPlaying(true) : setPlaying(false)
+         lightUp ? audio.play() : audio.pause()
     })
 
     return (

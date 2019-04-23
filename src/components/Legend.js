@@ -3,7 +3,6 @@ import { KeyboardQ } from '../svgs/KeyboardSVGS'
 
 
 function Legend({ show, handleLegendToggle, ...props}){
-  console.log(show)
 
      return(
        <div className={show ? 'modal display-block' : 'modal display-none'}>
