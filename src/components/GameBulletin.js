@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSpring, animated, useTransition } from "react-spring";
 import '../App.css'
 
@@ -16,7 +16,7 @@ const GameBulletin = ({ levelUp, levelNumber, fade, gameOver, resetGame }) => {
     return (
       <>
         <animated.div style={props} className="simon-says-bulletin">
-        {console.log(props)}
+        {/* {console.log(props)} */}
           <h4>LEVEL {levelNumber}</h4>
           {transitions.map(
             ({ item, key, props }) =>

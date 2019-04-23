@@ -108,9 +108,9 @@ function GameContainer(props) {
     document.addEventListener('keydown', onKeyPressed)
 
 
-    console.log(state)
+    // console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
-      console.log('begin game')
+      // console.log('begin game')
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
       dispatch({ type: NEXT_LEVEL })
@@ -242,7 +242,7 @@ function playSeq(sequence, intervalTime = 500) {
     intervalTime = 200;
   }
 
-   console.log(sequence)
+  //  console.log(sequence)
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;

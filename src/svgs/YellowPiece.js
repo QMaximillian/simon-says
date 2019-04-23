@@ -7,7 +7,7 @@ export const YellowPiece = ({ handleClick, lightUp, playMode }) => {
   const audio = new Audio(sound)
 
   useEffect(() => {
-    // lightUp ? audio.play() : audio.pause()
+    lightUp ? audio.play() : audio.pause()
   })
 
   return (

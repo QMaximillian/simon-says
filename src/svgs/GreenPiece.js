@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 // import { useAudio } from '../hooks/gameReducer'
-import sound from '../audio/FirstNote (1).wav'
+import sound from '../audio/FirstNote.wav'
 
 export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
 
