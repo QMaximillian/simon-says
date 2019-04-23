@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useAudio } from '../hooks/gameReducer'
-
-export const BluePiece = ({ sound, handleClick, lightUp, playMode }) => {
+import sound from '../audio/FourthNote.wav'
+export const BluePiece = ({ handleClick, lightUp, playMode }) => {
     
-  const [setPlaying] = useAudio(sound);
+  const audio = new Audio(sound)
 
   useEffect(() => {
-    lightUp ? setPlaying(true) : setPlaying(false);
-  });
+    // lightUp ? audio.play() : audio.pause()
+  })
 
   return (
   <svg 

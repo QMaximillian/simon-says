@@ -7,7 +7,6 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
-
 import './App.css'
 import {
   playModeReducer,
@@ -232,7 +231,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
+function playSeq(sequence, intervalTime = 500) {
     const { levelNumber} = state
     let i = 0;
 

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import { useAudio } from '../hooks/gameReducer'
+// import { useAudio } from '../hooks/gameReducer'
+import sound from '../audio/SecondNote.wav'
 
-export const RedPiece = ({ handleClick, lightUp, playMode, sound }) => {
+export const RedPiece = ({ handleClick, lightUp, playMode }) => {
     
 
-      const [setPlaying] = useAudio(sound);
+    const audio = new Audio(sound)
 
-    useEffect(() => { 
-        lightUp ? setPlaying(true) : setPlaying(false);
-    });
+    useEffect(() => {
+        lightUp ? audio.play() : audio.pause()
+    })
 
     return (
     <svg 
