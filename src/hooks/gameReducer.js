@@ -11,7 +11,7 @@ export const YELLOW_ON = "YELLOW_ON";
 export const COLOR_BUTTON_OFF = "COLOR_BUTTON_OFF";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
-export const GAME_OVER = "GAME_OVER";
+export const GAME_OVER_TOGGLE = "GAME_OVER_TOGGLE";
 export const RESET_GAME = "RESET_GAME"
 export const MODAL_TOGGLE = "MODAL_TOGGLE"
 
@@ -102,7 +102,10 @@ export const playModeReducer = (state, action) => {
         ...state,
         watchMode: false,
         playMode: true,
-        gameOver: false
+        // gameOver: false
+
+        // Game over needs to become false 
+        // when the user submits or refuses to submit their initials
       };
     case WATCH_MODE: 
       return {
@@ -111,9 +114,9 @@ export const playModeReducer = (state, action) => {
         playMode: false,
         
       }
-    case GAME_OVER: 
+    case GAME_OVER_TOGGLE: 
       return {
-        ...action.value,
+        ...state,
         gameOver: true
       }
     case RESET_GAME:
