@@ -6,6 +6,8 @@ import { RedPiece } from './svgs/RedPiece.js'
 import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
+import GameOverModal from './components/GameOverModal'
+
 import './App.css'
 import {
   playModeReducer,
@@ -19,7 +21,7 @@ import {
   PLAY_MODE,
   WATCH_MODE,
   COLOR_BUTTON_OFF,
-  GAME_OVER,
+  GAME_OVER_TOGGLE,
   RESET_GAME,
   MODAL_TOGGLE,
 } from "./hooks/gameReducer";
@@ -41,7 +43,7 @@ Array.prototype.equals = function (array) {
     if (this.length !== array.length)
         return false;
 
-    for (var i = 0, l=this.length; i < l; i++) {
+    for (var i = 0, l = this.length; i < l; i++) {
         // Check if we have nested arrays
         if (this[i] instanceof Array && array[i] instanceof Array) {
             // recurse into the nested arrays
@@ -58,19 +60,20 @@ Array.prototype.equals = function (array) {
 
 // TO-DO
 
-// Create start button to begin game and restart button to begin game again ✅ 
+// FIGMA
 
-// Find effect that makes it look like button is being pressed and is visually noticeable ✅ 
-// memoize dispatch array function to just add new value without creating a new array for each watchMode
-// Mess around with React Spring animations for desired effects
-// Decrease amount of time between intervals every 5 or 10 levels ✅ 
-// EXTRA: Add a single replay button to save you if you make a single mistake ✅
+// Create start button SVG to begin game and restart button to begin game again ✅
+// Place the button on the plane behind (zIndex) but make it center within the simon says buttons
+// Create and outside SVG to wrap all of the simon says buttons (zIndex)
 
-// Add audio for each button to play during playMode and when clicked
+ 
+
+
+
+// Add audio for each button to play during playMode and when clicked (audio refs)
 // Pass down correct and wrong button press feedback to GameBulletin to alert player
-// CSS Styling to clean up interface
+
 // React Spring animations for level updates
-// soothing calm background color
 // Rails backend for high scores
 
 function GameContainer(props) {
@@ -121,11 +124,11 @@ function GameContainer(props) {
     else if (playMode && gameArray[index] != level[index]
     ) {
       // console.log("wrong");
-      dispatch({ type: GAME_OVER, value: initialState })
+      dispatch({ type: GAME_OVER_TOGGLE})
     }
 
     
-    if (watchMode && available) {
+    if (!gameOver && watchMode && available) {
             dispatchLightUpPatternWithState()
 
     }
@@ -148,7 +151,7 @@ function GameContainer(props) {
   }
 
   function resetGame() {
-    dispatch({ type: RESET_GAME, value: initialState })
+    dispatch({ type: RESET_GAME, value: initialState})
   }
 
 
@@ -229,8 +232,8 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 1000) {
-    const { levelNumber, gameDispatch } = state
+function playSeq(sequence, intervalTime = 100) {
+    const { levelNumber} = state
     let i = 0;
 
   if (levelNumber >= 5) {
@@ -244,11 +247,7 @@ function playSeq(sequence, intervalTime = 1000) {
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
-
-    // if (state.gameDispatch.length == i) {
-    //   console.log(gameDispatch, i)
-    //   dispatch({ type: PLAY_MODE });
-    // }
+    
     if(i >= sequence.length){
       dispatch({ type: PLAY_MODE })
       clearInterval(interval)
@@ -265,7 +264,9 @@ function handleLegendToggle() {
 
     const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
-    return (
+
+     
+      return (
       <div className="simon-says-grid">
         {showLegendModal ? (
             <Legend
@@ -282,7 +283,7 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        <div style={{ zIndex: 1}} className="simon-says-circle">
+        <div style={{order: 1}} className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}
@@ -310,8 +311,12 @@ function handleLegendToggle() {
             playMode={playMode}
           />
         </div>
+          {gameOver ? <GameOverModal gameOver={gameOver}/> : null}
       </div>
-    );
-}
+
+
+    )
+  }
+
 
 export default GameContainer 
