@@ -201,16 +201,20 @@ function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
     const { keyCode } = event
-    const { playMode, watchMode } = state
-  
+  const { playMode, watchMode, gameOver } = state
+
+  if (keyCode == 82) resetGame()
+
+
+  if (gameOver) return //??????? Sometimes it works, sometimes it doesn't 
+
     if (keyCode == 13) {
       return playMode || watchMode
         ? null
         : dispatch({ type: WATCH_MODE });
     }
 
-    if (keyCode == 82) resetGame()
-
+    
     if (keyCode == 76) handleLegendToggle()
 
     if (playMode) {
@@ -231,7 +235,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 500) {
+function playSeq(sequence, intervalTime = 100) {
     const { levelNumber} = state
     let i = 0;
 

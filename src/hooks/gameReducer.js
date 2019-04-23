@@ -132,14 +132,3 @@ export const playModeReducer = (state, action) => {
       return state
   }
 }
-
-export const useAudio = url => {
-  const [audio] = useState(new Audio(url));
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    playing ? audio.play() : audio.pause();
-  }, [playing]);
-
-  return [playing, setPlaying];
-};
