@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from 'react';
-import { useSpring, animated } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
@@ -235,7 +234,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
+function playSeq(sequence, intervalTime = 1000) {
     const { levelNumber} = state
     let i = 0;
 
@@ -268,7 +267,7 @@ function handleLegendToggle() {
     const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
-     const springProps = useSpring({opacity: 0, from: { opacity: 1} })
+
 
       return (
       <div className="simon-says-grid">
@@ -287,7 +286,6 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        {/* {state.levelUp ? <animated.div style={springProps}>LEVEL UP</animated.div> : null} */}
         <div style={{order: 1}} className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
