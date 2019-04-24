@@ -1,5 +1,3 @@
-// var button4 = require('../audio/Button4.wav')
-import { useState, useEffect } from 'react'
 export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
@@ -102,7 +100,6 @@ export const playModeReducer = (state, action) => {
         ...state,
         watchMode: false,
         playMode: true,
-        // gameOver: false
 
         // Game over needs to become false 
         // when the user submits or refuses to submit their initials
@@ -117,7 +114,9 @@ export const playModeReducer = (state, action) => {
     case GAME_OVER_TOGGLE: 
       return {
         ...state,
-        gameOver: true
+        gameOver: true,
+        playMode: false,
+        watchMode: false
       }
     case RESET_GAME:
         return {

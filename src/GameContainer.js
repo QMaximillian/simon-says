@@ -103,10 +103,11 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-    const { playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-    
-    document.addEventListener('keydown', onKeyPressed)
+    const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
+    console.log(gameOver)
 
+    
+      document.addEventListener('keydown', onKeyPressed)
 
     // console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
@@ -123,7 +124,7 @@ function GameContainer(props) {
     else if (playMode && gameArray[index] != level[index]
     ) {
       // console.log("wrong");
-      dispatch({ type: GAME_OVER_TOGGLE})
+      dispatch({ type: GAME_OVER_TOGGLE })
     }
 
     
@@ -201,12 +202,11 @@ function onKeyPressed(event) {
   // switch statement (include other possible keypress combinations?)
   // allow user to use a lifeline to see the sequence one more time
     const { keyCode } = event
-  const { playMode, watchMode, gameOver } = state
+  const { playMode, watchMode } = state
 
   if (keyCode == 82) resetGame()
 
-
-  if (gameOver) return //??????? Sometimes it works, sometimes it doesn't 
+    if (gameOver) return 
 
     if (keyCode == 13) {
       return playMode || watchMode
