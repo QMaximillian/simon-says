@@ -19,7 +19,7 @@ export const YellowPiece = ({ handleClick, lightUp, playMode }) => {
     >
       <path 
         onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null}
-        data-id="1" 
+        data-id="3" 
         pointerEvents="all"
         stroke={lightUp ? "gold" : "black"} 
         strokeMiterlimit="10" 

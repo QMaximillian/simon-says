@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-// import { useSpring } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
@@ -104,7 +104,7 @@ function GameContainer(props) {
 
   useEffect(() => {
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-    console.log(gameOver)
+    console.log(levelUp)
 
     
       document.addEventListener('keydown', onKeyPressed)
@@ -143,7 +143,7 @@ function GameContainer(props) {
         onKeyPressed
       );
     }
-  }, [state.gameArray, state.watchMode, state.playMode, state.available])
+  }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
 
   function handleClick(number) {
@@ -268,7 +268,8 @@ function handleLegendToggle() {
     const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
-     
+     const springProps = useSpring({opacity: 0, from: { opacity: 1} })
+
       return (
       <div className="simon-says-grid">
         {showLegendModal ? (
@@ -286,6 +287,7 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
+        {/* {state.levelUp ? <animated.div style={springProps}>LEVEL UP</animated.div> : null} */}
         <div style={{order: 1}} className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}

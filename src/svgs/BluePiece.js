@@ -16,6 +16,7 @@ export const BluePiece = ({ handleClick, lightUp, playMode }) => {
     viewBox="0 0 250 240" 
   >
     <path 
+      onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null}
       fill="blue"
       data-id="4"
       pointerEvents="all"
