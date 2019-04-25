@@ -62,6 +62,7 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
+        greenAudio: state.greenAudio.play()
       }
     case RED_ON:
       return {
@@ -69,7 +70,9 @@ export const playModeReducer = (state, action) => {
         lightUpGreen: false,
         lightUpRed: true,
         lightUpYellow: false,
-        lightUpBlue: false
+        lightUpBlue: false,
+        redAudio: state.redAudio.play(),
+        
       };
     case BLUE_ON:
       return {
@@ -77,7 +80,9 @@ export const playModeReducer = (state, action) => {
         lightUpGreen: false,
         lightUpRed: false,
         lightUpYellow: false,
-        lightUpBlue: true
+        lightUpBlue: true,
+        blueAudio: state.blueAudio.play(),
+
       };
     case YELLOW_ON:
       return {
@@ -85,7 +90,8 @@ export const playModeReducer = (state, action) => {
         lightUpGreen: false,
         lightUpRed: false,
         lightUpYellow: true,
-        lightUpBlue: false
+        lightUpBlue: false,
+        yellowAudio: state.yellowAudio.play(),
       };
     case COLOR_BUTTON_OFF:
       return {
@@ -94,6 +100,11 @@ export const playModeReducer = (state, action) => {
         lightUpRed: false,
         lightUpYellow: false,
         lightUpBlue: false,
+        greenAudio: state.greenAudio,
+        redAudio: state.redAudio,
+        yellowAudio: state.yellowAudio,
+        blueAudio: state.blueAudio
+
       }
     case PLAY_MODE:
       return {

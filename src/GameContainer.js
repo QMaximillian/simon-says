@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
-import { useSpring, animated } from 'react-spring'
+// import { useSpring, animated } from 'react-spring'
+
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
@@ -7,6 +8,11 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
+import green from './audio/FirstNote.wav'
+import red from './audio/SecondNote.wav'
+import yellow from './audio/ThirdNote.wav'
+import blue from './audio/FourthNote.wav'
+
 import './App.css'
 import {
   playModeReducer,
@@ -77,6 +83,11 @@ Array.prototype.equals = function (array) {
 
 function GameContainer(props) {
 
+  const greenSound = new Audio(green) 
+  const redSound = new Audio(red)
+  const yellowSound = new Audio(yellow)
+  const blueSound = new Audio(blue)
+
   const initialState = {
     level: [1, 2, 3, 4],
     gameDispatch: [],
@@ -93,8 +104,14 @@ function GameContainer(props) {
     watchMode: false,
     playMode: false,
     gameOver: false,
-    greenAudio: false,
     showLegendModal: false,
+    greenAudio: greenSound,
+
+    // edit these to match greenAudio
+    redAudio: redSound,
+    yellowAudio: yellowSound,
+    blueAudio: blueSound
+
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -104,7 +121,7 @@ function GameContainer(props) {
 
   useEffect(() => {
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-    console.log(levelUp)
+
 
     
       document.addEventListener('keydown', onKeyPressed)
@@ -235,7 +252,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
+function playSeq(sequence, intervalTime = 1000) {
     const { levelNumber} = state
     let i = 0;
 
@@ -268,7 +285,7 @@ function handleLegendToggle() {
     const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
-     const springProps = useSpring({opacity: 0, from: { opacity: 1} })
+    //  const springProps = useSpring({opacity: 0, from: { opacity: 1} })
 
       return (
       <div className="simon-says-grid">
@@ -301,10 +318,10 @@ function handleLegendToggle() {
             playMode={playMode}
           />
           <br />
-          {/* <div 
+          <div 
             tabIndex="0"
-            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}
-            </div> */}
+            onClick={function() { dispatch({ type: WATCH_MODE })}}>{state.watchMode || playMode ? null : 'START'}
+            </div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}

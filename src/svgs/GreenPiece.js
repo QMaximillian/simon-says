@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
+import React from 'react'
 // import { useAudio } from '../hooks/gameReducer'
-import sound from '../audio/FirstNote.wav'
+// import sound from '../audio/FirstNote.wav'
 
 export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
 
-    const audio = new Audio(sound)
+    // const audio = new Audio(sound)
 
        
 
-    useEffect(() => {
-         lightUp ? audio.play() : audio.pause()
-    })
+    // useEffect(() => {
+    //      lightUp ? audio.play() : audio.pause()
+    // })
 
     return (
         <svg pointerEvents="none" width="252" height="251" viewBox="0 0 252 251" fill="none" xmlns="http://www.w3.org/2000/svg">

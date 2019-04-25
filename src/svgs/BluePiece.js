@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
-import sound from '../audio/FourthNote.wav'
+// import React, { useEffect } from 'react'
+import React from 'react'
+// import sound from '../audio/FourthNote.wav'
 export const BluePiece = ({ handleClick, lightUp, playMode }) => {
     
-  const audio = new Audio(sound)
+  // const audio = new Audio(sound)
 
-  useEffect(() => {
-    lightUp ? audio.play() : audio.pause()
-  })
+  // useEffect(() => {
+  //   lightUp ? audio.play() : audio.pause()
+  // })
 
   return (
   <svg 
