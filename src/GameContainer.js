@@ -6,6 +6,8 @@ import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
+import wrongSound from './audio/Incorrect.wav'
+import rightSound from './audio/Correct.wav'
 import './App.css'
 import {
   playModeReducer,
@@ -68,7 +70,7 @@ Array.prototype.equals = function (array) {
 
 
 
-// Add audio for each button to play during playMode and when clicked (audio refs)
+// Add audio for each button to play during playMode and when clicked (audio refs) ✅
 // Pass down correct and wrong button press feedback to GameBulletin to alert player
 
 // React Spring animations for level updates
@@ -102,8 +104,8 @@ function GameContainer(props) {
 
 
   useEffect(() => {
+    
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-    console.log(levelUp)
 
     
       document.addEventListener('keydown', onKeyPressed)
@@ -116,14 +118,22 @@ function GameContainer(props) {
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
+      // const right = new Audio(rightSound)
+      // right.play()
+
     } 
     else if (playMode && gameArray[index] == level[index]) {
-      // console.log('right')
     }
     else if (playMode && gameArray[index] != level[index]
     ) {
-      // console.log("wrong");
+      const wrong = new Audio(wrongSound)
+      wrong.play()
       dispatch({ type: GAME_OVER_TOGGLE })
+    }
+
+    if (levelUp) {
+      const right = new Audio(rightSound)
+      right.play()
     }
 
     
@@ -178,7 +188,7 @@ function GameContainer(props) {
         { type: COLOR_BUTTON_OFF }
       );
     }
-    playSeq(dispatchArray, 100);
+    playSeq(dispatchArray, 150);
   }
 
   function getColor(id) {
@@ -234,7 +244,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 1000) {
+function playSeq(sequence, intervalTime = 500) {
     const { levelNumber} = state
     let i = 0;
 
@@ -251,7 +261,10 @@ function playSeq(sequence, intervalTime = 1000) {
     i++;
     
     if(i >= sequence.length){
-      dispatch({ type: PLAY_MODE })
+      if (state.watchMode) {
+        dispatch({ type: PLAY_MODE })
+      }
+      
       clearInterval(interval)
     }
   }, intervalTime)  
