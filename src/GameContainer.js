@@ -135,10 +135,10 @@ function GameContainer(props) {
       dispatch({ type: GAME_OVER_TOGGLE })
     }
 
-    if (levelUp) {
-      const right = new Audio(rightSound)
-      right.play()
-    }
+    // if (levelUp) {
+    //   const right = new Audio(rightSound)
+    //   right.play()
+    // }
 
     
     if (!gameOver && watchMode && available) {
@@ -318,10 +318,10 @@ function handleLegendToggle() {
             windowWidth={windowWidth}
           />
           <br />
-          {/* <div 
+          <div 
             tabIndex="0"
-            onClick={function() { dispatch({ type: WATCH_MODE })}}>{watchMode || playMode ? null : 'START'}
-            </div> */}
+            onClick={function() { dispatch({ type: WATCH_MODE })}}>{state.watchMode || playMode ? null : 'START'}
+            </div>
           <YellowPiece
             lightUp={lightUpYellow}
             handleClick={handleClick}
