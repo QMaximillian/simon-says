@@ -1,50 +1,17 @@
-import React, { useEffect, useState } from 'react'
-// import { useAudio } from '../hooks/gameReducer'
+import React, { useEffect } from 'react'
+
 import sound from '../audio/FirstNote.wav'
 
-export const GreenPiece = ({ handleClick, lightUp, playMode }) => {
+
+export const GreenPiece = ({ handleClick, lightUp, playMode, ...props }) => {
 
     const audio = new Audio(sound)
-    const [width, setWidth] = useState(window.innerWidth)
-
-    
-    function debounce(func, wait, immediate) {
-        var timeout;
-        return function () {
-            var context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            }, wait);
-            if (immediate && !timeout) func.apply(context, args);
-        };
-    }
-
-    var myEfficientFunction = debounce(function() {
-        updateDimensions()
-    }, 250)
-
-  function updateDimensions() {
-    setWidth(window.innerWidth + 'px')
-    console.log(window.innerWidth)
-}
   
-       
-
     useEffect(() => {
-        window.addEventListener('resize', myEfficientFunction)
-            updateDimensions()
-         lightUp ? audio.play() : audio.pause()
-
-         return function cleanup() {
-            window.removeEventListener('resize', myEfficientFunction)
-
-         }
-        
+         lightUp ? audio.play() : audio.pause() 
     })
 
-    if (window.innerWidth <= 755) {
+    if (props.width <= 755) {
         return (
             <svg width="250" height="250" viewBox="0 0 250 250">
                 <path d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="lime" />

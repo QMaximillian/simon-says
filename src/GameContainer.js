@@ -24,6 +24,8 @@ import {
   GAME_OVER_TOGGLE,
   RESET_GAME,
   MODAL_TOGGLE,
+  SET_WINDOW_WIDTH,
+  debounce
 } from "./hooks/gameReducer";
 
 
@@ -94,21 +96,23 @@ function GameContainer(props) {
     watchMode: false,
     playMode: false,
     gameOver: false,
-    greenAudio: false,
     showLegendModal: false,
+    clientWidth: undefined
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
   // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000}
 
+  var dimensionUpdater = debounce(function() {
+        dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
+    }, 100)
+
 
   useEffect(() => {
     
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-
-    console.log(window.innerWidth)
       document.addEventListener('keydown', onKeyPressed)
-      
+      window.addEventListener('resize', dimensionUpdater)
 
     // console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
@@ -151,6 +155,7 @@ function GameContainer(props) {
         "keydown",
         onKeyPressed
       );
+      window.removeEventListener('resize', dimensionUpdater)
 
     }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
@@ -277,7 +282,7 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { showLegendModal, greenAudio, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
+    const { windowWidth, showLegendModal, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
 
@@ -304,12 +309,13 @@ function handleLegendToggle() {
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
-            greenAudio={greenAudio}
+            width={windowWidth}
           />
           <RedPiece
             lightUp={lightUpRed}
             handleClick={handleClick}
             playMode={playMode}
+            width={windowWidth}
           />
           <br />
           {/* <div 
@@ -320,11 +326,13 @@ function handleLegendToggle() {
             lightUp={lightUpYellow}
             handleClick={handleClick}
             playMode={playMode}
+            width={windowWidth}
           />
           <BluePiece
             lightUp={lightUpBlue}
             handleClick={handleClick}
             playMode={playMode}
+            width={windowWidth}
           />
         </div>
           {gameOver ? <GameOverModal gameOver={gameOver}/> : null}

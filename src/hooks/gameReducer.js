@@ -12,6 +12,7 @@ export const WATCH_MODE = "WATCH_MODE";
 export const GAME_OVER_TOGGLE = "GAME_OVER_TOGGLE";
 export const RESET_GAME = "RESET_GAME"
 export const MODAL_TOGGLE = "MODAL_TOGGLE"
+export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH"
 
 
 
@@ -129,7 +130,25 @@ export const playModeReducer = (state, action) => {
           ...state,
           showLegendModal: !state.showLegendModal
         }
+    case SET_WINDOW_WIDTH:
+      return {
+        ...state,
+        windowWidth: action.value
+      }
     default:
       return state
   }
+}
+
+export const debounce = (func, wait, immediate) => {
+  var timeout;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
 }
