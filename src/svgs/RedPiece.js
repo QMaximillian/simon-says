@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 // import { useAudio } from '../hooks/gameReducer'
 import sound from '../audio/SecondNote.wav'
 
-export const RedPiece = ({ width, handleClick, lightUp, playMode }) => {
+export const RedPiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
     
 
     const audio = new Audio(sound)
@@ -11,7 +11,7 @@ export const RedPiece = ({ width, handleClick, lightUp, playMode }) => {
         lightUp ? audio.play() : audio.pause()
     })
 
-    if (width <= 755) {
+    if (windowWidth <= 755) {
         return (
             <svg width="250" height="250" viewBox="0 0 250 250">
                 <path d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="red" />

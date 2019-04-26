@@ -8,7 +8,6 @@
   color: white;
   text-shadow: 1px 1px teal;
   font-style: italic;
-
 }
 
 @media only screen and (max-width: 755px) {
@@ -16,10 +15,31 @@
     background-color: orange;
   }
   div.simon-says-grid {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 1fr 225px 1fr;
+    grid-template-rows: repeat(4, 225px);
     height: 100vh;
   }
+
+  div.simon-says-circle {
+    grid-column: 2;
+  }
+
+  button.button-primary {
+    grid-column: 1;
+    grid-row: 1
+  }
+
+  div.simon-says-bulletin {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 2em;
+    padding: 1em 1em;
+    color: white;
+    text-shadow: 1px 1px teal;
+    font-style: italic;
+  }
+
+
 }
 
 .legend-open-button {
@@ -39,8 +59,13 @@
 .simon-says-circle {
   grid-column: 3 / span 8;
   grid-row: 4 / span 5;
-
 }
+
+
+
+
+
+
 
 .simon-says-bulletin {
   grid-column: 3 / span 8;

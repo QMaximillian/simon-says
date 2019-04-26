@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import sound from '../audio/FirstNote.wav'
 
 
-export const GreenPiece = ({ handleClick, lightUp, playMode, ...props }) => {
+export const GreenPiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
 
     const audio = new Audio(sound)
   
@@ -11,7 +11,7 @@ export const GreenPiece = ({ handleClick, lightUp, playMode, ...props }) => {
          lightUp ? audio.play() : audio.pause() 
     })
 
-    if (props.width <= 755) {
+    if (windowWidth <= 755) {
         return (
             <svg width="250" height="250" viewBox="0 0 250 250">
                 <path d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="lime" />

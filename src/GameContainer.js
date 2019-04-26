@@ -97,7 +97,7 @@ function GameContainer(props) {
     playMode: false,
     gameOver: false,
     showLegendModal: false,
-    clientWidth: undefined
+    windowWidth: window.innerWidth
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
@@ -109,7 +109,7 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-    
+    console.log(state.windowWidth)
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       document.addEventListener('keydown', onKeyPressed)
       window.addEventListener('resize', dimensionUpdater)
@@ -295,7 +295,7 @@ function handleLegendToggle() {
             show={showLegendModal}
             />
         ) : (
-          <button className="button-primary legend-open-button" onClick={handleLegendToggle}>LEGEND</button>
+            <button className="button-primary legend-open-button" onClick={handleLegendToggle}>LEGEND</button>
         )}
         <GameBulletin
           levelUp={levelUp}
@@ -309,13 +309,13 @@ function handleLegendToggle() {
             lightUp={lightUpGreen}
             handleClick={handleClick}
             playMode={playMode}
-            width={windowWidth}
+            windowWidth={windowWidth}
           />
           <RedPiece
             lightUp={lightUpRed}
             handleClick={handleClick}
             playMode={playMode}
-            width={windowWidth}
+            windowWidth={windowWidth}
           />
           <br />
           {/* <div 
@@ -326,13 +326,13 @@ function handleLegendToggle() {
             lightUp={lightUpYellow}
             handleClick={handleClick}
             playMode={playMode}
-            width={windowWidth}
+            windowWidth={windowWidth}
           />
           <BluePiece
             lightUp={lightUpBlue}
             handleClick={handleClick}
             playMode={playMode}
-            width={windowWidth}
+            windowWidth={windowWidth}
           />
         </div>
           {gameOver ? <GameOverModal gameOver={gameOver}/> : null}
