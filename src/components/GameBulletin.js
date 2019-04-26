@@ -29,7 +29,7 @@ const GameBulletin = ({ levelUp, levelNumber, fade, gameOver, resetGame }) => {
     return (
         <animated.div style={props} className="simon-says-bulletin">
 
-          <h4>LEVEL {levelNumber}</h4>
+          <h4 style={{color: 'white'}}>LEVEL {levelNumber}</h4>
           {transitions.map(
             ({ item, key, props }) =>
               item && <animated.div style={props} key={key}>LEVEL UP</animated.div>
