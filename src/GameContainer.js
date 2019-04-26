@@ -99,7 +99,6 @@ function GameContainer(props) {
   }
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
-
   // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000}
 
 
@@ -107,8 +106,9 @@ function GameContainer(props) {
     
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
 
-    
+    console.log(window.innerWidth)
       document.addEventListener('keydown', onKeyPressed)
+      
 
     // console.log(state)
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
@@ -151,9 +151,9 @@ function GameContainer(props) {
         "keydown",
         onKeyPressed
       );
-    }
-  }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
+    }
+  }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
   function handleClick(number) {
     dispatchClickAction(number)

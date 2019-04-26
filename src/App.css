@@ -11,7 +11,16 @@
 
 }
 
-
+@media only screen and (max-width: 755px) {
+  body {
+    background-color: orange;
+  }
+  div.simon-says-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: 100vh;
+  }
+}
 
 .legend-open-button {
   grid-column: 1 / span 2;
