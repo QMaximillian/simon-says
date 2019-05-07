@@ -249,7 +249,7 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 500) {
+function playSeq(sequence, intervalTime = 100) {
     const { levelNumber} = state
     let i = 0;
 

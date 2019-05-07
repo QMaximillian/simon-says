@@ -1,4 +1,9 @@
 import React from 'react';
+import ApolloClient from 'apollo-client'
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
+import { ApolloProvider } from "react-apollo";
+
 import './App.css';
 import GameContainer from './GameContainer'
 
