@@ -7,7 +7,7 @@ import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import wrongSound from './audio/Incorrect.wav'
-import rightSound from './audio/Correct.wav'
+// import rightSound from './audio/Correct.wav'
 import './App.css'
 import {
   playModeReducer,
@@ -27,6 +27,8 @@ import {
   SET_WINDOW_WIDTH,
   debounce
 } from "./hooks/gameReducer";
+
+
 
 
 

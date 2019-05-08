@@ -7,11 +7,28 @@ import { ApolloProvider } from "react-apollo";
 import './App.css';
 import GameContainer from './GameContainer'
 
+const createApolloClient = () => {
+  return new ApolloClient({
+    link: new HttpLink({
+      uri: "https://simon-says-endpoint.herokuapp.com/v1alpha1/graphql"
+    }),
+    // headers: {
+      // 'content-type': 'application/json',
+      // "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET
+    // },
+    cache: new InMemoryCache()
+  });
+}
+
 const App = (props) => {
+
+  const client = createApolloClient()
     return (
-      <div className="top-level-styles">
-        <GameContainer />
-      </div>
+      <ApolloProvider client={client}>
+        <div className="top-level-styles">
+          <GameContainer />
+        </div>
+      </ApolloProvider>
     );
 }
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import '../App.css'
+import { Query } from 'react-apollo'
+import { GET_TOP_HIGH_SCORES } from '../hooks/gql-queries'
+
 
 function GameOverModal({gameOver, ...props}){
 
@@ -13,7 +16,33 @@ function GameOverModal({gameOver, ...props}){
         </div>
     )
 }
-
+const HighScores = ({ users }) => {
+  console.log(users)
+  return (
+    <div>
+      {users.map(user => (
+          <div key={user.id}>
+            <span>{user.name}</span><span>{user.score}</span>
+          </div>
+      ))}
+    </div>)
+}
+const TopHighScoreListQuery = () => {
+  return (
+    <Query query={GET_TOP_HIGH_SCORES}>
+    {({ loading, error, data, client }) => {
+      if (loading) {
+        return (<div>Loading...</div>)
+      } 
+      if (error) {
+        console.error(error)
+        return (<div>Error!</div>)
+      }
+      return (<HighScores client={client} users={data.users}/>)
+    }}
+    </Query>
+  )
+}
 const HighScoreList = ({ resetGame }) => {
 
   const [text, setText] = useState('')
@@ -34,6 +63,7 @@ function handleChange(event) {
          <label>Enter Your Initials</label>
          <input maxLength={3} onChange={handleChange} value={text}></input>
        </div>
+       <TopHighScoreListQuery />
      </aside>
   )
 }
