@@ -47,13 +47,17 @@ const TopHighScoreListQuery = () => {
 
 const InitialInput = ({ levelNumber }) => {
 
-  const [name, setName] = useState("");
+  const [text, setText] = useState("");
+  const [disabled, setDisabled] = useState(false)
 
   function handleChange(event) {
-    setName(event.target.value.toUpperCase());
+    setText(event.target.value.toUpperCase());
   }
 
   const updateCache = (cache, { data }) => {
+
+    // Logic to add it if it is in the high score list to the correct position in the list
+
     const existingUsers = cache.readQuery({
       query: GET_TOP_HIGH_SCORES
     });
@@ -75,18 +79,18 @@ const InitialInput = ({ levelNumber }) => {
           return (<div>Error!</div>)
         }
 
-        const score = levelNumber
         return (
           <>
             <label>Enter Your Initials</label>
-            <input maxLength={3} onChange={handleChange} value={name} />
+            <input maxLength={3} onChange={handleChange} value={text} disabled={disabled ? 'disabled' : ''}/>
             <button
               onClick={e => {
-                console.log(name, score)
                 e.preventDefault();
-                addInitialsAndScore({variables: { name: name, score: score }})
-              }}
-            />
+                addInitialsAndScore({variables: { name: text, score: levelNumber }})
+                setDisabled(true)
+                setText('')
+              }}>Submit
+            </button>
           </>
         );
       }}
