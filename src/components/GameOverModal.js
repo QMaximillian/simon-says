@@ -18,6 +18,7 @@ function GameOverModal({gameOver, levelNumber, ...props}){
 }
 const HighScores = ({ users }) => {
   console.log(users)
+
   return (
     <div>
       {users.map(user => (
@@ -63,10 +64,12 @@ const InitialInput = ({ levelNumber }) => {
     });
 
     const newUser = data.insert_users.returning[0];
-    console.log(newUser)
+
+    const usersArray = [newUser, ...existingUsers.users].sort((a, b) => b.score - a.score)
+
     cache.writeQuery({
       query: GET_TOP_HIGH_SCORES,
-      data: { users: [newUser, ...existingUsers.users] }
+      data: { users: usersArray }
     });
   };
 
@@ -78,6 +81,8 @@ const InitialInput = ({ levelNumber }) => {
           console.error(error);
           return (<div>Error!</div>)
         }
+
+
 
         return (
           <>
