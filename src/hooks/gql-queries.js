@@ -9,3 +9,15 @@ export const GET_TOP_HIGH_SCORES = gql`
     }
   }
 `;
+
+export const ADD_INITIALS_AND_SCORE = gql`
+        mutation($name: String!, $score: Int!) {
+        insert_users(objects: { name: $name, score: $score }) {
+            returning {
+            id
+            name
+            score
+            }
+        }
+    }
+       `;

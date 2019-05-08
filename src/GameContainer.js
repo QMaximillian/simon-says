@@ -288,7 +288,7 @@ function handleLegendToggle() {
 
 
 
-
+  
       return (
       <div className="simon-says-grid">
         {showLegendModal ? (
@@ -337,7 +337,7 @@ function handleLegendToggle() {
             windowWidth={windowWidth}
           />
         </div>
-          {gameOver ? <GameOverModal gameOver={gameOver}/> : null}
+          {gameOver ? <GameOverModal levelNumber={levelNumber} gameOver={gameOver}/> : null}
       </div>
 
 

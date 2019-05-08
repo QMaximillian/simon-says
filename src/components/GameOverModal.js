@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import '../App.css'
-import { Query } from 'react-apollo'
-import { GET_TOP_HIGH_SCORES } from '../hooks/gql-queries'
+import { Query, Mutation } from 'react-apollo'
+import { GET_TOP_HIGH_SCORES, ADD_INITIALS_AND_SCORE } from '../hooks/gql-queries'
 
 
-function GameOverModal({gameOver, ...props}){
+function GameOverModal({gameOver, levelNumber, ...props}){
 
     const showHideClassname = gameOver ? 'game-over-modal display-block' : "game-over-modal display-none";
 
     return (
         <div className={showHideClassname}>
             <section className="game-over-modal-main">
-            <HighScoreList />
+            <HighScoreList levelNumber={levelNumber}/>
             </section>
         </div>
     )
@@ -43,13 +43,60 @@ const TopHighScoreListQuery = () => {
     </Query>
   )
 }
-const HighScoreList = ({ resetGame }) => {
 
-  const [text, setText] = useState('')
 
-function handleChange(event) {
-  setText(event.target.value)
-}
+const InitialInput = ({ levelNumber }) => {
+
+  const [name, setName] = useState("");
+
+  function handleChange(event) {
+    setName(event.target.value.toUpperCase());
+  }
+
+  const updateCache = (cache, { data }) => {
+    const existingUsers = cache.readQuery({
+      query: GET_TOP_HIGH_SCORES
+    });
+
+    const newUser = data.insert_users.returning[0];
+    console.log(newUser)
+    cache.writeQuery({
+      query: GET_TOP_HIGH_SCORES,
+      data: { users: [newUser, ...existingUsers.users] }
+    });
+  };
+
+  return (
+    <Mutation mutation={ADD_INITIALS_AND_SCORE} update={updateCache}>
+      {(addInitialsAndScore, { loading, data, error }) => {
+        console.log(levelNumber);
+        if (error) {
+          console.error(error);
+          return (<div>Error!</div>)
+        }
+
+        const score = levelNumber
+        return (
+          <>
+            <label>Enter Your Initials</label>
+            <input maxLength={3} onChange={handleChange} value={name} />
+            <button
+              onClick={e => {
+                console.log(name, score)
+                e.preventDefault();
+                addInitialsAndScore({variables: { name: name, score: score }})
+              }}
+            />
+          </>
+        );
+      }}
+    </Mutation>
+  );
+};
+
+const HighScoreList = ({ resetGame, levelNumber }) => {
+
+  
 
   return (
      <aside>
@@ -60,8 +107,7 @@ function handleChange(event) {
          <div onClick={resetGame}>
            PLAY AGAIN?
          </div>
-         <label>Enter Your Initials</label>
-         <input maxLength={3} onChange={handleChange} value={text}></input>
+         <InitialInput levelNumber={levelNumber}/>
        </div>
        <TopHighScoreListQuery />
      </aside>
