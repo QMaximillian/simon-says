@@ -163,6 +163,7 @@ function GameContainer(props) {
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
   function handleClick(number) {
+    if (state.watchMode) return
     dispatchClickAction(number)
   }
 

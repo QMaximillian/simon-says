@@ -13,8 +13,8 @@ export const GreenPiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
 
     if (windowWidth <= 755) {
         return (
-            <svg width="250" height="250" viewBox="0 0 250 250">
-                <path d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="lime" />
+            <svg pointerEvents="none" width="250" height="250" viewBox="0 0 250 250">
+                <path onClick={(e) => handleClick(Number(e.target.dataset.id))} d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} data-id="1" pointerEvents="all" fill="lime" />
             </svg>
         )
     } else {

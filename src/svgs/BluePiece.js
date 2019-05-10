@@ -10,8 +10,16 @@ export const BluePiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
 
   if (windowWidth <= 755) {
         return (
-            <svg width="250" height="250" viewBox="0 0 250 250">
-                <path d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="blue" />
+          <svg pointerEvents="none" width="250" height="250" viewBox="0 0 250 250">
+                <path 
+                  d="M4 4H246V246H4V4Z" 
+                  stroke={lightUp ? "gold" : "black"} 
+                  strokeWidth={lightUp ? "8px" : "1px"} 
+                  fill="blue"
+                  onClick={(event) => handleClick(Number(event.target.dataset.id))}
+                  data-id="4"
+                  pointerEvents="all"
+                   />
             </svg>
         )
   } else {
@@ -23,7 +31,7 @@ export const BluePiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
       viewBox="0 0 250 240" 
     >
       <path 
-        onClick={playMode ? (event) => handleClick(Number(event.target.dataset.id)) : null}
+        onClick={(event) => handleClick(Number(event.target.dataset.id))}
         fill="blue"
         data-id="4"
         pointerEvents="all"
