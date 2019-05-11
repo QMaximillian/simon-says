@@ -13,23 +13,24 @@
 @media only screen and (max-width: 755px) {
   body {
     background-color: orange;
+
   }
-  div.simon-says-grid {
-    grid-template-columns: 1fr 225px 1fr;
-    grid-template-rows: repeat(4, 225px);
-    height: 100vh;
+  .simon-says-grid {
+    grid-template-columns: 1fr 250px 250px 1fr;
+    grid-template-rows: repeat(4, 1fr);
   }
 
-  div.simon-says-circle {
-    grid-column: 2;
+  .simon-says-circle {
+   grid-row: 2;
+   grid-column: 2;
   }
 
-  button.button-primary {
+  .button-primary {
     grid-column: 1;
     grid-row: 1
   }
 
-  div.simon-says-bulletin {
+  .simon-says-bulletin {
     grid-column: 2;
     grid-row: 1;
     font-size: 2em;
@@ -37,6 +38,24 @@
     color: white;
     text-shadow: 1px 1px teal;
     font-style: italic;
+  }
+
+  .green {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .red {
+    grid-row: 2;
+    grid-column: 3;
+  }
+  .yellow {
+    grid-row: 3;
+    grid-column: 2;
+  }
+  .blue {
+    grid-row: 3;
+    grid-column: 3;
   }
 
 
@@ -145,5 +164,5 @@ div {
 }
 
 .button:hover {
-  text: 'Press L'
+  content: 'Press L'
 }

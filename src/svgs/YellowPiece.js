@@ -13,12 +13,24 @@ export const YellowPiece = ({ windowWidth, handleClick, lightUp, playMode }) => 
 
   if (windowWidth <= 755) {
     return (
-      <svg pointerEvents="none"  width="225" height="225" viewBox="0 0 250 250">
-        <path onClick={(e) => handleClick(Number(e.target.dataset.id))}
-          data-id="3"
-          pointerEvents="all" d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill="yellow" />
-      </svg>
-    )
+        <svg
+          className="yellow"
+          pointerEvents="none"
+          width="200"
+          height="200"
+          viewBox="0 0 250 250"
+        >
+          <path
+            onClick={e => handleClick(Number(e.target.dataset.id))}
+            data-id="3"
+            pointerEvents="all"
+            d="M4 4H246V246H4V4Z"
+            stroke={lightUp ? "gold" : "black"}
+            strokeWidth={lightUp ? "8px" : "1px"}
+            fill="yellow"
+          />
+        </svg>
+    );
   } else {
     return (
       <svg 

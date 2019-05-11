@@ -10,7 +10,7 @@ export const BluePiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
 
   if (windowWidth <= 755) {
         return (
-          <svg pointerEvents="none" width="250" height="250" viewBox="0 0 250 250">
+          <svg className="blue" pointerEvents="none" width="200" height="200" viewBox="0 0 250 250">
                 <path 
                   d="M4 4H246V246H4V4Z" 
                   stroke={lightUp ? "gold" : "black"} 

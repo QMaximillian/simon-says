@@ -307,7 +307,7 @@ function handleLegendToggle() {
           gameOver={gameOver}
           resetGame={resetGame}
         />
-        <div style={{order: 1}} className="simon-says-circle">
+        <div className="simon-says-circle">
           <GreenPiece
             lightUp={lightUpGreen}
             handleClick={handleClick}
