@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { useAudio } from './hooks/gameReducer'
 import { GreenPiece } from './svgs/GreenPiece.js'
 import { YellowPiece } from './svgs/YellowPiece.js'
 import { RedPiece } from './svgs/RedPiece.js'
@@ -64,23 +65,22 @@ Array.prototype.equals = function (array) {
 
 // TO-DO
 
+// July 7th, 2019: Update
+
+// 1. Audio is playing here and there, find way to return sound to play before click so it's 
+// ready on direct click
+
+// Figure out pattern for why sounds aren't playing (unmounting, pausing faster than playing, not resetting in time)
+
+// 2. Get all buttons to respond to being clicked and playing audio by end of week
 // FIGMA
 
-// Create start button SVG to begin game and restart button to begin game again ✅
-// Place the button on the plane behind (zIndex) but make it center within the simon says buttons
-// Create and outside SVG to wrap all of the simon says buttons (zIndex)
-
- 
 
 
-
-// Add audio for each button to play during playMode and when clicked (audio refs) ✅
-// Pass down correct and wrong button press feedback to GameBulletin to alert player
-
-// React Spring animations for level updates
-// Rails backend for high scores
 
 function GameContainer(props) {
+
+  let sound;
 
   const initialState = {
     level: [1, 2, 3, 4],
@@ -136,11 +136,6 @@ function GameContainer(props) {
       wrong.play()
       dispatch({ type: GAME_OVER_TOGGLE })
     }
-
-    // if (levelUp) {
-    //   const right = new Audio(rightSound)
-    //   right.play()
-    // }
 
     
     if (!gameOver && watchMode && available) {
@@ -198,6 +193,7 @@ function GameContainer(props) {
     }
     playSeq(dispatchArray, 150);
   }
+  
 
   function getColor(id) {
     switch (true) {
@@ -252,10 +248,9 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
+function playSeq(sequence, intervalTime = 500) {
     const { levelNumber} = state
     let i = 0;
-
   if (levelNumber >= 5) {
     intervalTime = 500;
   } 

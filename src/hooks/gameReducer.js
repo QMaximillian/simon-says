@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
@@ -13,7 +14,6 @@ export const GAME_OVER_TOGGLE = "GAME_OVER_TOGGLE";
 export const RESET_GAME = "RESET_GAME"
 export const MODAL_TOGGLE = "MODAL_TOGGLE"
 export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH"
-
 
 
 
@@ -152,3 +152,21 @@ export const debounce = (func, wait, immediate) => {
     if (immediate && !timeout) func.apply(context, args);
   };
 }
+
+export const useAudio = url => {
+  const [audio] = useState(new Audio(url));
+  const [playing, setPlaying] = useState(false);
+
+  const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+    if (playing) {
+      audio.play()
+    } else {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  }, [playing]);
+
+  return [playing, toggle];
+};

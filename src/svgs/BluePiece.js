@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import sound from '../audio/FourthNote.wav'
 export const BluePiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
     
-  const audio = new Audio(sound)
+  // const audio = new Audio(sound)
 
-  useEffect(() => {
-    lightUp ? audio.play() : audio.pause()
-  })
+  // useEffect(() => {
+  //   lightUp ? audio.play() : audio.pause() 
+  // })
 
   if (windowWidth <= 755) {
         return (

@@ -4,11 +4,11 @@ import sound from '../audio/ThirdNote.wav'
 
 export const YellowPiece = ({ windowWidth, handleClick, lightUp, playMode }) => {
 
-  const audio = new Audio(sound)
+  // const audio = new Audio(sound)
 
-  useEffect(() => {
-    lightUp ? audio.play() : audio.pause()
-  })
+  // useEffect(() => {
+  //   lightUp ? audio.play() : audio.pause() 
+  // })
 
 
   if (windowWidth <= 755) {
