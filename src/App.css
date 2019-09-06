@@ -20,10 +20,10 @@
     grid-template-rows: repeat(4, 1fr);
   }
 
-  .simon-says-circle {
+  /* .simon-says-circle {
    grid-row: 2;
    grid-column: 2;
-  }
+  } */
 
   .button-primary {
     grid-column: 1;

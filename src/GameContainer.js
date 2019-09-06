@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
-import { useAudio } from './hooks/gameReducer'
-import { GreenPiece } from './svgs/GreenPiece.js'
-import { YellowPiece } from './svgs/YellowPiece.js'
-import { RedPiece } from './svgs/RedPiece.js'
-import { BluePiece } from './svgs/BluePiece.js'
+// import { useAudio } from './hooks/gameReducer'
+import { GameBoardPiece } from './svgs/GameBoardPiece.js'
+// import { YellowPiece } from './svgs/YellowPiece.js'
+// import { RedPiece } from './svgs/RedPiece.js'
+// import { BluePiece } from './svgs/BluePiece.js'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
@@ -80,7 +80,7 @@ Array.prototype.equals = function (array) {
 
 function GameContainer(props) {
 
-  let sound;
+  // let sound;
 
   const initialState = {
     level: [1, 2, 3, 4],
@@ -137,13 +137,9 @@ function GameContainer(props) {
       dispatch({ type: GAME_OVER_TOGGLE })
     }
 
-    
     if (!gameOver && watchMode && available) {
             dispatchLightUpPatternWithState()
-
     }
-
-
 
 
 
@@ -286,58 +282,90 @@ function handleLegendToggle() {
 
   
       return (
-      <div className="simon-says-grid">
-        {showLegendModal ? (
+        <div className="simon-says-grid">
+          {showLegendModal ? (
             <Legend
-            handleLegendToggle={handleLegendToggle}
-            show={showLegendModal}
+              handleLegendToggle={handleLegendToggle}
+              show={showLegendModal}
             />
-        ) : (
-            <button className="button-primary legend-open-button" onClick={handleLegendToggle}>LEGEND</button>
-        )}
-        <GameBulletin
-          levelUp={levelUp}
-          levelNumber={levelNumber}
-          fade={fade}
-          gameOver={gameOver}
-          resetGame={resetGame}
-        />
-        <div className="simon-says-circle">
-          <GreenPiece
-            lightUp={lightUpGreen}
-            handleClick={handleClick}
-            playMode={playMode}
-            windowWidth={windowWidth}
+          ) : (
+            <button
+              className="button-primary legend-open-button"
+              onClick={handleLegendToggle}
+            >
+              LEGEND
+            </button>
+          )}
+          <GameBulletin
+            levelUp={levelUp}
+            levelNumber={levelNumber}
+            fade={fade}
+            gameOver={gameOver}
+            resetGame={resetGame}
           />
-          <RedPiece
-            lightUp={lightUpRed}
-            handleClick={handleClick}
-            playMode={playMode}
-            windowWidth={windowWidth}
-          />
-          <br />
-          <div 
-            tabIndex="0"
-            onClick={function() { dispatch({ type: WATCH_MODE })}}>{state.watchMode || playMode ? null : 'START'}
+          <div
+            className="simon-says-circle"
+            style={{ backgroundColor: "orange" }}
+          >
+            <div style={{ position: "relative" }}>
+              <GameBoardPiece
+                transform={{ transform: "rotate(0deg" }}
+                lightUp={lightUpGreen}
+                handleClick={handleClick}
+                playMode={playMode}
+                windowWidth={windowWidth}
+                color={"lime"}
+                dataId={1}
+              />
+              <GameBoardPiece
+                transform={{ transform: "rotate(90deg" }}
+                lightUp={lightUpRed}
+                handleClick={handleClick}
+                playMode={playMode}
+                windowWidth={windowWidth}
+                color={"red"}
+                dataId={2}
+              />
+              <br />
+              <div
+                tabIndex="0"
+                onClick={() => dispatch({ type: WATCH_MODE })}
+                style={{
+                  position: "absolute",
+                  margin: "auto",
+                  left: "0",
+                  right: "0",
+                  bottom: "239px",
+                  zIndex: "10"
+                }}
+              >
+                {!state.watchMode && !playMode ? "START" : null}
+              </div>
+              <GameBoardPiece
+                transform={{ transform: "rotate(270deg" }}
+                lightUp={lightUpYellow}
+                handleClick={handleClick}
+                playMode={playMode}
+                windowWidth={windowWidth}
+                color={"yellow"}
+                dataId={3}
+              />
+              <GameBoardPiece
+                transform={{ transform: "rotate(180deg" }}
+                lightUp={lightUpBlue}
+                handleClick={handleClick}
+                playMode={playMode}
+                windowWidth={windowWidth}
+                color={"blue"}
+                dataId={4}
+              />
             </div>
-          <YellowPiece
-            lightUp={lightUpYellow}
-            handleClick={handleClick}
-            playMode={playMode}
-            windowWidth={windowWidth}
-          />
-          <BluePiece
-            lightUp={lightUpBlue}
-            handleClick={handleClick}
-            playMode={playMode}
-            windowWidth={windowWidth}
-          />
+          </div>
+          {gameOver ? (
+            <GameOverModal levelNumber={levelNumber} gameOver={gameOver} />
+          ) : null}
         </div>
-          {gameOver ? <GameOverModal levelNumber={levelNumber} gameOver={gameOver}/> : null}
-      </div>
-
-
-    )
+      );
   }
 
 
