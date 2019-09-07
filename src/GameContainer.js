@@ -69,15 +69,13 @@ Array.prototype.equals = function (array) {
 
 // TO-DO
 
-// July 7th, 2019: Update
+// September 7th, 2019: Update
 
-// 1. Audio is playing here and there, find way to return sound to play before click so it's 
-// ready on direct click
+// 1. useMemo to help with expensive computations where array that is dispatched is not built on every new level
 
-// Figure out pattern for why sounds aren't playing (unmounting, pausing faster than playing, not resetting in time)
+// 2. Create dispatch events that run a COLOR AND SOUND TOGETHER and then COLOR_OFF
 
-// 2. Get all buttons to respond to being clicked and playing audio by end of week
-// FIGMA
+
 
 
 
