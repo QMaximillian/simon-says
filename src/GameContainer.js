@@ -111,25 +111,35 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-    // console.log(state.windowWidth)
-    const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-      document.addEventListener('keydown', onKeyPressed)
-      window.addEventListener('resize', dimensionUpdater)
+    document.addEventListener('keydown', onKeyPressed)
+    window.addEventListener('resize', dimensionUpdater)
 
-    // console.log(state)
+    return function cleanup() {
+      document.removeEventListener(
+        "keydown",
+        onKeyPressed
+      );
+      window.removeEventListener('resize', dimensionUpdater)
+    }
+  })
+
+
+  useEffect(() => {
+
+    const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
+      
+
+
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
-      // console.log('begin game')
+      console.log('begin game')
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
-      // const right = new Audio(rightSound)
-      // right.play()
-
     } 
-    else if (playMode && gameArray[index] == level[index]) {
-    }
+    // else if (playMode && gameArray[index] == level[index]) {
+    // }
     else if (playMode && gameArray[index] != level[index]
     ) {
       const wrong = new Audio(wrongSound)
@@ -140,19 +150,10 @@ function GameContainer(props) {
     if (!gameOver && watchMode && available) {
             dispatchLightUpPatternWithState()
     }
-
-
-
-    return function cleanup() {
-      document.removeEventListener(
-        "keydown",
-        onKeyPressed
-      );
-      window.removeEventListener('resize', dimensionUpdater)
-
-    }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
+
+  
   function handleClick(number) {
     if (state.watchMode) return
     dispatchClickAction(number)
@@ -305,7 +306,7 @@ function handleLegendToggle() {
           />
           <div
             className="simon-says-circle"
-            style={{ backgroundColor: "orange" }}
+            // style={{ backgroundColor: "orange" }}
           >
             <div style={{ position: "relative" }}>
               <GameBoardPiece

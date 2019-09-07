@@ -32,13 +32,13 @@ export const playModeReducer = (state, action) => {
     case RESET_LEVEL_UP:
       return {
         ...state,
-        level: state.level,
+        // level: state.level,
         // levelUp: false,
         index: -1,
         fade: true,
         gameArray: [],
-        available: state.available,
-        levelNumber: state.levelNumber,
+        // available: state.available,
+        // levelNumber: state.levelNumber,
         playMode: false
 
       };
@@ -47,9 +47,9 @@ export const playModeReducer = (state, action) => {
         ...state,
         gameArray: [...state.gameArray, action.value],
         index: ++state.index,
-        levelNumber: state.levelNumber,
-        level: state.level,
-        available: state.available,
+        // levelNumber: state.levelNumber,
+        // level: state.level,
+        // available: state.available,
         levelUp: false,
       };
     case MAIN_GAME_LOADED: 
@@ -158,7 +158,7 @@ export const useAudio = url => {
   const [playing, setPlaying] = useState(false);
 
   const toggle = () => setPlaying(!playing);
-console.log(audio)
+
   useEffect(() => {
     if (playing) {
       audio.play()
