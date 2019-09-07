@@ -125,7 +125,7 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-
+    // debugger;
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
 
@@ -134,20 +134,25 @@ function GameContainer(props) {
       console.log('begin game')
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
+      console.log('next level')
+      
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
+      console.log('start watch mode')
     } 
     // else if (playMode && gameArray[index] == level[index]) {
     // }
     else if (playMode && gameArray[index] != level[index]
     ) {
+      console.log('trigger game over')
       const wrong = new Audio(wrongSound)
       wrong.play()
       dispatch({ type: GAME_OVER_TOGGLE })
     }
 
     if (!gameOver && watchMode && available) {
+      console.log('watch mode pattern start')
             dispatchLightUpPatternWithState()
     }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
@@ -172,7 +177,11 @@ function GameContainer(props) {
       gameDispatch.push({type: getColor(level[level.length - 1])}, {type: COLOR_BUTTON_OFF}) 
     } else {
       level.forEach((num) => {
-          gameDispatch.push({ type: getColor(num) }, { type: COLOR_BUTTON_OFF });
+        console.log(num)
+
+        gameDispatch.push(
+          { type: getColor(num) },
+          { type: COLOR_BUTTON_OFF });
       });
     }
     playSeq(gameDispatch)
@@ -310,6 +319,7 @@ function handleLegendToggle() {
           >
             <div style={{ position: "relative" }}>
               <GameBoardPiece
+                watchMode={state.watchMode}
                 sound={greenSound}
                 transform={{ transform: "rotate(0deg" }}
                 lightUp={lightUpGreen}
@@ -320,6 +330,7 @@ function handleLegendToggle() {
                 dataId={1}
               />
               <GameBoardPiece
+              watchMode={state.watchMode}
                 sound={redSound}
                 transform={{ transform: "rotate(90deg" }}
                 lightUp={lightUpRed}
@@ -345,6 +356,7 @@ function handleLegendToggle() {
                 {!state.watchMode && !playMode ? "START" : null}
               </div>
               <GameBoardPiece
+              watchMode={state.watchMode}
                 sound={yellowSound}
                 transform={{ transform: "rotate(270deg" }}
                 lightUp={lightUpYellow}
@@ -355,6 +367,7 @@ function handleLegendToggle() {
                 dataId={3}
               />
               <GameBoardPiece
+              watchMode={state.watchMode}
                 sound={blueSound}
                 transform={{ transform: "rotate(180deg" }}
                 lightUp={lightUpBlue}
