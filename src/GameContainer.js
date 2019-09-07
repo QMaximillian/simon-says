@@ -170,7 +170,7 @@ function GameContainer(props) {
 
 
   function dispatchLightUpPatternWithState() {
-
+    // Not triggering audio calls, next thing to fix
     const { gameDispatch, level } = state
     
     if (level.length > 4) {
