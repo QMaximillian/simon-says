@@ -3,10 +3,12 @@ export const NEXT_LEVEL = 'NEXT_LEVEL'
 export const CLICK = 'CLICK'
 export const MAIN_GAME_LOADED = 'MAIN_GAME_LOADED'
 export const RESET_LEVEL_UP = 'RESET_LEVEL_UP'
+export const RESET_GAME_DISPATCH = 'RESET_GAME_DISPATCH'
 export const GREEN_ON = "GREEN_ON";
 export const RED_ON = "RED_ON";
 export const BLUE_ON = "BLUE_ON";
 export const YELLOW_ON = "YELLOW_ON";
+export const SOUND_ON = "SOUND_ON";
 export const COLOR_BUTTON_OFF = "COLOR_BUTTON_OFF";
 export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
@@ -67,6 +69,11 @@ export const playModeReducer = (state, action) => {
         lightUpYellow: false,
         lightUpBlue: false,
       }
+    case SOUND_ON: 
+      action.value()
+      return {
+        ...state
+      }
     case RED_ON:
       return {
         ...state,
@@ -125,6 +132,11 @@ export const playModeReducer = (state, action) => {
         return {
           ...action.value
         }
+    case RESET_GAME_DISPATCH:
+        return {
+          ...state,
+          gameDispatch: []
+        }
     case MODAL_TOGGLE:
         return {
           ...state,
@@ -168,14 +180,13 @@ export const useAudio = url => {
     
     if (playing) {
       audio.play()
-      console.log('audio playing')
     } else {
       audio.pause()
-      console.log('audio stop')
       audio.currentTime = 0
       toggle()
     }
   }, [playing]);
 
-  return [playing, toggle];
+  // return [playing, toggle];
+  return [toggle];
 };

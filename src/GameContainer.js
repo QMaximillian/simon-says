@@ -8,6 +8,8 @@ import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import wrongSound from './audio/Incorrect.wav'
+import { useAudio } from './hooks/gameReducer'
+
 // import rightSound from './audio/Correct.wav'
 import './App.css'
 import {
@@ -15,6 +17,7 @@ import {
   NEXT_LEVEL,
   CLICK,
   RESET_LEVEL_UP,
+  RESET_GAME_DISPATCH,
   GREEN_ON,
   YELLOW_ON,
   RED_ON,
@@ -26,6 +29,7 @@ import {
   RESET_GAME,
   MODAL_TOGGLE,
   SET_WINDOW_WIDTH,
+  SOUND_ON,
   debounce
 } from "./hooks/gameReducer";
 
@@ -81,6 +85,10 @@ Array.prototype.equals = function (array) {
 function GameContainer(props) {
 
   // let sound;
+  const [greenToggle] = useAudio(greenSound)
+  const [redToggle] = useAudio(redSound)
+  const [blueToggle] = useAudio(blueSound)
+  const [yellowToggle] = useAudio(yellowSound)
 
   const initialState = {
     level: [1, 2, 3, 4],
@@ -125,34 +133,29 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-    // debugger;
+
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
 
 
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
-      console.log('begin game')
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
-      console.log('next level')
       
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
-      console.log('start watch mode')
     } 
     // else if (playMode && gameArray[index] == level[index]) {
     // }
     else if (playMode && gameArray[index] != level[index]
     ) {
-      console.log('trigger game over')
       const wrong = new Audio(wrongSound)
       wrong.play()
       dispatch({ type: GAME_OVER_TOGGLE })
     }
 
     if (!gameOver && watchMode && available) {
-      console.log('watch mode pattern start')
             dispatchLightUpPatternWithState()
     }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
@@ -165,27 +168,29 @@ function GameContainer(props) {
   }
 
   function resetGame() {
-    dispatch({ type: RESET_GAME, value: initialState})
+    dispatch({ type: RESET_GAME, value: initialState })
   }
 
 
   function dispatchLightUpPatternWithState() {
-    // Not triggering audio calls, next thing to fix
-    const { gameDispatch, level } = state
     
-    if (level.length > 4) {
-      gameDispatch.push({type: getColor(level[level.length - 1])}, {type: COLOR_BUTTON_OFF}) 
-    } else {
+    const { level, gameDispatch } = state
       level.forEach((num) => {
-        console.log(num)
-
+        
         gameDispatch.push(
-          { type: getColor(num) },
-          { type: COLOR_BUTTON_OFF });
-      });
-    }
-    playSeq(gameDispatch)
+            getSound(num),
+            { type: getColor(num) },
+            { type: COLOR_BUTTON_OFF }
+          );
+    })
+
+    
+      playSeq(gameDispatch)
+      dispatch({type: RESET_GAME_DISPATCH})
+
   }
+
+
 
   function dispatchClickAction(svgId) {
     var dispatchArray = [];
@@ -211,6 +216,21 @@ function GameContainer(props) {
         return YELLOW_ON
       case id == 4:
         return BLUE_ON
+      default:
+        break;
+    }
+  }
+  
+  function getSound(id) {
+    switch (true) {
+      case id === 1:
+        return {type: SOUND_ON, value: greenToggle}
+      case id === 2:
+        return { type: SOUND_ON, value: redToggle }
+      case id === 3:
+        return { type: SOUND_ON, value: yellowToggle }
+      case id === 4:
+        return { type: SOUND_ON, value: blueToggle }
       default:
         break;
     }
@@ -255,7 +275,7 @@ function onKeyPressed(event) {
   
 
 function playSeq(sequence, intervalTime = 500) {
-    const { levelNumber} = state
+    const { levelNumber } = state
     let i = 0;
   if (levelNumber >= 5) {
     intervalTime = 500;
@@ -264,7 +284,8 @@ function playSeq(sequence, intervalTime = 500) {
     intervalTime = 200;
   }
 
-  //  console.log(sequence)
+
+  debugger;
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
@@ -319,8 +340,9 @@ function handleLegendToggle() {
           >
             <div style={{ position: "relative" }}>
               <GameBoardPiece
+                toggle={greenToggle}
                 watchMode={state.watchMode}
-                sound={greenSound}
+                // sound={greenSound}
                 transform={{ transform: "rotate(0deg" }}
                 lightUp={lightUpGreen}
                 handleClick={handleClick}
@@ -330,8 +352,9 @@ function handleLegendToggle() {
                 dataId={1}
               />
               <GameBoardPiece
+              toggle={redToggle}
               watchMode={state.watchMode}
-                sound={redSound}
+                // sound={redSound}
                 transform={{ transform: "rotate(90deg" }}
                 lightUp={lightUpRed}
                 handleClick={handleClick}
@@ -356,8 +379,9 @@ function handleLegendToggle() {
                 {!state.watchMode && !playMode ? "START" : null}
               </div>
               <GameBoardPiece
+              toggle={yellowToggle}
               watchMode={state.watchMode}
-                sound={yellowSound}
+                // sound={yellowSound}
                 transform={{ transform: "rotate(270deg" }}
                 lightUp={lightUpYellow}
                 handleClick={handleClick}
@@ -367,8 +391,9 @@ function handleLegendToggle() {
                 dataId={3}
               />
               <GameBoardPiece
+              toggle={blueToggle}
               watchMode={state.watchMode}
-                sound={blueSound}
+                // sound={blueSound}
                 transform={{ transform: "rotate(180deg" }}
                 lightUp={lightUpBlue}
                 handleClick={handleClick}

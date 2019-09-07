@@ -17,7 +17,6 @@ function GameOverModal({gameOver, levelNumber, ...props}){
     )
 }
 const HighScores = ({ users }) => {
-  console.log(users)
 
   return (
     <div>
@@ -76,7 +75,6 @@ const InitialInput = ({ levelNumber }) => {
   return (
     <Mutation mutation={ADD_INITIALS_AND_SCORE} update={updateCache}>
       {(addInitialsAndScore, { loading, data, error }) => {
-        console.log(levelNumber);
         if (error) {
           console.error(error);
           return (<div>Error!</div>)
