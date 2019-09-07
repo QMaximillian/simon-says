@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
-// import { useAudio } from './hooks/gameReducer'
 import { GameBoardPiece } from './svgs/GameBoardPiece.js'
-// import { YellowPiece } from './svgs/YellowPiece.js'
-// import { RedPiece } from './svgs/RedPiece.js'
-// import { BluePiece } from './svgs/BluePiece.js'
+import greenSound from './audio/FirstNote.mp3'
+import redSound from './audio/SecondNote.mp3'
+import yellowSound from './audio/ThirdNote.mp3'
+import blueSound from './audio/FourthNote.mp3'
 import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
@@ -111,7 +111,7 @@ function GameContainer(props) {
 
 
   useEffect(() => {
-    console.log(state.windowWidth)
+    // console.log(state.windowWidth)
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       document.addEventListener('keydown', onKeyPressed)
       window.addEventListener('resize', dimensionUpdater)
@@ -309,6 +309,7 @@ function handleLegendToggle() {
           >
             <div style={{ position: "relative" }}>
               <GameBoardPiece
+                sound={greenSound}
                 transform={{ transform: "rotate(0deg" }}
                 lightUp={lightUpGreen}
                 handleClick={handleClick}
@@ -318,6 +319,7 @@ function handleLegendToggle() {
                 dataId={1}
               />
               <GameBoardPiece
+                sound={redSound}
                 transform={{ transform: "rotate(90deg" }}
                 lightUp={lightUpRed}
                 handleClick={handleClick}
@@ -342,6 +344,7 @@ function handleLegendToggle() {
                 {!state.watchMode && !playMode ? "START" : null}
               </div>
               <GameBoardPiece
+                sound={yellowSound}
                 transform={{ transform: "rotate(270deg" }}
                 lightUp={lightUpYellow}
                 handleClick={handleClick}
@@ -351,6 +354,7 @@ function handleLegendToggle() {
                 dataId={3}
               />
               <GameBoardPiece
+                sound={blueSound}
                 transform={{ transform: "rotate(180deg" }}
                 lightUp={lightUpBlue}
                 handleClick={handleClick}

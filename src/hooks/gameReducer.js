@@ -158,7 +158,7 @@ export const useAudio = url => {
   const [playing, setPlaying] = useState(false);
 
   const toggle = () => setPlaying(!playing);
-
+console.log(audio)
   useEffect(() => {
     if (playing) {
       audio.play()

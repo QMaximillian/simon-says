@@ -1,9 +1,8 @@
 import React from 'react'
 import { useAudio } from '../hooks/gameReducer'
-import sound from '../audio/FirstNote.wav'
 import { callAll } from '../utils'
 
-export const GameBoardPiece = ({ windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
+export const GameBoardPiece = ({ sound, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
     const [playing, toggle] = useAudio(sound)
 
     if (windowWidth <= 755) {
@@ -24,13 +23,14 @@ export const GameBoardPiece = ({ windowWidth, handleClick, lightUp, playMode, tr
           >
             <path
               onClick={
-                playMode
-                  ? event =>
+                // playMode
+                //   ? 
+                  event =>
                       callAll(
                         toggle(),
                         handleClick(Number(event.target.dataset.id))
                       )
-                  : null
+                  // : null
               }
               data-id={dataId}
               pointerEvents="all"
