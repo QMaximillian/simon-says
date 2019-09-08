@@ -9,6 +9,7 @@ import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import wrongSound from './audio/Incorrect.wav'
 import { useAudio } from './hooks/gameReducer'
+import { BackgroundTransition } from './App'
 
 // import rightSound from './audio/Correct.wav'
 import './App.css'
@@ -283,7 +284,7 @@ function playSeq(sequence, intervalTime = 500) {
   }
 
 
-  debugger;
+  // debugger;
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
@@ -311,7 +312,10 @@ function handleLegendToggle() {
 
   
       return (
-        <div className="simon-says-grid">
+        <div><BackgroundTransition levelUp={state.levelUp}/>
+        <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
+          
+          <div style={{ display: 'flex'}}>
           {showLegendModal ? (
             <Legend
               handleLegendToggle={handleLegendToggle}
@@ -332,6 +336,7 @@ function handleLegendToggle() {
             gameOver={gameOver}
             resetGame={resetGame}
           />
+          </div>
           <div
             className="simon-says-circle"
             // style={{ backgroundColor: "orange" }}
@@ -370,7 +375,6 @@ function handleLegendToggle() {
                   margin: "auto",
                   left: "0",
                   right: "0",
-                  bottom: "239px",
                   zIndex: "10"
                 }}
               >
@@ -405,6 +409,7 @@ function handleLegendToggle() {
           {gameOver ? (
             <GameOverModal levelNumber={levelNumber} gameOver={gameOver} />
           ) : null}
+        </div>
         </div>
       );
   }
