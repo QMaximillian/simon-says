@@ -10,6 +10,7 @@ body {
   height: 100vh;
   width: 100vw;
   /* background-image: linear-gradient(rgba(0, 0, 0, 0.817)); */
+  background: white;
   box-sizing: border-box;
 
 }

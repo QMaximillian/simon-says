@@ -284,7 +284,7 @@ function playSeq(sequence, intervalTime = 500) {
   }
 
 
-  // debugger;
+
   var interval = setInterval(() => {
     dispatch(sequence[i]);
     i++;
@@ -312,9 +312,9 @@ function handleLegendToggle() {
 
   
       return (
-        <div><BackgroundTransition levelUp={state.levelUp}/>
+        <div><BackgroundTransition levelUp={state.levelUp} />
         <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
-          
+            
           <div style={{ display: 'flex'}}>
           {showLegendModal ? (
             <Legend
@@ -325,6 +325,7 @@ function handleLegendToggle() {
             <button
               className="button-primary legend-open-button"
               onClick={handleLegendToggle}
+              style={{position: 'absolute', top: '0', left: '0'}}
             >
               LEGEND
             </button>
@@ -338,7 +339,7 @@ function handleLegendToggle() {
           />
           </div>
           <div
-            className="simon-says-circle"
+            // className="simon-says-circle"
             // style={{ backgroundColor: "orange" }}
           >
             <div style={{ position: "relative" }}>

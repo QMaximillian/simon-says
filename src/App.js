@@ -45,7 +45,7 @@ const pages = [
 
 export function BackgroundTransition(props) {
   const [index, set] = useState(0)
-  // const onClick = useCallback(() => set(state => (state + 1) % pages.length), [])
+
   const transitions = useTransition(index, p => p, {
     from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
