@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-client'
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import { ApolloProvider } from "react-apollo";
-
+import BackgroundAnimation from './components/BackgroundAnimation'
 import './App.css';
 import GameContainer from './GameContainer'
 
@@ -25,9 +25,10 @@ const App = (props) => {
   const client = createApolloClient()
     return (
       <ApolloProvider client={client}>
-        <div className="top-level-styles">
+        {/* <div className="top-level-styles"> */}
+          {/* <BackgroundAnimation/> */}
           <GameContainer />
-        </div>
+        {/* </div> */}
       </ApolloProvider>
     );
 }
