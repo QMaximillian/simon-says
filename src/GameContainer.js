@@ -72,9 +72,11 @@ Array.prototype.equals = function (array) {
 
 // September 7th, 2019: Update
 
-// 1. useMemo to help with expensive computations where array that is dispatched is not built on every new level
+// 1. Get sound and light up to fire at the same time, combine actions in reducer, useEffect to play the sound in GameContainer
+       // a. Create dispatch events that run a COLOR AND SOUND TOGETHER and then COLOR_OFF
+// 2. useMemo to help with expensive computations where array that is dispatched is not built on every new level
 
-// 2. Create dispatch events that run a COLOR AND SOUND TOGETHER and then COLOR_OFF
+
 
 
 
