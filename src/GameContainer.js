@@ -201,7 +201,7 @@ function GameContainer(props) {
         { type: COLOR_BUTTON_OFF }
       );
     }
-    playSeq(dispatchArray, 150);
+    playSeq(dispatchArray, 100);
   }
   
 
@@ -273,14 +273,14 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 500) {
+function playSeq(sequence, intervalTime = 100) {
     const { levelNumber } = state
     let i = 0;
   if (levelNumber >= 5) {
-    intervalTime = 500;
+    // intervalTime = 500;
   } 
   else if (levelNumber >= 10) {
-    intervalTime = 200;
+    // intervalTime = 200;
   }
 
 
@@ -312,7 +312,7 @@ function handleLegendToggle() {
 
   
       return (
-        <div><BackgroundTransition levelUp={state.levelUp} />
+        <div><BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
         <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
             
           <div style={{ display: 'flex'}}>

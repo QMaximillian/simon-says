@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTransition, animated } from 'react-spring'
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -27,7 +27,6 @@ const App = (props) => {
   const client = createApolloClient()
     return (
       <ApolloProvider client={client}>
-          {/* <BackgroundTransition children={<GameContainer />}/> */}
           <GameContainer />
       </ApolloProvider>
     );
@@ -35,21 +34,38 @@ const App = (props) => {
 
 export default App
 
+
+
 const pages = [
-  ({ style }) => <animated.div style={{ ...style, background: 'lightpink' }}/>,
-  ({ style }) => <animated.div style={{ ...style, background: 'lightblue' }}/>,
-  ({ style }) => <animated.div style={{ ...style, background: 'lightgreen' }}/>,
-  ({ style }) => <animated.div style={{ ...style, background: 'teal' }}/>,
+  ({ style }) => <animated.div style={{ ...style, background: 'lightpink' }} />,
+  ({ style }) => <animated.div style={{ ...style, background: 'lightblue' }} />,
+  ({ style }) => <animated.div style={{ ...style, background: 'lightgreen' }} />,
+  ({ style }) => <animated.div style={{ ...style, background: 'orange' }} />,
+  ({ style }) => <animated.div style={{ ...style, background: 'teal' }} />,
 ]
+
 
 export function BackgroundTransition(props) {
   const [index, set] = useState(0)
 
   const transitions = useTransition(index, p => p, {
-    from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
-    enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-    leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
+    // change background color animation
+    from: { opacity: 0, transform: 'translate3d(0%,0%,100%)' },
+    enter: { opacity: 1, transform: 'translate3d(0%,0,0%)' },
+    leave: { opacity: 0, transform: 'translate3d(0,-50%, 0)' },
   })
+
+  // rtl animation
+
+    // from: { opacity: 0, transform: 'translate3d(100%,0%,0)' },
+    // enter: { opacity: 1, transform: 'translate3d(0%,0%,0)' },
+    // leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
+
+ // Bottom Up Animation
+
+  // from: { opacity: 0, transform: 'translate3d(0%,100%,0)' },
+  // enter: { opacity: 1, transform: 'translate3d(0%,0%,0)' },
+  // leave: { opacity: 0, transform: 'translate3d(0%,-50%,0)' },
 
   useEffect(() => {
     if (props.levelUp) {
