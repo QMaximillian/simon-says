@@ -1,19 +1,17 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { GameBoardPiece } from './svgs/GameBoardPiece.js'
 import greenSound from './audio/FirstNote.mp3'
 import redSound from './audio/SecondNote.mp3'
 import yellowSound from './audio/ThirdNote.mp3'
 import blueSound from './audio/FourthNote.mp3'
-import Legend from './components/Legend'
+// import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import wrongSound from './audio/Incorrect.wav'
-import { useAudio } from './hooks/gameReducer'
-import { BackgroundTransition } from './App'
-
-// import rightSound from './audio/Correct.wav'
-
+import BackgroundTransition from './components/BackgroundTransition'
 import styles from './GameContainer.module.css'
+
+
 import {
   playModeReducer,
   NEXT_LEVEL,
@@ -32,7 +30,9 @@ import {
   MODAL_TOGGLE,
   SET_WINDOW_WIDTH,
   SOUND_ON,
-  debounce
+  debounce,
+  useAudio, 
+  initialState
 } from "./hooks/gameReducer";
 
 
@@ -86,36 +86,18 @@ Array.prototype.equals = function (array) {
 
 function GameContainer(props) {
 
-  // let sound;
+
   const [greenToggle] = useAudio(greenSound)
   const [redToggle] = useAudio(redSound)
   const [blueToggle] = useAudio(blueSound)
   const [yellowToggle] = useAudio(yellowSound)
 
-  const initialState = {
-    level: [1, 2, 3, 4],
-    gameDispatch: [],
-    gameArray: [],
-    index: -1,
-    levelNumber: 1,
-    fade: false,
-    available: true,
-    levelUp: false,
-    lightUpGreen: false,
-    lightUpRed: false,
-    lightUpYellow: false,
-    lightUpBlue: false,
-    watchMode: false,
-    playMode: false,
-    gameOver: false,
-    showLegendModal: false,
-    windowWidth: window.innerWidth
-  }
-
   const [state, dispatch] = useReducer(playModeReducer, initialState)
-  // const spring = useSpring({ to: {opacity: 1}, from: { opacity: 0}, delay: 1000}
 
-  var dimensionUpdater = debounce(function() {
+  const [intervalTime, setIntervalTime] = useState(500)
+
+
+  let dimensionUpdater = debounce(function() {
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
     }, 100)
 
@@ -133,10 +115,30 @@ function GameContainer(props) {
     }
   })
 
+  useEffect(() => {
+    const { levelNumber, gameOver } = state
+    
+    if (levelNumber === 4) {
+      console.log('levelNumber5', levelNumber)
+      setIntervalTime(250)
+    } else if (levelNumber === 9) {
+      console.log('levelNumber10', levelNumber)
+
+      setIntervalTime(100);
+    }
+    else if (levelNumber === 14) {
+      console.log('levelNumber15', levelNumber)
+
+      setIntervalTime(50)
+    }
+    
+    if (gameOver) {
+      setIntervalTime(500)
+    }
+  }, [state.levelNumber, state.gameOver])
 
   useEffect(() => {
     console.log(state.level)
-
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
 
@@ -181,7 +183,7 @@ function GameContainer(props) {
       level.forEach((num) => {
         
         gameDispatch.push(
-            getSound(num),
+            { type: SOUND_ON, value: getSound(num)},
             { type: getColor(num) },
             { type: COLOR_BUTTON_OFF }
           );
@@ -205,7 +207,7 @@ function GameContainer(props) {
         { type: COLOR_BUTTON_OFF }
       );
     }
-    playSeq(dispatchArray, 100);
+    playSeq(dispatchArray, 50);
   }
   
 
@@ -227,13 +229,13 @@ function GameContainer(props) {
   function getSound(id) {
     switch (true) {
       case id === 1:
-        return {type: SOUND_ON, value: greenToggle}
+        return greenToggle 
       case id === 2:
-        return { type: SOUND_ON, value: redToggle }
+        return redToggle 
       case id === 3:
-        return { type: SOUND_ON, value: yellowToggle }
+        return yellowToggle 
       case id === 4:
-        return { type: SOUND_ON, value: blueToggle }
+        return blueToggle 
       default:
         break;
     }
@@ -277,17 +279,8 @@ function onKeyPressed(event) {
 
   
 
-function playSeq(sequence, intervalTime = 100) {
-    const { levelNumber } = state
+function playSeq(sequence, clickDispatch = intervalTime) {
     let i = 0;
-  if (levelNumber >= 5) {
-    // intervalTime = 500;
-  } 
-  else if (levelNumber >= 10) {
-    // intervalTime = 200;
-  }
-
-
 
   var interval = setInterval(() => {
     dispatch(sequence[i]);
@@ -300,7 +293,7 @@ function playSeq(sequence, intervalTime = 100) {
       
       clearInterval(interval)
     }
-  }, intervalTime)  
+  }, clickDispatch)  
 };
 
 function handleLegendToggle() {
@@ -316,93 +309,93 @@ function handleLegendToggle() {
 
   
       return (
-        <div><BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
-        <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
-            
-          <div style={{ display: 'flex'}}>
-          {showLegendModal ? (
-            <Legend
-              handleLegendToggle={handleLegendToggle}
-              show={showLegendModal}
+        <div>
+          <BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
+          <div className={styles['game-top']}>
+            <div className={styles['bulletin-container']}>
+            <GameBulletin
+              levelUp={levelUp}
+              levelNumber={levelNumber}
+              fade={fade}
+              gameOver={gameOver}
+              resetGame={resetGame}
             />
-          ) : (
-            <button
-              className="button-primary legend-open-button"
-              onClick={handleLegendToggle}
-              style={{position: 'absolute', top: '0', left: '0'}}
-            >
-              LEGEND
-            </button>
-          )}
-          <GameBulletin
-            levelUp={levelUp}
-            levelNumber={levelNumber}
-            fade={fade}
-            gameOver={gameOver}
-            resetGame={resetGame}
-          />
-          </div>
-          <div
-            // className="simon-says-circle"
-            // style={{ backgroundColor: "orange" }}
-          >
-            <div style={{ position: "relative" }}>
-              <GameBoardPiece
-                toggle={greenToggle}
-                watchMode={state.watchMode}
-                // sound={greenSound}
-                transform={{ transform: "rotate(0deg" }}
-                lightUp={lightUpGreen}
-                handleClick={handleClick}
-                playMode={playMode}
-                windowWidth={windowWidth}
-                color={"lime"}
-                dataId={1}
-              />
-              <GameBoardPiece
-              toggle={redToggle}
-              watchMode={state.watchMode}
-                // sound={redSound}
-                transform={{ transform: "rotate(90deg" }}
-                lightUp={lightUpRed}
-                handleClick={handleClick}
-                playMode={playMode}
-                windowWidth={windowWidth}
-                color={"red"}
-                dataId={2}
-              />
-              <br />
-              <div
-                onClick={() => dispatch({ type: WATCH_MODE })}
-                className={styles['start-button']}
-              >
-                {!state.watchMode && !playMode ? "START" : null}
-              </div>
-              <GameBoardPiece
-              toggle={yellowToggle}
-              watchMode={state.watchMode}
-                // sound={yellowSound}
-                transform={{ transform: "rotate(270deg" }}
-                lightUp={lightUpYellow}
-                handleClick={handleClick}
-                playMode={playMode}
-                windowWidth={windowWidth}
-                color={"yellow"}
-                dataId={3}
-              />
-              <GameBoardPiece
-              toggle={blueToggle}
-              watchMode={state.watchMode}
-                // sound={blueSound}
-                transform={{ transform: "rotate(180deg" }}
-                lightUp={lightUpBlue}
-                handleClick={handleClick}
-                playMode={playMode}
-                windowWidth={windowWidth}
-                color={"blue"}
-                dataId={4}
-              />
             </div>
+            {/* <div style={{ display: 'flex'}}>
+            {showLegendModal ? (
+              <Legend
+                handleLegendToggle={handleLegendToggle}
+                show={showLegendModal}
+              />
+            ) : (
+              <button
+                className="button-primary legend-open-button"
+                onClick={handleLegendToggle}
+                style={{position: 'absolute', top: '0', left: '0'}}
+              >
+                LEGEND
+              </button>
+            )}
+            
+            </div> */}
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <div style={{ position: "relative" }}>
+                <GameBoardPiece
+                  toggle={greenToggle}
+                  watchMode={state.watchMode}
+                  // sound={greenSound}
+                  transform={{ transform: "rotate(0deg" }}
+                  lightUp={lightUpGreen}
+                  handleClick={handleClick}
+                  playMode={playMode}
+                  windowWidth={windowWidth}
+                  color={"lime"}
+                  dataId={1}
+                />
+                <GameBoardPiece
+                toggle={redToggle}
+                watchMode={state.watchMode}
+                  // sound={redSound}
+                  transform={{ transform: "rotate(90deg" }}
+                  lightUp={lightUpRed}
+                  handleClick={handleClick}
+                  playMode={playMode}
+                  windowWidth={windowWidth}
+                  color={"red"}
+                  dataId={2}
+                />
+                <br />
+                <div
+                  onClick={() => dispatch({ type: WATCH_MODE })}
+                  className={styles['start-button']}
+                >
+                  {!state.watchMode && !playMode ? "START" : null}
+                </div>
+                <GameBoardPiece
+                toggle={yellowToggle}
+                watchMode={state.watchMode}
+                  // sound={yellowSound}
+                  transform={{ transform: "rotate(270deg" }}
+                  lightUp={lightUpYellow}
+                  handleClick={handleClick}
+                  playMode={playMode}
+                  windowWidth={windowWidth}
+                  color={"yellow"}
+                  dataId={3}
+                />
+                <GameBoardPiece
+                toggle={blueToggle}
+                watchMode={state.watchMode}
+                  // sound={blueSound}
+                  transform={{ transform: "rotate(180deg" }}
+                  lightUp={lightUpBlue}
+                  handleClick={handleClick}
+                  playMode={playMode}
+                  windowWidth={windowWidth}
+                  color={"blue"}
+                  dataId={4}
+                />
+              </div>
           </div>
           {gameOver ? (
             <GameOverModal levelNumber={levelNumber} gameOver={gameOver} />

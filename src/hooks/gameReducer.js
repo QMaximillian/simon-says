@@ -18,6 +18,25 @@ export const MODAL_TOGGLE = "MODAL_TOGGLE"
 export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH"
 
 
+export const initialState = {
+  level: [1, 2, 3, 4],
+  gameDispatch: [],
+  gameArray: [],
+  index: -1,
+  levelNumber: 1,
+  fade: false,
+  available: true,
+  levelUp: false,
+  lightUpGreen: false,
+  lightUpRed: false,
+  lightUpYellow: false,
+  lightUpBlue: false,
+  watchMode: false,
+  playMode: false,
+  gameOver: false,
+  showLegendModal: false,
+  windowWidth: window.innerWidth
+}
 
 
 export const playModeReducer = (state, action) => {

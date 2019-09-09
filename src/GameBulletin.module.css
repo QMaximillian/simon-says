@@ -1,0 +1,22 @@
+.level-number {
+    color: white;
+    font-size: 20em;
+    width: 100%;
+    margin-left: 10px;
+}
+
+.level-up {
+    color: electric;
+    font-size: 10em;
+    color: blue;
+    font-weight: bold;
+    text-shadow: 4px 4px #ffff33;
+}
+
+.top {
+ position: relative;
+ width: 100%;
+}
+
+.container {display: flex; flex-direction: column; width: 100%}
+
