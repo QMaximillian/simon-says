@@ -10,12 +10,6 @@
   font-style: italic;
 }
 
-@media only screen and (max-width: 755px) {
-  body {
-    background-color: orange;
-
-  }
-}
 
 
   
@@ -33,13 +27,6 @@ div {
   -o-transition: opacity 3s ease-in-out;
 }
 
-.black {
-  background-color: black
-}
-.start-button {
-  grid-column: 3 / span 2;
-  grid-row: 4;
-}
 
 .modal {
   position: fixed;
@@ -47,7 +34,6 @@ div {
   left: 0;
   width:100%;
   height: 100%;
-  /* background: rgba(0, 0, 0, 0.6); */
 }
 
 .modal-main {
@@ -60,14 +46,17 @@ div {
   top: 20%;
   left: 20%;
   transform: translate(-50%,-50%);
+  
 }
 
 .display-block {
   display: block;
+
 }
 
 .display-none {
   display: none;
+  
 }
 
 .game-over-modal {
@@ -77,6 +66,7 @@ div {
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+
 }
 .game-over-modal-main {
   position:fixed;
@@ -84,11 +74,9 @@ div {
   height: 50vh;
   top:50%;
   left:50%;
+
+  
   transform: translate(-50%,-50%);
   border: 5px solid black;
   background-color: palegoldenrod;
-}
-
-.button:hover {
-  content: 'Press L'
 }

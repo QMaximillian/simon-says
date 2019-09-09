@@ -12,7 +12,8 @@ import { useAudio } from './hooks/gameReducer'
 import { BackgroundTransition } from './App'
 
 // import rightSound from './audio/Correct.wav'
-import './App.css'
+
+import styles from './GameContainer.module.css'
 import {
   playModeReducer,
   NEXT_LEVEL,
@@ -134,6 +135,7 @@ function GameContainer(props) {
 
 
   useEffect(() => {
+    console.log(state.level)
 
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
@@ -371,15 +373,8 @@ function handleLegendToggle() {
               />
               <br />
               <div
-                tabIndex="0"
                 onClick={() => dispatch({ type: WATCH_MODE })}
-                style={{
-                  position: "absolute",
-                  margin: "auto",
-                  left: "0",
-                  right: "0",
-                  zIndex: "10"
-                }}
+                className={styles['start-button']}
               >
                 {!state.watchMode && !playMode ? "START" : null}
               </div>

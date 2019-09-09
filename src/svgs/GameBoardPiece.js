@@ -1,6 +1,6 @@
 import React from 'react'
 // import { useAudio } from '../hooks/gameReducer'
-import { callAll } from '../utils'
+
 
 export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
     // const [playing, toggle] = useAudio(sound)
@@ -26,11 +26,9 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
                 playMode
                   ? 
                   event => {
-                      // callAll(
                         toggle()
                         handleClick(Number(event.target.dataset.id))
                   }
-                      // )
                   : null
               }
               data-id={dataId}

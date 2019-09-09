@@ -83,9 +83,9 @@ const InitialInput = ({ levelNumber }) => {
 
 
         return (
-          <>
+          <div>
             <label>Enter Your Initials</label>
-            <input maxLength={3} onChange={handleChange} value={text} disabled={disabled ? 'disabled' : ''}/>
+            <input maxLength={3} onChange={handleChange} value={text} disabled={disabled}/>
             <button
               onClick={e => {
                 e.preventDefault();
@@ -94,7 +94,7 @@ const InitialInput = ({ levelNumber }) => {
                 setText('')
               }}>Submit
             </button>
-          </>
+          </div>
         );
       }}
     </Mutation>
@@ -106,7 +106,7 @@ const HighScoreList = ({ resetGame, levelNumber }) => {
   
 
   return (
-     <aside>
+     <aside style={{height: '100%'}}>
        <div>
          <div>
             GAME OVER
