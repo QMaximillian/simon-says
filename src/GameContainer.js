@@ -94,14 +94,15 @@ function GameContainer(props) {
   const [state, dispatch] = useReducer(playModeReducer, initialState)
 
   const [intervalTime, setIntervalTime] = useState(500)
-
+  const [fasterDuration, setFasterDuration] = useState(500)
+  const [showFasterAnimation, setShowFasterAnimation] = useState(false)
 
   let dimensionUpdater = debounce(function() {
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
     })
 
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
 
     return function cleanup() {
@@ -112,14 +113,20 @@ function GameContainer(props) {
   useEffect(() => {
     const { levelNumber, gameOver } = state
     
-    if (levelNumber === 4) {
+    if (levelNumber === 2) {
       setIntervalTime(250)
+      setShowFasterAnimation(true)
+      setFasterDuration(400)
     } 
-    else if (levelNumber === 9) {
+    else if (levelNumber === 4) {
       setIntervalTime(100);
+      setShowFasterAnimation(true);
+      setFasterDuration(300);
     }
-    else if (levelNumber === 14) {
+    else if (levelNumber === 6) {
       setIntervalTime(50)
+      setShowFasterAnimation(true);
+      setFasterDuration(200);
     }
     
     if (gameOver) {
@@ -264,6 +271,9 @@ function playSeq(sequence, clickDispatch = intervalTime) {
               fade={fade}
               gameOver={gameOver}
               resetGame={resetGame}
+              duration={fasterDuration}
+              setShowFasterAnimation={setShowFasterAnimation}
+              showFasterAnimation={showFasterAnimation}
             />
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

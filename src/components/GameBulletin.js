@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTransition, animated } from "react-spring";
+import React, {  useEffect } from 'react'
+import { useTransition, useSpring, animated } from "react-spring";
 import '../App.css'
 import styles from '../GameBulletin.module.css'
 
@@ -7,12 +7,37 @@ import styles from '../GameBulletin.module.css'
 
 
 
-const GameBulletin = ({ levelNumber, ...props }) => {
+const GameBulletin = ({ levelNumber, levelUp, fasterDuration, setShowFasterAnimation, showFasterAnimation }) => {
 
-  const transitions = useTransition(props.levelUp, null, {
+  useEffect(() => {
+    let timeout;
+    if (showFasterAnimation) {
+      timeout = setTimeout(() => setShowFasterAnimation(false), 1500)
+    }
+    
+    return function cleanup(){
+      clearTimeout(timeout)
+    }
+  }, [showFasterAnimation])
+
+  const transitions = useTransition(levelUp, null, {
     from: { opacity: 0, transform: "translate3d(-50%, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0%, 0, 0)" },
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" }
+  });
+
+  const springProps = useSpring({
+    to: [
+      { opacity: 1, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+      { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+      { opacity: 1, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+      { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+    ],
+    from: { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+    config: { duration: fasterDuration },
+    onRest: () => {
+      setShowFasterAnimation(false);
+    }
   });
 
   return (
@@ -33,6 +58,7 @@ const GameBulletin = ({ levelNumber, ...props }) => {
                 </animated.div>
               )
           )}
+          {showFasterAnimation && <animated.div style={springProps}>FASTER</animated.div>}
         </div>
       </div>
     </div>

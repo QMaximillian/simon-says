@@ -187,7 +187,6 @@ export const useAudio = url => {
 
   useEffect(() => {
     if (firstRun) {
-      console.log('here')
       setFirstRun(false)
       return
     }
