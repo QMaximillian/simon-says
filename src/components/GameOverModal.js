@@ -4,15 +4,15 @@ import { Query, Mutation } from 'react-apollo'
 import { GET_TOP_HIGH_SCORES, ADD_INITIALS_AND_SCORE } from '../hooks/gql-queries'
 
 
-function GameOverModal({gameOver, levelNumber, ...props}){
+export default function GameOverModal({gameOver, levelNumber, ...props}){
 
-    const showHideClassname = gameOver ? 'game-over-modal display-block' : "game-over-modal display-none";
+
 
     return (
-        <div className={showHideClassname}>
-            <section className="game-over-modal-main">
+        <div className="game-over-modal-main">
+          <section >
             <HighScoreList levelNumber={levelNumber}/>
-            </section>
+          </section>
         </div>
     )
 }
@@ -121,4 +121,3 @@ const HighScoreList = ({ resetGame, levelNumber }) => {
   )
 }
 
-export default GameOverModal

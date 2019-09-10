@@ -7,6 +7,7 @@ import blueSound from './audio/FourthNote.mp3'
 // import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
+import Modal from './components/Modal'
 import wrongSound from './audio/Incorrect.wav'
 import BackgroundTransition from './components/BackgroundTransition'
 import styles from './GameContainer.module.css'
@@ -96,6 +97,7 @@ function GameContainer(props) {
 
   const [intervalTime, setIntervalTime] = useState(500)
 
+  console.log('initial state', state)
 
   let dimensionUpdater = debounce(function() {
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
@@ -119,16 +121,12 @@ function GameContainer(props) {
     const { levelNumber, gameOver } = state
     
     if (levelNumber === 4) {
-      console.log('levelNumber5', levelNumber)
       setIntervalTime(250)
-    } else if (levelNumber === 9) {
-      console.log('levelNumber10', levelNumber)
-
+    } 
+    else if (levelNumber === 9) {
       setIntervalTime(100);
     }
     else if (levelNumber === 14) {
-      console.log('levelNumber15', levelNumber)
-
       setIntervalTime(50)
     }
     
@@ -138,7 +136,6 @@ function GameContainer(props) {
   }, [state.levelNumber, state.gameOver])
 
   useEffect(() => {
-    console.log(state.level)
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
 
@@ -161,6 +158,7 @@ function GameContainer(props) {
     }
 
     if (!gameOver && watchMode && available) {
+      console.log('after reset', state)
             dispatchLightUpPatternWithState()
     }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
@@ -178,7 +176,7 @@ function GameContainer(props) {
 
 
   function dispatchLightUpPatternWithState() {
-    
+    // debugger;
     const { level, gameDispatch } = state
       level.forEach((num) => {
         
@@ -369,7 +367,7 @@ function handleLegendToggle() {
                   onClick={() => dispatch({ type: WATCH_MODE })}
                   className={styles['start-button']}
                 >
-                  {!state.watchMode && !playMode ? "START" : null}
+                  {!state.watchMode && !playMode && !gameOver? "START" : null}
                 </div>
                 <GameBoardPiece
                 toggle={yellowToggle}
@@ -397,9 +395,11 @@ function handleLegendToggle() {
                 />
               </div>
           </div>
-          {gameOver ? (
-            <GameOverModal levelNumber={levelNumber} gameOver={gameOver} />
-          ) : null}
+          {/* { ? ( */}
+            {/* //  <GameOverModal levelNumber={levelNumber} gameOver={gameOver} /> */}
+            <Modal overlayClickable={true} open={gameOver} children={<GameOverModal />} onClose={resetGame}/> 
+            {/* children={<div style={{backgroundColor: '#ffffff', width: '500px', height: '500px'}}>Hello</div>}/> */}
+          {/* ) : null} */}
         </div>
         </div>
       );

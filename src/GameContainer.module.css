@@ -1,10 +1,17 @@
 .start-button {
   position: absolute;
-  margin: auto;
+  top: 50%;
   left: 0;
   right: 0;
+  transform: translateY(-50%);
   z-index: 10;
+  font-size: 10em;
+
 }
+
+/* .start-button-container {
+  display: flex
+} */
 
 .game-top {
   height: 100vh; 

@@ -54,7 +54,7 @@ export const playModeReducer = (state, action) => {
       return {
         ...state,
         // level: state.level,
-        // levelUp: false,
+        levelUp: false,
         index: -1,
         fade: true,
         gameArray: [],
@@ -149,7 +149,8 @@ export const playModeReducer = (state, action) => {
       }
     case RESET_GAME:
         return {
-          ...action.value
+          ...action.value,
+          gameDispatch: []
         }
     case RESET_GAME_DISPATCH:
         return {
@@ -193,6 +194,7 @@ export const useAudio = url => {
 
   useEffect(() => {
     if (firstRun) {
+      console.log('here')
       setFirstRun(false)
       return
     }
