@@ -97,14 +97,13 @@ function GameContainer(props) {
 
   const [intervalTime, setIntervalTime] = useState(500)
 
-  console.log('initial state', state)
 
   let dimensionUpdater = debounce(function() {
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
-    }, 100)
+    })
 
 
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     document.addEventListener('keydown', onKeyPressed)
     window.addEventListener('resize', dimensionUpdater)
 
@@ -143,7 +142,6 @@ function GameContainer(props) {
     if (watchMode && gameArray.length == 0 && levelNumber == 1){
     } 
     else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
-      
       dispatch({ type: NEXT_LEVEL })
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
@@ -158,7 +156,6 @@ function GameContainer(props) {
     }
 
     if (!gameOver && watchMode && available) {
-      console.log('after reset', state)
             dispatchLightUpPatternWithState()
     }
   }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
@@ -301,11 +298,11 @@ function handleLegendToggle() {
 
   //PLAY MODE
 
-    const { windowWidth, showLegendModal, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
+    const { windowWidth, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
 
-  
+
       return (
         <div>
           <BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
@@ -397,7 +394,7 @@ function handleLegendToggle() {
           </div>
           {/* { ? ( */}
             {/* //  <GameOverModal levelNumber={levelNumber} gameOver={gameOver} /> */}
-            <Modal overlayClickable={true} open={gameOver} children={<GameOverModal />} onClose={resetGame}/> 
+            <Modal overlayClickable={true} open={gameOver} children={<GameOverModal levelNumber={levelNumber}/>} onClose={resetGame}/> 
             {/* children={<div style={{backgroundColor: '#ffffff', width: '500px', height: '500px'}}>Hello</div>}/> */}
           {/* ) : null} */}
         </div>

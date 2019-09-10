@@ -5,10 +5,16 @@ import React from 'react'
 export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
     // const [playing, toggle] = useAudio(sound)
 
-    if (windowWidth <= 755) {
+    if (windowWidth < 755) {
         return (
             <svg style={transform} className="green" pointerEvents="none" width="200" height="200" viewBox="0 0 250 250">
-                <path onClick={(e) => handleClick(Number(e.target.dataset.id))} d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} data-id={dataId} pointerEvents="all" fill={color} />
+                <path onClick={playMode
+                  ? 
+                  event => {
+                        toggle()
+                        handleClick(Number(event.target.dataset.id))
+                  }
+                  : null} d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} data-id={dataId} pointerEvents="all" fill={color} />
             </svg>
         )
     } else {
@@ -16,8 +22,8 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
           <svg
             style={transform}
             pointerEvents="none"
-            width="1000"
-            height="1000"
+            width="250"
+            height="250"
             viewBox="0 0 252 251"
             fill="none"
           >

@@ -1,16 +1,15 @@
 .level-number {
     color: white;
-    font-size: 20em;
+    font-size: 4em;
     width: 100%;
     margin-left: 10px;
 }
 
 .level-up {
-    color: electric;
-    font-size: 10em;
+    font-size: 2em;
     color: blue;
     font-weight: bold;
-    text-shadow: 4px 4px #ffff33;
+    text-shadow: 2px 2px #ffff33;
 }
 
 .top {

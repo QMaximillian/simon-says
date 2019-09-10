@@ -1,15 +1,12 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styles from '../Modal.module.css'
 import PropTypes from 'prop-types'
 
 export default function Modal (props){
 
-    const container = useRef()
-
     function overlayClick(){
         if (props.overlayClickable) props.onClose()
     }
-
 
         const { open, onClose, showDefaultCloseBtn } = props
         if (!open) return null
@@ -29,7 +26,6 @@ export default function Modal (props){
                                 style={{ bottom: -100 }}
                                 className={styles['default-close']}
                             >
-                                {/* X circle <IoIosCloseCircle className="text-white text-6xl" /> */}
                                 <p className={styles.close}>Close</p>
                             </div>
                         )}

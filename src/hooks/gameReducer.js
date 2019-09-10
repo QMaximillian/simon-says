@@ -53,8 +53,8 @@ export const playModeReducer = (state, action) => {
     case RESET_LEVEL_UP:
       return {
         ...state,
-        // level: state.level,
-        levelUp: false,
+        level: state.level,
+        levelUp: state.levelUp,
         index: -1,
         fade: true,
         gameArray: [],
