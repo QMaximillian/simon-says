@@ -133,6 +133,7 @@ function GameContainer(props) {
 
   useEffect(() => {
 
+    if (state.watchMode) console.log(state.level)
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
       
 
@@ -184,7 +185,7 @@ function GameContainer(props) {
     })
 
     
-      playSeq(gameDispatch)
+      playSeq(gameDispatch, 500)
       dispatch({type: RESET_GAME_DISPATCH})
 
   }
@@ -201,7 +202,7 @@ function GameContainer(props) {
         { type: COLOR_BUTTON_OFF }
       );
     }
-    playSeq(dispatchArray, 150);
+    playSeq(dispatchArray, 100);
   }
   
 
@@ -280,7 +281,7 @@ function playSeq(sequence, intervalTime = 500) {
     intervalTime = 500;
   } 
   else if (levelNumber >= 10) {
-    intervalTime = 200;
+    intervalTime = 500;
   }
 
 

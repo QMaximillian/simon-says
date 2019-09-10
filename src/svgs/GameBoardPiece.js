@@ -16,8 +16,8 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
           <svg
             style={transform}
             pointerEvents="none"
-            width="1000"
-            height="1000"
+            width="200"
+            height="200"
             viewBox="0 0 252 251"
             fill="none"
           >
