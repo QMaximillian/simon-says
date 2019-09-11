@@ -13,7 +13,7 @@ const GameBulletin = ({ levelNumber, levelUp, fasterDuration, setShowFasterAnima
     let timeout;
 
     if (showFasterAnimation) {
-      timeout = setTimeout(() => setShowFasterAnimation(false), 2500)
+      timeout = setTimeout(() => setShowFasterAnimation(false), 2000)
     }
 
     return function cleanup(){
@@ -56,7 +56,7 @@ const GameBulletin = ({ levelNumber, levelUp, fasterDuration, setShowFasterAnima
                 </animated.div>
               )
           )}
-          {showFasterAnimation && <animated.div style={springProps}>FASTER</animated.div>}
+          {showFasterAnimation ? <animated.div style={springProps}>FASTER</animated.div> : null}
         </div>
       </div>
     </div>

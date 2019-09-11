@@ -22,6 +22,7 @@
 
 .game-over {
     font-size: 2em;
+    width: 100%;
 }
 
 .container {
@@ -31,15 +32,6 @@
     height: 100%;
 }
 
-.high-score-container {
-    width: 50%;
-    height:80%;
-    /* border: 1px solid red; */
-    margin-right: 5px;
-    display: flex;
-    flex-direction: column;  
-    justify-content: space-evenly;
-}
 
 .high-score {
     font-size: 1.5em;
@@ -47,7 +39,12 @@
 }
 
 .play-again {
-    margin: -80px;
+    margin-bottom: 10px;
+    font-size: 1.25em;
+    border: 1px solid white;
+    border-radius: .25rem;
+    padding: .5rem;
+
 }
 
 
@@ -58,7 +55,18 @@
     margin-left: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: start;
+}
+
+
+.high-score-container {
+    width: 50%;
+    height:80%;
+    /* border: 1px solid red; */
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;  
+    justify-content: start;
 }
 
  @keyframes gameOverBorder {
@@ -69,4 +77,17 @@
 @keyframes gameOverInside {
     to { background: peachpuff; color: black; }
     from { background:  black; color: white;}
+}
+
+.submit {
+
+    background: black;
+    color: white;
+
+    margin-bottom: 10px;
+    font-size: 1em;
+    border: 1px solid white;
+    border-radius: .25rem;
+    padding: .5rem;
+
 }

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useTransition, animated } from 'react-spring'
 
 const pages = [
-({ style }) => <animated.div style={{ ...style, background: 'lightpink' }} />,
-({ style }) => <animated.div style={{ ...style, background: 'lightblue' }} />,
-({ style }) => <animated.div style={{ ...style, background: 'lightgreen' }} />,
-({ style }) => <animated.div style={{ ...style, background: 'orange' }} />,
-({ style }) => <animated.div style={{ ...style, background: 'teal' }} />,
+({ style }) => <animated.div style={{ ...style, background: '#ffb6c1' }} />,
+    ({ style }) => <animated.div style={{ ...style, background: '#add8e6' }} />,
+    ({ style }) => <animated.div style={{ ...style, background: '#90ee90' }} />,
+    ({ style }) => <animated.div style={{ ...style, background: '#ffa500' }} />,
+    ({ style }) => <animated.div style={{ ...style, background: '#008080' }} />,
 ({ style }) => <animated.div style={{ ...style, background: '#E52A88' }} />,
 ({ style }) => <animated.div style={{ ...style, background: '#B52AF4' }} />,
 ({ style }) => <animated.div style={{ ...style, background: '#4E9059' }} />,

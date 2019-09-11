@@ -93,8 +93,8 @@ function GameContainer(props) {
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
 
-  const [intervalTime, setIntervalTime] = useState(500)
-  const [fasterDuration, setFasterDuration] = useState(500)
+  const [intervalTime, setIntervalTime] = useState(400)
+  const [fasterDuration, setFasterDuration] = useState(300)
   const [showFasterAnimation, setShowFasterAnimation] = useState(false)
 
   let dimensionUpdater = debounce(function() {
@@ -113,21 +113,27 @@ console.log(state.level);
 
   useEffect(() => {
     const { levelNumber, gameOver } = state
-    
-    if (levelNumber === 2) {
-      setIntervalTime(250)
-      setShowFasterAnimation(true)
-      setFasterDuration(500)
+    console.log('levelNumber', levelNumber)
+    if (levelNumber === 4) {
+      setIntervalTime(400)
     } 
-    else if (levelNumber === 4) {
+    else if (levelNumber === 5) {
+      setFasterDuration(400)
+      setShowFasterAnimation(true)
+    }
+    else if (levelNumber === 9) {
       setIntervalTime(100);
+    }
+    else if (levelNumber === 10) {
       setShowFasterAnimation(true);
       setFasterDuration(300);
     }
-    else if (levelNumber === 6) {
-      setIntervalTime(50)
-      setShowFasterAnimation(true);
+    else if (levelNumber === 14) {
+      setIntervalTime(75)
+    }
+    else if (levelNumber === 15) {
       setFasterDuration(200);
+      setShowFasterAnimation(true);
     }
     
     if (gameOver) {
@@ -337,7 +343,7 @@ function playSeq(sequence, clickDispatch = intervalTime) {
             <Modal
               overlayClickable={true}
               open={true || gameOver}
-              children={<GameOverModal levelNumber={levelNumber} />}
+              children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
               onClose={resetGame}
             />
           </div>

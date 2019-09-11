@@ -17,8 +17,10 @@ export default function GameOverModal({gameOver, levelNumber, resetGame }){
             <HighScoreList levelNumber={levelNumber} />
           </div>
           <div className={styles["high-score-list-container"]}>
-            <div className={styles["high-score"]}>High Scores</div>
-            <TopHighScoreListQuery />
+            <div className={styles["high-score"]} style={{marginBottom: '1rem'}}>High Scores</div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <TopHighScoreListQuery />
+            </div>
           </div>
         </div>
         <div onClick={resetGame} className={styles['play-again']}>PLAY AGAIN?</div>
@@ -30,13 +32,14 @@ export default function GameOverModal({gameOver, levelNumber, resetGame }){
 const HighScores = ({ users }) => {
 
   return (
-    <div>
+    <table>
       {users.map(user => (
-          <div key={user.id}>
-            <span>{user.name}</span><span>{user.score}</span>
-          </div>
+        <tr style={{ display: 'flex', height: '25px'}} key={user.id}>
+          <td style={{  padding:0, margin:0, verticalAlign: 'top', width: '5rem'}}>{user.name}</td>
+          <td style={{ padding:0, margin:0, verticalAlign: 'top', borderLeft: '1px solid white', width: '5rem' }}>{user.score}</td>
+        </tr>
       ))}
-    </div>)
+    </table>)
 }
 const TopHighScoreListQuery = () => {
   return (
@@ -98,9 +101,10 @@ const InitialInput = ({ levelNumber }) => {
 
         return (
           <div>
-            <label>Enter Your Initials</label>
+            <label className={styles['high-score']}>Enter Initials</label>
               <TextBox onChange={handleChange} value={text} disabled={disabled}/>
             <button
+            className={styles['submit']}
               onClick={e => {
                 e.preventDefault();
                 addInitialsAndScore({variables: { name: text, score: levelNumber }})

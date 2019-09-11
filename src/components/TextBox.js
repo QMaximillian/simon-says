@@ -1,4 +1,4 @@
-import { isEmpty } from "validator";
+
 import PropTypes from "prop-types";
 import React from "react";
 import styles from '../TextBox.module.css'
@@ -33,9 +33,9 @@ TextBox.defaultProps = {
 };
 
 TextBox.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   required: PropTypes.bool,
   type: PropTypes.oneOf(["text"]),
   value: PropTypes.string.isRequired,
