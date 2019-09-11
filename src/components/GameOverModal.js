@@ -123,7 +123,7 @@ const InitialInput = ({ levelNumber }) => {
     });
   }
 
-
+  
   return (
     <Mutation mutation={ADD_INITIALS_AND_SCORE} update={updateCache}>
       {(addInitialsAndScore, { loading, data, error }) => {

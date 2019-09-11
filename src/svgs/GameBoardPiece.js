@@ -3,11 +3,11 @@ import React from 'react'
 
 
 export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
-    // const [playing, toggle] = useAudio(sound)
+
 
     if (windowWidth < 755) {
         return (
-            <svg style={transform} className="green" pointerEvents="none" width="200" height="200" viewBox="0 0 250 250">
+            <svg style={transform} className="green" pointerEvents="none" width="200" height="200" viewBox="0 0 230 230">
                 <path onClick={playMode
                   ? 
                   event => {
@@ -22,8 +22,8 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
           <svg
             style={transform}
             pointerEvents="none"
-            width="250"
-            height="250"
+            width="230"
+            height="230"
             viewBox="0 0 252 251"
             fill="none"
           >

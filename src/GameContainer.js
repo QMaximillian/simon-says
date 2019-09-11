@@ -97,23 +97,23 @@ function GameContainer(props) {
   const [fasterDuration, setFasterDuration] = useState(300)
   const [showFasterAnimation, setShowFasterAnimation] = useState(false)
 
-  let dimensionUpdater = debounce(function() {
+  let dimensionUpdater = debounce(() => 
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
-    })
+    )
 
 
   useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
-console.log(state.level);
+
     return function cleanup() {
       window.removeEventListener('resize', dimensionUpdater)
     }
     
-  }, [state.level])
+  }, [window.innerWidth])
 
   useEffect(() => {
     const { levelNumber, gameOver } = state
-    console.log('levelNumber', levelNumber)
+
     if (levelNumber === 4) {
       setIntervalTime(400)
     } 
@@ -163,7 +163,7 @@ console.log(state.level);
     if (!gameOver && watchMode && available) {
             dispatchLightUpPatternWithState()
     }
-  }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
+  }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
 
   
