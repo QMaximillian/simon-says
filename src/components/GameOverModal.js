@@ -94,7 +94,7 @@ const InitialInput = ({ levelNumber }) => {
   }
 
   const updateCache = (cache, { data }) => {
-
+    let usersArray;
     // Logic to add it if it is in the high score list to the correct position in the list
 
     const existingUsers = cache.readQuery({
@@ -102,17 +102,27 @@ const InitialInput = ({ levelNumber }) => {
     });
 
     const newUser = data.insert_users.returning[0];
-console.log(existingUsers.users)
-    if (newUser.score >= existingUsers.users[existingUsers.users.length - 1].score) {
-      const topFourUsers = existingUsers.users.slice(0, -1)
-      const usersArray = [newUser, ...topFourUsers].sort((a, b) => b.score - a.score)
+    
+      if (existingUsers.users.length === 0) {
+        usersArray = [newUser]
+      } 
+      else if (existingUsers.users.length < 5) {
+        usersArray = [newUser, ...existingUsers.users].sort(
+          (a, b) => b.score - a.score)
+      } 
+      else if (newUser.score >= existingUsers.users[existingUsers.users.length - 1].score) {
+        const topFourUsers = existingUsers.users.slice(0, -1);
+        usersArray = [newUser, ...topFourUsers].sort(
+          (a, b) => b.score - a.score
+        );
+      }
 
     cache.writeQuery({
       query: GET_TOP_HIGH_SCORES,
       data: { users: usersArray }
     });
   }
-  };
+
 
   return (
     <Mutation mutation={ADD_INITIALS_AND_SCORE} update={updateCache}>
