@@ -96,13 +96,14 @@ function GameContainer(props) {
   const [intervalTime, setIntervalTime] = useState(400)
   const [fasterDuration, setFasterDuration] = useState(300)
   const [showFasterAnimation, setShowFasterAnimation] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(true)
   let dimensionUpdater = debounce(() => 
         dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
     )
 
 
   useEffect(() => {
+    setIsLoading(false)
     window.addEventListener('resize', dimensionUpdater)
 
     return function cleanup() {
@@ -139,7 +140,7 @@ function GameContainer(props) {
     if (gameOver) {
       setIntervalTime(500)
     }
-  }, [state.levelNumber, state.gameOver])
+  }, [state.levelNumber, state.gameOver, isLoading])
 
   useEffect(() => {
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
@@ -266,6 +267,9 @@ function playSeq(sequence, clickDispatch = intervalTime) {
 
 
 
+    if (isLoading) {
+      return null
+    } else {
       return (
         <div>
           <BackgroundTransition
@@ -349,6 +353,7 @@ function playSeq(sequence, clickDispatch = intervalTime) {
           </div>
         </div>
       );
+    }
   }
 
 
