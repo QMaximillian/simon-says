@@ -75,9 +75,15 @@ const TopHighScoreListQuery = () => {
         return (<div>Error!</div>)
       }
 
+      if (data.users.length === 0) {
+        return (<div>No High Scores</div>)
+      }
+      
+      if (data) {
       return (
           <HighScores client={client} users={data.users}/>
       )
+      }
     }}
     </Query>
   )
