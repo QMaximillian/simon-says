@@ -33,13 +33,35 @@ const HighScores = ({ users }) => {
 
   return (
     <table>
-      {users.map(user => (
-        <tr style={{ display: 'flex', height: '25px'}} key={user.id}>
-          <td style={{  padding:0, margin:0, verticalAlign: 'top', width: '5rem'}}>{user.name}</td>
-          <td style={{ padding:0, margin:0, verticalAlign: 'top', borderLeft: '1px solid white', width: '5rem' }}>{user.score}</td>
-        </tr>
-      ))}
-    </table>)
+      <tbody>
+        {users.map(user => (
+          <tr style={{ display: "flex", height: "25px" }} key={user.id}>
+            <td
+              style={{
+                padding: 0,
+                margin: 0,
+                verticalAlign: "top",
+                width: "5rem"
+              }}
+            >
+              {user.name}
+            </td>
+            <td
+              style={{
+                padding: 0,
+                margin: 0,
+                verticalAlign: "top",
+                borderLeft: "1px solid white",
+                width: "5rem"
+              }}
+            >
+              {user.score}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 const TopHighScoreListQuery = () => {
   return (
@@ -80,13 +102,16 @@ const InitialInput = ({ levelNumber }) => {
     });
 
     const newUser = data.insert_users.returning[0];
-
-    const usersArray = [newUser, ...existingUsers.users].sort((a, b) => b.score - a.score)
+console.log(existingUsers.users)
+    if (newUser.score >= existingUsers.users[existingUsers.users.length - 1].score) {
+      const topFourUsers = existingUsers.users.slice(0, -1)
+      const usersArray = [newUser, ...topFourUsers].sort((a, b) => b.score - a.score)
 
     cache.writeQuery({
       query: GET_TOP_HIGH_SCORES,
       data: { users: usersArray }
     });
+  }
   };
 
   return (

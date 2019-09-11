@@ -342,7 +342,7 @@ function playSeq(sequence, clickDispatch = intervalTime) {
             </div>
             <Modal
               overlayClickable={true}
-              open={true || gameOver}
+              open={gameOver}
               children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
               onClose={resetGame}
             />
