@@ -11,12 +11,13 @@ const GameBulletin = ({ levelNumber, levelUp, fasterDuration, setShowFasterAnima
 
   useEffect(() => {
     let timeout;
+
     if (showFasterAnimation) {
-      timeout = setTimeout(() => setShowFasterAnimation(false), 1500)
+      timeout = setTimeout(() => setShowFasterAnimation(false), 2500)
     }
-    
+
     return function cleanup(){
-      clearTimeout(timeout)
+        clearTimeout(timeout)
     }
   }, [showFasterAnimation])
 
@@ -28,16 +29,13 @@ const GameBulletin = ({ levelNumber, levelUp, fasterDuration, setShowFasterAnima
 
   const springProps = useSpring({
     to: [
-      { opacity: 1, color: "blue", fontSize: "4em", fontStyle: 'italic' },
-      { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
-      { opacity: 1, color: "blue", fontSize: "4em", fontStyle: 'italic' },
-      { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+
+      { opacity: 1, color: "blue", fontSize: "4em", fontStyle: "italic" },
+      { opacity: 0, color: "blue", fontSize: "4em", fontStyle: "italic" }
     ],
-    from: { opacity: 0, color: "blue", fontSize: "4em", fontStyle: 'italic' },
+    // leave: { opacity: 0, color: "blue", fontSize: "4em", fontStyle: "italic" },
+    from: { opacity: 0, color: "blue", fontSize: "4em", fontStyle: "italic" },
     config: { duration: fasterDuration },
-    onRest: () => {
-      setShowFasterAnimation(false);
-    }
   });
 
   return (

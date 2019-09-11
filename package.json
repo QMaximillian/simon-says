@@ -15,7 +15,8 @@
     "react-apollo": "^2.5.5",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
-    "react-spring": "^8.0.7"
+    "react-spring": "^8.0.7",
+    "validator": "^11.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

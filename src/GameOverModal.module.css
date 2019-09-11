@@ -1,0 +1,72 @@
+.game-over-modal-main {
+  position:fixed;
+  width: 60vw;
+  height: 30vh;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background: black;
+  color: white;
+  animation-name: gameOverBorder;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+}
+
+.game-over {
+    font-size: 2em;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.high-score-container {
+    width: 50%;
+    height:80%;
+    /* border: 1px solid red; */
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;  
+    justify-content: space-evenly;
+}
+
+.high-score {
+    font-size: 1.5em;
+    text-decoration: underline;
+}
+
+.play-again {
+    margin: -80px;
+}
+
+
+.high-score-list-container {
+    width: 50%;
+    height: 80%;
+    /* border: 1px solid red; */
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+ @keyframes gameOverBorder {
+  from { border: 8px solid black; }
+  to {  border: 8px solid gold;}
+}
+
+@keyframes gameOverInside {
+    to { background: peachpuff; color: black; }
+    from { background:  black; color: white;}
+}

@@ -104,11 +104,12 @@ function GameContainer(props) {
 
   useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
-
+console.log(state.level);
     return function cleanup() {
       window.removeEventListener('resize', dimensionUpdater)
     }
-  })
+    
+  }, [state.level])
 
   useEffect(() => {
     const { levelNumber, gameOver } = state
@@ -116,7 +117,7 @@ function GameContainer(props) {
     if (levelNumber === 2) {
       setIntervalTime(250)
       setShowFasterAnimation(true)
-      setFasterDuration(400)
+      setFasterDuration(500)
     } 
     else if (levelNumber === 4) {
       setIntervalTime(100);
@@ -259,24 +260,26 @@ function playSeq(sequence, clickDispatch = intervalTime) {
 
 
 
-
       return (
         <div>
-          <BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
-          <div className={styles['game-top']}>
-            <div className={styles['bulletin-container']}>
-            <GameBulletin
-              levelUp={levelUp}
-              levelNumber={levelNumber}
-              fade={fade}
-              gameOver={gameOver}
-              resetGame={resetGame}
-              duration={fasterDuration}
-              setShowFasterAnimation={setShowFasterAnimation}
-              showFasterAnimation={showFasterAnimation}
-            />
+          <BackgroundTransition
+            levelUp={state.levelUp}
+            watchMode={state.watchMode}
+          />
+          <div className={styles["game-top"]}>
+            <div className={styles["bulletin-container"]}>
+              <GameBulletin
+                levelUp={levelUp}
+                levelNumber={levelNumber}
+                fade={fade}
+                gameOver={gameOver}
+                resetGame={resetGame}
+                duration={fasterDuration}
+                setShowFasterAnimation={setShowFasterAnimation}
+                showFasterAnimation={showFasterAnimation}
+              />
             </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <div style={{ position: "relative" }}>
                 <GameBoardPiece
                   toggle={greenToggle}
@@ -303,9 +306,9 @@ function playSeq(sequence, clickDispatch = intervalTime) {
                 <br />
                 <div
                   onClick={() => dispatch({ type: WATCH_MODE })}
-                  className={styles['start-button']}
+                  className={styles["start-button"]}
                 >
-                  {!state.watchMode && !playMode && !gameOver? "START" : null}
+                  {!state.watchMode && !playMode && !gameOver ? "START" : null}
                 </div>
                 <GameBoardPiece
                   toggle={yellowToggle}
@@ -330,9 +333,14 @@ function playSeq(sequence, clickDispatch = intervalTime) {
                   dataId={4}
                 />
               </div>
+            </div>
+            <Modal
+              overlayClickable={true}
+              open={true || gameOver}
+              children={<GameOverModal levelNumber={levelNumber} />}
+              onClose={resetGame}
+            />
           </div>
-            <Modal overlayClickable={true} open={gameOver} children={<GameOverModal levelNumber={levelNumber}/>} onClose={resetGame}/> 
-        </div>
         </div>
       );
   }

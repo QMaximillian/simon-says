@@ -1,21 +1,32 @@
 import React, { useState } from 'react'
-import '../App.css'
+// import { useSpring, animated } from 'react-spring'
+import styles from '../GameOverModal.module.css'
 import { Query, Mutation } from 'react-apollo'
 import { GET_TOP_HIGH_SCORES, ADD_INITIALS_AND_SCORE } from '../hooks/gql-queries'
+import TextBox from '../components/TextBox'
+import "../App.css";
 
 
-export default function GameOverModal({gameOver, levelNumber, ...props}){
-
-
+export default function GameOverModal({gameOver, levelNumber, resetGame }){
 
     return (
-        <div className="game-over-modal-main">
-          <section >
-            <HighScoreList levelNumber={levelNumber}/>
-          </section>
+      <div className={styles["game-over-modal-main"]}>
+        <div className={styles["game-over"]}>Game Over</div>
+        <div className={styles["container"]}>
+          <div className={styles["high-score-container"]}>
+            <HighScoreList levelNumber={levelNumber} />
+          </div>
+          <div className={styles["high-score-list-container"]}>
+            <div className={styles["high-score"]}>High Scores</div>
+            <TopHighScoreListQuery />
+          </div>
         </div>
-    )
+        <div onClick={resetGame} className={styles['play-again']}>PLAY AGAIN?</div>
+      </div>
+    );
 }
+
+
 const HighScores = ({ users }) => {
 
   return (
@@ -38,7 +49,10 @@ const TopHighScoreListQuery = () => {
         console.error(error)
         return (<div>Error!</div>)
       }
-      return (<HighScores client={client} users={data.users}/>)
+
+      return (
+          <HighScores client={client} users={data.users}/>
+      )
     }}
     </Query>
   )
@@ -47,7 +61,7 @@ const TopHighScoreListQuery = () => {
 
 const InitialInput = ({ levelNumber }) => {
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [disabled, setDisabled] = useState(false)
 
   function handleChange(event) {
@@ -85,7 +99,7 @@ const InitialInput = ({ levelNumber }) => {
         return (
           <div>
             <label>Enter Your Initials</label>
-            <input maxLength={3} onChange={handleChange} value={text} disabled={disabled}/>
+              <TextBox onChange={handleChange} value={text} disabled={disabled}/>
             <button
               onClick={e => {
                 e.preventDefault();
@@ -101,23 +115,9 @@ const InitialInput = ({ levelNumber }) => {
   );
 };
 
-const HighScoreList = ({ resetGame, levelNumber }) => {
-
-  
-
+const HighScoreList = ({ levelNumber }) => {
   return (
-     <aside style={{height: '100%'}}>
-       <div>
-         <div>
-            GAME OVER
-         </div>
-         <div onClick={resetGame}>
-           PLAY AGAIN?
-         </div>
-         <InitialInput levelNumber={levelNumber}/>
-       </div>
-       <TopHighScoreListQuery />
-     </aside>
-  )
+      <InitialInput levelNumber={levelNumber} />
+  );
 }
 
