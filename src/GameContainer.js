@@ -98,12 +98,16 @@ function GameContainer(props) {
   const [showFasterAnimation, setShowFasterAnimation] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   let dimensionUpdater = debounce(() => 
-        dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
-    )
+      dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
+  )
 
 
   useEffect(() => {
     setIsLoading(false)
+  }, [isLoading])
+
+
+  useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
 
     return function cleanup() {
@@ -140,7 +144,7 @@ function GameContainer(props) {
     if (gameOver) {
       setIntervalTime(500)
     }
-  }, [state.levelNumber, state.gameOver, isLoading])
+  }, [state.levelNumber, state.gameOver])
 
   useEffect(() => {
     const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
@@ -267,94 +271,90 @@ function playSeq(sequence, clickDispatch = intervalTime) {
 
 
 
-    if (isLoading) {
-      return null
-    } else {
-      return (
-        <div>
-          <BackgroundTransition
-            levelUp={state.levelUp}
-            watchMode={state.watchMode}
-          />
-          <div className={styles["game-top"]}>
-            <div className={styles["bulletin-container"]}>
-              <GameBulletin
-                levelUp={levelUp}
-                levelNumber={levelNumber}
-                fade={fade}
-                gameOver={gameOver}
-                resetGame={resetGame}
-                duration={fasterDuration}
-                setShowFasterAnimation={setShowFasterAnimation}
-                showFasterAnimation={showFasterAnimation}
-              />
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <div style={{ position: "relative" }}>
-                <GameBoardPiece
-                  toggle={greenToggle}
-                  watchMode={state.watchMode}
-                  transform={{ transform: "rotate(0deg" }}
-                  lightUp={lightUpGreen}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"lime"}
-                  dataId={1}
-                />
-                <GameBoardPiece
-                  toggle={redToggle}
-                  watchMode={state.watchMode}
-                  transform={{ transform: "rotate(90deg" }}
-                  lightUp={lightUpRed}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"red"}
-                  dataId={2}
-                />
-                <br />
-                <div
-                  onClick={() => dispatch({ type: WATCH_MODE })}
-                  className={styles["start-button"]}
-                >
-                  {!state.watchMode && !playMode && !gameOver ? "START" : null}
-                </div>
-                <GameBoardPiece
-                  toggle={yellowToggle}
-                  watchMode={state.watchMode}
-                  transform={{ transform: "rotate(270deg" }}
-                  lightUp={lightUpYellow}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"yellow"}
-                  dataId={3}
-                />
-                <GameBoardPiece
-                  toggle={blueToggle}
-                  watchMode={state.watchMode}
-                  transform={{ transform: "rotate(180deg" }}
-                  lightUp={lightUpBlue}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"blue"}
-                  dataId={4}
+        return isLoading ? null : (
+          <div>
+            <BackgroundTransition
+              levelUp={state.levelUp}
+              watchMode={state.watchMode}
+            />
+            <div className={styles["game-top"]}>
+              <div className={styles["bulletin-container"]}>
+                <GameBulletin
+                  levelUp={levelUp}
+                  levelNumber={levelNumber}
+                  fade={fade}
+                  gameOver={gameOver}
+                  resetGame={resetGame}
+                  duration={fasterDuration}
+                  setShowFasterAnimation={setShowFasterAnimation}
+                  showFasterAnimation={showFasterAnimation}
                 />
               </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{ position: "relative" }}>
+                  <GameBoardPiece
+                    toggle={greenToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(0deg" }}
+                    lightUp={lightUpGreen}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"lime"}
+                    dataId={1}
+                  />
+                  <GameBoardPiece
+                    toggle={redToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(90deg" }}
+                    lightUp={lightUpRed}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"red"}
+                    dataId={2}
+                  />
+                  <br />
+                  <div
+                    onClick={() => dispatch({ type: WATCH_MODE })}
+                    className={styles["start-button"]}
+                  >
+                    {!state.watchMode && !playMode && !gameOver ? "START" : null}
+                  </div>
+                  <GameBoardPiece
+                    toggle={yellowToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(270deg" }}
+                    lightUp={lightUpYellow}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"yellow"}
+                    dataId={3}
+                  />
+                  <GameBoardPiece
+                    toggle={blueToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(180deg" }}
+                    lightUp={lightUpBlue}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"blue"}
+                    dataId={4}
+                  />
+                </div>
+              </div>
+              <Modal
+                overlayClickable={true}
+                open={gameOver}
+                children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
+                onClose={resetGame}
+              />
             </div>
-            <Modal
-              overlayClickable={true}
-              open={gameOver}
-              children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
-              onClose={resetGame}
-            />
           </div>
-        </div>
-      );
-    }
-  }
+        );
+      }
 
 
 export default GameContainer 

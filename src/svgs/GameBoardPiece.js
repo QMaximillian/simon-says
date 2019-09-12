@@ -7,14 +7,14 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
 
     if (windowWidth < 755) {
         return (
-            <svg style={transform} className="green" pointerEvents="none" width="200" height="200" viewBox="0 0 230 230">
-                <path onClick={playMode
-                  ? 
-                  event => {
-                        toggle()
-                        handleClick(Number(event.target.dataset.id))
-                  }
-                  : null} d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} data-id={dataId} pointerEvents="all" fill={color} />
+          <svg  className="green" pointerEvents="none" width="230" height="230">
+            <rect onClick={playMode
+              ?
+              event => {
+                toggle()
+                handleClick(Number(event.target.dataset.id))
+              }
+              : null}x="10" y="10" width="220" height="220" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
             </svg>
         )
     } else {

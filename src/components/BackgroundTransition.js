@@ -65,6 +65,7 @@ const pages = [
 export default function BackgroundTransition(props) {
     const [index, set] = useState(0)
 
+
     
     const transitions = useTransition(index, p => p, {
         // change background color animation
