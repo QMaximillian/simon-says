@@ -20,6 +20,7 @@ pattern ends, mimic the pattern back to advance to the next level. If you fail t
 - More uniform, terse styles
 - Replace Apollo components with hooks
 - Animation for signalling the beginning of watching the pattern, and playing the game
+- Better experience playing on mobile
 - Game Modes: Remove sounds, increase speed, fire off pattern at different speeds
 
 
