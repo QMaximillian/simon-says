@@ -14,7 +14,6 @@ export const PLAY_MODE = "PLAY_MODE";
 export const WATCH_MODE = "WATCH_MODE";
 export const GAME_OVER_TOGGLE = "GAME_OVER_TOGGLE";
 export const RESET_GAME = "RESET_GAME"
-export const MODAL_TOGGLE = "MODAL_TOGGLE"
 export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH"
 
 
@@ -34,7 +33,6 @@ export const initialState = {
   watchMode: false,
   playMode: false,
   gameOver: false,
-  showLegendModal: false,
   windowWidth: window.innerWidth
 }
 
@@ -157,11 +155,6 @@ export const playModeReducer = (state, action) => {
           ...state,
           gameDispatch: []
         }
-    case MODAL_TOGGLE:
-        return {
-          ...state,
-          showLegendModal: !state.showLegendModal
-        }
     case SET_WINDOW_WIDTH:
       return {
         ...state,
@@ -194,7 +187,6 @@ export const useAudio = url => {
 
   useEffect(() => {
     if (firstRun) {
-      console.log('here')
       setFirstRun(false)
       return
     }

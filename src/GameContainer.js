@@ -4,7 +4,6 @@ import greenSound from './audio/FirstNote.mp3'
 import redSound from './audio/SecondNote.mp3'
 import yellowSound from './audio/ThirdNote.mp3'
 import blueSound from './audio/FourthNote.mp3'
-// import Legend from './components/Legend'
 import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import Modal from './components/Modal'
@@ -28,7 +27,6 @@ import {
   COLOR_BUTTON_OFF,
   GAME_OVER_TOGGLE,
   RESET_GAME,
-  MODAL_TOGGLE,
   SET_WINDOW_WIDTH,
   SOUND_ON,
   debounce,
@@ -76,7 +74,7 @@ Array.prototype.equals = function (array) {
 
 // 1. Get sound and light up to fire at the same time, combine actions in reducer, useEffect to play the sound in GameContainer
        // a. Create dispatch events that run a COLOR AND SOUND TOGETHER and then COLOR_OFF
-// 2. useMemo to help with expensive computations where array that is dispatched is not built on every new level
+
 
 
 
@@ -95,38 +93,52 @@ function GameContainer(props) {
 
   const [state, dispatch] = useReducer(playModeReducer, initialState)
 
-  const [intervalTime, setIntervalTime] = useState(500)
+  const [intervalTime, setIntervalTime] = useState(400)
+  const [fasterDuration, setFasterDuration] = useState(300)
+  const [showFasterAnimation, setShowFasterAnimation] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  let dimensionUpdater = debounce(() => 
+      dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
+  )
 
 
-  let dimensionUpdater = debounce(function() {
-        dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
-    })
+  useEffect(() => {
+    setIsLoading(false)
+  }, [isLoading])
 
 
-  React.useLayoutEffect(() => {
-    document.addEventListener('keydown', onKeyPressed)
+  useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
 
     return function cleanup() {
-      document.removeEventListener(
-        "keydown",
-        onKeyPressed
-      );
       window.removeEventListener('resize', dimensionUpdater)
     }
-  })
+    
+  }, [window.innerWidth])
 
   useEffect(() => {
     const { levelNumber, gameOver } = state
-    
+
     if (levelNumber === 4) {
-      setIntervalTime(250)
+      setIntervalTime(400)
     } 
+    else if (levelNumber === 5) {
+      setFasterDuration(400)
+      setShowFasterAnimation(true)
+    }
     else if (levelNumber === 9) {
       setIntervalTime(100);
     }
+    else if (levelNumber === 10) {
+      setShowFasterAnimation(true);
+      setFasterDuration(300);
+    }
     else if (levelNumber === 14) {
-      setIntervalTime(50)
+      setIntervalTime(75)
+    }
+    else if (levelNumber === 15) {
+      setFasterDuration(200);
+      setShowFasterAnimation(true);
     }
     
     if (gameOver) {
@@ -146,8 +158,6 @@ function GameContainer(props) {
       dispatch({ type: RESET_LEVEL_UP })
       dispatch({ type: WATCH_MODE })
     } 
-    // else if (playMode && gameArray[index] == level[index]) {
-    // }
     else if (playMode && gameArray[index] != level[index]
     ) {
       const wrong = new Audio(wrongSound)
@@ -158,7 +168,7 @@ function GameContainer(props) {
     if (!gameOver && watchMode && available) {
             dispatchLightUpPatternWithState()
     }
-  }, [window.innerWidth, state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
+  }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
 
   
@@ -173,7 +183,7 @@ function GameContainer(props) {
 
 
   function dispatchLightUpPatternWithState() {
-    // debugger;
+
     const { level, gameDispatch } = state
       level.forEach((num) => {
         
@@ -236,42 +246,6 @@ function GameContainer(props) {
     }
   }
 
-
-function onKeyPressed(event) {
-  // switch statement (include other possible keypress combinations?)
-  // allow user to use a lifeline to see the sequence one more time
-    const { keyCode } = event
-  const { playMode, watchMode } = state
-
-  if (keyCode == 82) resetGame()
-
-    if (gameOver) return 
-
-    if (keyCode == 13) {
-      return playMode || watchMode
-        ? null
-        : dispatch({ type: WATCH_MODE });
-    }
-
-    
-    if (keyCode == 76) handleLegendToggle()
-
-    if (playMode) {
-      switch (true) {
-          case keyCode == 81:
-            return dispatchClickAction(1);
-          case keyCode == 87:
-            return dispatchClickAction(2);
-          case keyCode == 65:
-            return dispatchClickAction(3);
-          case keyCode == 83:
-            return dispatchClickAction(4);
-        default:
-          return;
-      }
-    }
-}
-
   
 
 function playSeq(sequence, clickDispatch = intervalTime) {
@@ -291,116 +265,96 @@ function playSeq(sequence, clickDispatch = intervalTime) {
   }, clickDispatch)  
 };
 
-function handleLegendToggle() {
-  dispatch({type: MODAL_TOGGLE})
-}
 
-
-  //PLAY MODE
 
     const { windowWidth, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
 
 
 
-
-      return (
-        <div>
-          <BackgroundTransition levelUp={state.levelUp} watchMode={state.watchMode}/>
-          <div className={styles['game-top']}>
-            <div className={styles['bulletin-container']}>
-            <GameBulletin
-              levelUp={levelUp}
-              levelNumber={levelNumber}
-              fade={fade}
-              gameOver={gameOver}
-              resetGame={resetGame}
+        return isLoading ? null : (
+          <div>
+            <BackgroundTransition
+              levelUp={state.levelUp}
+              watchMode={state.watchMode}
             />
-            </div>
-            {/* <div style={{ display: 'flex'}}>
-            {showLegendModal ? (
-              <Legend
-                handleLegendToggle={handleLegendToggle}
-                show={showLegendModal}
-              />
-            ) : (
-              <button
-                className="button-primary legend-open-button"
-                onClick={handleLegendToggle}
-                style={{position: 'absolute', top: '0', left: '0'}}
-              >
-                LEGEND
-              </button>
-            )}
-            
-            </div> */}
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-              <div style={{ position: "relative" }}>
-                <GameBoardPiece
-                  toggle={greenToggle}
-                  watchMode={state.watchMode}
-                  // sound={greenSound}
-                  transform={{ transform: "rotate(0deg" }}
-                  lightUp={lightUpGreen}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"lime"}
-                  dataId={1}
-                />
-                <GameBoardPiece
-                toggle={redToggle}
-                watchMode={state.watchMode}
-                  // sound={redSound}
-                  transform={{ transform: "rotate(90deg" }}
-                  lightUp={lightUpRed}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"red"}
-                  dataId={2}
-                />
-                <br />
-                <div
-                  onClick={() => dispatch({ type: WATCH_MODE })}
-                  className={styles['start-button']}
-                >
-                  {!state.watchMode && !playMode && !gameOver? "START" : null}
-                </div>
-                <GameBoardPiece
-                toggle={yellowToggle}
-                watchMode={state.watchMode}
-                  // sound={yellowSound}
-                  transform={{ transform: "rotate(270deg" }}
-                  lightUp={lightUpYellow}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"yellow"}
-                  dataId={3}
-                />
-                <GameBoardPiece
-                toggle={blueToggle}
-                watchMode={state.watchMode}
-                  // sound={blueSound}
-                  transform={{ transform: "rotate(180deg" }}
-                  lightUp={lightUpBlue}
-                  handleClick={handleClick}
-                  playMode={playMode}
-                  windowWidth={windowWidth}
-                  color={"blue"}
-                  dataId={4}
+            <div className={styles["game-top"]}>
+              <div className={styles["bulletin-container"]}>
+                <GameBulletin
+                  levelUp={levelUp}
+                  levelNumber={levelNumber}
+                  fade={fade}
+                  gameOver={gameOver}
+                  resetGame={resetGame}
+                  duration={fasterDuration}
+                  setShowFasterAnimation={setShowFasterAnimation}
+                  showFasterAnimation={showFasterAnimation}
                 />
               </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{ position: "relative" }}>
+                  <GameBoardPiece
+                    toggle={greenToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(0deg" }}
+                    lightUp={lightUpGreen}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"lime"}
+                    dataId={1}
+                  />
+                  <GameBoardPiece
+                    toggle={redToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(90deg" }}
+                    lightUp={lightUpRed}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"red"}
+                    dataId={2}
+                  />
+                  <br />
+                  <div
+                    onClick={() => dispatch({ type: WATCH_MODE })}
+                    className={styles["start-button"]}
+                  >
+                    {!state.watchMode && !playMode && !gameOver ? "START" : null}
+                  </div>
+                  <GameBoardPiece
+                    toggle={yellowToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(270deg" }}
+                    lightUp={lightUpYellow}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"yellow"}
+                    dataId={3}
+                  />
+                  <GameBoardPiece
+                    toggle={blueToggle}
+                    watchMode={state.watchMode}
+                    transform={{ transform: "rotate(180deg" }}
+                    lightUp={lightUpBlue}
+                    handleClick={handleClick}
+                    playMode={playMode}
+                    windowWidth={windowWidth}
+                    color={"blue"}
+                    dataId={4}
+                  />
+                </div>
+              </div>
+              <Modal
+                overlayClickable={true}
+                open={gameOver}
+                children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
+                onClose={resetGame}
+              />
+            </div>
           </div>
-          {/* { ? ( */}
-            {/* //  <GameOverModal levelNumber={levelNumber} gameOver={gameOver} /> */}
-            <Modal overlayClickable={true} open={gameOver} children={<GameOverModal levelNumber={levelNumber}/>} onClose={resetGame}/> 
-            {/* children={<div style={{backgroundColor: '#ffffff', width: '500px', height: '500px'}}>Hello</div>}/> */}
-          {/* ) : null} */}
-        </div>
-        </div>
-      );
-  }
+        );
+      }
 
 
 export default GameContainer 

@@ -3,18 +3,17 @@ import React from 'react'
 
 
 export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
-    // const [playing, toggle] = useAudio(sound)
 
-    if (windowWidth < 755) {
+  if (windowWidth < 755) {
         return (
-            <svg style={transform} className="green" pointerEvents="none" width="200" height="200" viewBox="0 0 250 250">
-                <path onClick={playMode
-                  ? 
-                  event => {
-                        toggle()
-                        handleClick(Number(event.target.dataset.id))
-                  }
-                  : null} d="M4 4H246V246H4V4Z" stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} data-id={dataId} pointerEvents="all" fill={color} />
+          <svg  className="green" pointerEvents="none" width="230" height="230">
+            <rect onClick={playMode
+              ?
+              event => {
+                toggle()
+                handleClick(Number(event.target.dataset.id))
+              }
+              : null}x="10" y="10" width="210" height="210" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
             </svg>
         )
     } else {
@@ -22,8 +21,8 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
           <svg
             style={transform}
             pointerEvents="none"
-            width="250"
-            height="250"
+            width="230"
+            height="230"
             viewBox="0 0 252 251"
             fill="none"
           >
