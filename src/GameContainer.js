@@ -108,9 +108,11 @@ function GameContainer(props) {
 
 
   useEffect(() => {
+    document.addEventListener("keydown", onKeyPressed);
     window.addEventListener('resize', dimensionUpdater)
 
     return function cleanup() {
+      document.removeEventListener("keydown", onKeyPressed);
       window.removeEventListener('resize', dimensionUpdater)
     }
     
@@ -171,7 +173,38 @@ function GameContainer(props) {
   }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
 
 
-  
+  function onKeyPressed(event) {
+    // switch statement (include other possible keypress combinations?)
+    // allow user to use a lifeline to see the sequence one more time
+    const { keyCode } = event;
+    const { playMode, watchMode } = state;
+
+    if (keyCode == 82) resetGame();
+
+    if (gameOver) return;
+
+    if (keyCode == 13) {
+      return playMode || watchMode ? null : dispatch({ type: WATCH_MODE });
+    }
+
+    // if (keyCode == 76) handleLegendToggle();
+
+    if (playMode) {
+      switch (true) {
+        case keyCode == 81:
+          return dispatchClickAction(1);
+        case keyCode == 87:
+          return dispatchClickAction(2);
+        case keyCode == 65:
+          return dispatchClickAction(3);
+        case keyCode == 83:
+          return dispatchClickAction(4);
+        default:
+          return;
+      }
+    }
+  }
+
   function handleClick(number) {
     if (state.watchMode) return
     dispatchClickAction(number)
