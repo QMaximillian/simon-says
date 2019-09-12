@@ -4,8 +4,7 @@ import React from 'react'
 
 export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, lightUp, playMode, transform, color, dataId }) => {
 
-
-    if (windowWidth < 755) {
+  if (windowWidth < 755) {
         return (
           <svg  className="green" pointerEvents="none" width="230" height="230">
             <rect onClick={playMode
@@ -14,7 +13,7 @@ export const GameBoardPiece = ({ toggle, watchMode, windowWidth, handleClick, li
                 toggle()
                 handleClick(Number(event.target.dataset.id))
               }
-              : null}x="10" y="10" width="220" height="220" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
+              : null}x="10" y="10" width="210" height="210" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
             </svg>
         )
     } else {
