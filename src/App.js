@@ -7,6 +7,7 @@ import { ApolloProvider } from "react-apollo";
 import './index.css'
 import './App.css';
 import GameContainer from './GameContainer'
+import SpaceBackground from './components/SpaceBackground'
 
 const createApolloClient = () => {
   return new ApolloClient({
@@ -26,7 +27,9 @@ const App = (props) => {
   const client = createApolloClient()
     return (
       <ApolloProvider client={client}>
+        <SpaceBackground>
           <GameContainer />
+          </SpaceBackground>
       </ApolloProvider>
     );
 }

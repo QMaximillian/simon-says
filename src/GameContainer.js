@@ -8,7 +8,7 @@ import GameBulletin from './components/GameBulletin'
 import GameOverModal from './components/GameOverModal'
 import Modal from './components/Modal'
 import wrongSound from './audio/Incorrect.wav'
-import BackgroundTransition from './components/BackgroundTransition'
+// import BackgroundTransition from './components/BackgroundTransition'
 import styles from './GameContainer.module.css'
 
 
@@ -272,11 +272,11 @@ function playSeq(sequence, clickDispatch = intervalTime) {
 
 
         return isLoading ? null : (
-          <div>
-            <BackgroundTransition
+          <>
+            {/* <BackgroundTransition
               levelUp={state.levelUp}
               watchMode={state.watchMode}
-            />
+            /> */}
             <div className={styles["game-top"]}>
               <div className={styles["bulletin-container"]}>
                 <GameBulletin
@@ -352,7 +352,7 @@ function playSeq(sequence, clickDispatch = intervalTime) {
                 onClose={resetGame}
               />
             </div>
-          </div>
+          </>
         );
       }
 
