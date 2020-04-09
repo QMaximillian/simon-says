@@ -278,7 +278,7 @@ function playSeq(sequence, clickDispatch = intervalTime) {
               watchMode={state.watchMode}
             /> */}
             <div className={styles["game-top"]}>
-              <div className={styles["bulletin-container"]}>
+              {/* <div className={styles["bulletin-container"]}>
                 <GameBulletin
                   levelUp={levelUp}
                   levelNumber={levelNumber}
@@ -288,14 +288,14 @@ function playSeq(sequence, clickDispatch = intervalTime) {
                   duration={fasterDuration}
                   setShowFasterAnimation={setShowFasterAnimation}
                   showFasterAnimation={showFasterAnimation}
-                />
-              </div>
+                /> */}
+              {/* </div> */}
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div style={{ position: "relative" }}>
                   <GameBoardPiece
                     toggle={greenToggle}
                     watchMode={state.watchMode}
-                    transform={{ transform: "rotate(0deg" }}
+                    transform={{ transform: "rotate(0deg)" }}
                     lightUp={lightUpGreen}
                     handleClick={handleClick}
                     playMode={playMode}

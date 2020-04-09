@@ -8,19 +8,19 @@ export const GameBoardPieceTHREEjs = ({ toggle, watchMode, windowWidth, handleCl
 
   const mesh = React.useRef()
 
-  if (windowWidth < 755) {
-        return (
-          <svg  className="green" pointerEvents="none" width="230" height="230">
-            <rect onClick={playMode
-              ?
-              event => {
-                toggle()
-                handleClick(Number(event.target.dataset.id))
-              }
-              : null}x="10" y="10" width="210" height="210" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
-            </svg>
-        )
-    } else {
+  // if (windowWidth < 755) {
+  //       return (
+  //         <svg  className="green" pointerEvents="none" width="230" height="230">
+  //           <rect onClick={playMode
+  //             ?
+  //             event => {
+  //               toggle()
+  //               handleClick(Number(event.target.dataset.id))
+  //             }
+  //             : null}x="10" y="10" width="210" height="210" data-id={dataId} pointerEvents="all"  stroke={lightUp ? "gold" : "black"} fill={color} strokeWidth={lightUp ? "8px" : "1px"} />
+  //           </svg>
+  //       )
+  //   } else {
       let svgMarkup = `
       <svg
       style={transform}
@@ -68,7 +68,7 @@ export const GameBoardPieceTHREEjs = ({ toggle, watchMode, windowWidth, handleCl
           
         );
     }
-}
+// }
 
 function Svg({url}){
   const { paths } = useLoader(SVGLoader, url)
