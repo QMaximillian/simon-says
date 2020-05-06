@@ -1,42 +1,42 @@
-/** @jsx jsx */ import {css, jsx} from '@emotion/core'
+import React from 'react'
 import { KeyboardQ } from '../svgs/KeyboardSVGS'
-
+import styles from '../styles/Legend.module.css'
 
 function Legend({ show, handleLegendToggle, ...props}){
 
      return(
        <div className={show ? 'modal display-block' : 'modal display-none'}>
         <section className="modal-main">
-          <div css={legendContainer}>
+          <div className={styles.legendContainer}>
             <div
               className="x-modal"
               onClick={handleLegendToggle}
             />
-            <div css={legend}>Legend</div>
-            <div css={greenKey}>
+            <div className={styles.legend}>Legend</div>
+            <div className={styles.greenKey}>
               <label>Green</label>
               <div>
                 <KeyboardQ />
               </div>
             </div>
 
-            <div css={redKey}>
+            <div className={styles.redKey}>
               <label>W</label>
               <div>Red</div>
             </div>
-            <div css={yellowKey}>
+            <div className={styles.yellowKey}>
               <label>A</label>
               <div>Yellow</div>
             </div>
-            <div css={blueKey}>
+            <div className={styles.blueKey}>
               <label>D</label>
               <div>Blue</div>
             </div>
-            <div css={restartGame}>
+            <div className={styles.restartGame}>
               <label>R</label>
               <div>Restart Game</div>
             </div>
-            <div css={startGame}>
+            <div className={styles.startGame}>
               <div>Start Game</div>
               <label>Enter</label>
             </div>
@@ -45,52 +45,5 @@ function Legend({ show, handleLegendToggle, ...props}){
        </div>
         )     
 }   
-//https://spectrum.chat/next-js/general/looping-using-es6-map-in-styled-jsx~69e52ff1-6938-44c7-8f54-99150508e863
-//define grid holding these keyboard key values
-// iterate through all keys defining their grid positioning using JSX
-// Allow max 5 per row
-
-
-const legendContainer = css`
-              grid-column: 1 / span 2;
-              display: grid;
-              grid-template-columns: repeat(5, 1fr);
-              grid-template-rows: repeat(3, 1fr);
-            `
-
-const legend = css`
-    grid-column: 1 / span 5;
-    grid-row: 1;
-`
-
-const greenKey = css`
-    grid-column: 1;
-    grid-row: 2;
-`
-
-const yellowKey = css`
-    grid-column: 3;
-    grid-row: 2;
-`
-
-const redKey = css`
-    grid-column: 2;
-    grid-row: 2;
-`
-
-const blueKey = css`
-    grid-column: 4;
-    grid-row: 2;
-`
-
-const startGame = css`
-    grid-column: 1;
-    grid-row: 3;
-`
-
-const restartGame = css`
-    grid-column: 3;
-    grid-row: 3;
-`;
 
 export default Legend

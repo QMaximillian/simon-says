@@ -1,7 +1,7 @@
 import React, {  useEffect } from 'react'
 import { useTransition, useSpring, animated } from "react-spring";
 import '../App.css'
-import styles from '../GameBulletin.module.css'
+import styles from '../styles/GameBulletin.module.css'
 
 
 

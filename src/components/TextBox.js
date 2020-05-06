@@ -1,14 +1,10 @@
 
 import PropTypes from "prop-types";
 import React from "react";
-import styles from '../TextBox.module.css'
+import styles from '../styles/TextBox.module.css'
 
 // A simple text input to take user input.
 export default function TextBox(props){
-
-
-
-
 
     return (
       <div>

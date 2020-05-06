@@ -9,7 +9,7 @@ import GameOverModal from './components/GameOverModal'
 import Modal from './components/Modal'
 import wrongSound from './audio/Incorrect.wav'
 import BackgroundTransition from './components/BackgroundTransition'
-import styles from './GameContainer.module.css'
+import styles from './styles/GameContainer.module.css'
 
 
 import {

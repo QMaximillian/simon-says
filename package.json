@@ -7,20 +7,16 @@
     "node": "10.8.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.10",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.14",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
-    "gsap": "^2.1.2",
     "react": "^16.8.2",
     "react-apollo": "^2.5.5",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
-    "react-spring": "^8.0.7",
-    "validator": "^11.1.0"
+    "react-spring": "^8.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,7 +35,6 @@
   ],
   "devDependencies": {
     "autoprefixer": "^9.5.1",
-    "postcss-cli": "^6.1.2",
-    "tailwindcss": "^1.0.1"
+    "postcss-cli": "^6.1.2"
   }
 }

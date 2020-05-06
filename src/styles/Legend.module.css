@@ -1,0 +1,44 @@
+.legendContainer {
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.legend {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+}
+
+.greenKey {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+
+.yellowKey {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.redKey {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.blueKey {
+  grid-column: 4;
+  grid-row: 2;
+
+}
+
+.startGame {
+  grid-column: 1;
+  grid-row: 3;
+
+}
+
+.restartGame {
+  grid-column: 3;
+  grid-row: 3;
+}

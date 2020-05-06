@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-// import { useSpring, animated } from 'react-spring'
-import styles from '../GameOverModal.module.css'
+import styles from '../styles/GameOverModal.module.css'
 import { Query, Mutation } from 'react-apollo'
-import { GET_TOP_HIGH_SCORES, ADD_INITIALS_AND_SCORE } from '../hooks/gql-queries'
 import TextBox from '../components/TextBox'
 import "../App.css";
 
+import { GET_TOP_HIGH_SCORES, ADD_INITIALS_AND_SCORE } from '../hooks/gql-queries'
 
 export default function GameOverModal({gameOver, levelNumber, resetGame }){
 
