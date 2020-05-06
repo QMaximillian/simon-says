@@ -9,18 +9,20 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
+    "@xstate/react": "^0.8.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
-    "apollo-link-http": "^1.5.14",
+    "apollo-link-http": "^1.5.17",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "gsap": "^2.1.2",
-    "react": "^16.8.2",
+    "react": "^16.13.1",
     "react-apollo": "^2.5.5",
-    "react-dom": "^16.8.2",
+    "react-dom": "^16.13.1",
     "react-scripts": "2.1.5",
     "react-spring": "^8.0.7",
-    "validator": "^11.1.0"
+    "validator": "^11.1.0",
+    "xstate": "^4.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,8 +40,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "autoprefixer": "^9.5.1",
+    "autoprefixer": "^9.7.6",
     "postcss-cli": "^6.1.2",
-    "tailwindcss": "^1.0.1"
+    "tailwindcss": "^1.4.4"
   }
 }
