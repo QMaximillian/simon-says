@@ -17,14 +17,8 @@ export const gameMachine = Machine({
          invoke: {
            id: 'sound',
            src: playSequenceMachine,
-           onDone: 'playMode'
+           onDone: 'playMode',
          },
-        //  on: {
-        //   PLAY_RED: { 
-        //     actions: send('PLAY_RED', { to: 'sound'
-        //     })
-        //   }
-        // }
        },
        playMode: {
          on: {
@@ -37,7 +31,7 @@ export const gameMachine = Machine({
       on: {
         WATCH_MODE: '#gameOn.watchMode'
       }
-    },
+  },
     gameOver: {
       on: {
         RESTART_GAME: '#gameOn.watchMode'
