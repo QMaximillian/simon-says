@@ -1,5 +1,14 @@
 import { Machine, assign } from 'xstate'
 import {playSequenceMachine} from './playSequenceMachine'
+import greenSound from '../audio/FirstNote.mp3'
+import redSound from '../audio/SecondNote.mp3'
+import yellowSound from '../audio/ThirdNote.mp3'
+import blueSound from '../audio/FourthNote.mp3'
+
+const greenAudio = new Audio(greenSound)
+const redAudio = new Audio(redSound)
+const yellowAudio = new Audio(yellowSound)
+const blueAudio = new Audio(blueSound)
 
 export const gameMachine = Machine({
   id: 'gameMachine',
@@ -39,11 +48,9 @@ export const gameMachine = Machine({
     }
   }
 }, {
-  actions: {
-    createWatchModePattern: assign({
-      gameDispatchSequence: (context, event) => context.levelSequence
-    }),
-  }
+  actions: assign({
+    // Create array of promises
+  })
 })
 
 

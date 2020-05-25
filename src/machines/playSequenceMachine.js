@@ -25,18 +25,23 @@ export const playSequenceMachine = Machine({
   },
   states: {
     base: {
-      entry: ['redPieceOn']
-    },
-    redPiece: {
-    },
-    bluePiece: {
-
-    },
-    greenPiece: {
-
-    },
-    yellowPiece: {
-
+      initial: 'RED_PIECE',
+      entry: ['dispatchWatchModePattern'],
+      states: {
+        
+          RED_PIECE: {
+            entry: 'redPieceOn'
+          },
+          BLUE_PIECE: {
+            target: 'bluePieceOn'
+          },
+          YELLOW_PIECE: {
+            target: 'yellowPieceOn'
+          },
+          GREEN_PIECE: {
+            target: 'greenPieceOn'
+          },
+      }
     },
   }
 }, {
@@ -45,24 +50,43 @@ export const playSequenceMachine = Machine({
       lightUpRed: () => true,
       redAudio: (context) => context.redAudio.play()
     }),
-    greenPiece: {
-
-    },
-    yellowPiece: {
-
-    },
-    bluePiece: {
-
-    },
-    // incrementPosition: assign({
-    //   position: (context) => context.position + 1
-    // }),
-
-    // activateRed: assign({
-    //   redSound: (context) => { 
-    //     context.redSound.play()
-    //   },
-    //   lightUpRed: (context) => !context.lightUpRed
-    // })
-  }
+    yellowPieceOn: assign({
+      lightUpYellow: () => true,
+      yellowAudio: (context) => context.yellowAudio.play()
+    }),
+    bluePieceOn: assign({
+      lightUpBlue: () => true,
+      blueAudio: (context) => context.blueAudio.play()
+    }),
+    greenPieceOn: assign({
+      lightUpGreen: () => true,
+      greenAudio: (context) => context.greenAudio.play()
+    }),
+    dispatchWatchModePattern: (context, event) => {
+      let iterator = 0
+      while (iterator < context.gameDispatchSequence) {
+        
+        switch (context.gameDispatchSequence){
+          case 1:
+            
+            iterator++
+            break;
+          case 2:
+            send("YELLOW_PIECE")
+            iterator++
+            break;
+          case 3:
+            send("BLUE_PIECE")
+            iterator++
+            break;
+          case 4:
+            send("GREEN_PIECE")
+            iterator++
+            break;
+        default:
+          break; 
+        }
+      }
+    }
+}
 })
