@@ -6,7 +6,7 @@ import { HttpLink } from "apollo-link-http";
 import { ApolloProvider } from "react-apollo";
 import './index.css'
 import './App.css';
-import GameContainer from './GameContainer'
+import { GameContainerGenerator } from './GameContainerGenerator'
 
 const createApolloClient = () => {
   return new ApolloClient({
@@ -26,7 +26,7 @@ const App = (props) => {
   const client = createApolloClient()
     return (
       <ApolloProvider client={client}>
-          <GameContainer />
+          <GameContainerGenerator />
       </ApolloProvider>
     );
 }
