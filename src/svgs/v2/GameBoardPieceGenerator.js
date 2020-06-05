@@ -1,8 +1,7 @@
 import React from 'react'
 
 
-export const GameBoardPieceGenerator = ({  modeEnum, lightUp, fill, dataId, transform, handleColorSetter, setPlayArray }) => {
-
+export const GameBoardPieceGenerator = ({  setIndex, modeEnum, lightUp, fill, dataId, transform, handleColorSetter, setPlayArray }) => {
 
   // if (windowWidth < 755) {
         return (
@@ -11,7 +10,11 @@ export const GameBoardPieceGenerator = ({  modeEnum, lightUp, fill, dataId, tran
             modeEnum === 'PLAY'
               ? () => {
                 handleColorSetter(color => ({...color, sound: true, lightUp: true})) 
-                setPlayArray(curr => [...curr, fill])
+                setPlayArray(curr => {
+                  return [...curr, fill]
+                })
+                setIndex(i => ++i)
+                
               }
                 : null }
                 // sound.play()

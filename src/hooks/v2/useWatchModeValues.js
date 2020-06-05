@@ -22,7 +22,7 @@ export function useWatchModeValues(colorName, colorAudio, modeEnum) {
       }
     }
     
-    if (modeEnum === "PLAY" && color.sound) {
+    if ((modeEnum === "PLAY") && color.sound) {
         sound.play()
         new Promise(function(resolve) {
           timeoutId = setTimeout(function(){
@@ -37,5 +37,5 @@ export function useWatchModeValues(colorName, colorAudio, modeEnum) {
     return () => clearTimeout(timeoutId)
  }, [color, sound, setColor, modeEnum]);
 
-  return [color, setColor, sound];
+  return [color, setColor];
 }

@@ -8,71 +8,89 @@ import isEqual from 'lodash.isequal'
 import { useWatchModeValues } from './hooks/v2/useWatchModeValues'
 import styles from './styles/GameContainer.module.css'
 
+function useLogValue(value, name = value, deps = value) {
+  useEffect(() => {
+    console.log(`${name}`, value)
+  }, [deps])
+}
 
-let initialLightUpArray = ["red", 
-"lime", "yellow", "blue"
-]
+
+
 export function GameContainerGenerator(){
   
-  const [modeEnum, setModeEnum] = useState("IDLE")
-
-
-  const [lightUpArray, setLightUpArray] = useState(initialLightUpArray)
-  const [playArray, setPlayArray] = useState([]);
-  const [level, setLevel] = useState(1);
-  const [i, setI] = React.useState(0)
+  let initialLightUpArray = ["red", 
+"lime", "yellow", "blue"]
   
-  const [red, setRed, redSound] = useWatchModeValues('red', redAudio, modeEnum)
-  const [blue, setBlue, blueSound] = useWatchModeValues('blue', blueAudio, modeEnum)
-  const [lime, setLime, limeSound] = useWatchModeValues('lime', limeAudio, modeEnum)
-  const [yellow, setYellow, yellowSound] = useWatchModeValues('yellow', yellowAudio, modeEnum)
+  const [modeEnum, setModeEnum] = useState(() => "IDLE")
+  const [lightUpArray, setLightUpArray] = useState(() => initialLightUpArray)
+  const [playArray, setPlayArray] = useState(() => []);
+  const [level, setLevel] = useState(() => 1);
+  const [index, setIndex] = useState(() => -1)
   
+  const [red, setRed] = useWatchModeValues('red', redAudio, modeEnum)
+  const [blue, setBlue] = useWatchModeValues('blue', blueAudio, modeEnum)
+  const [lime, setLime] = useWatchModeValues('lime', limeAudio, modeEnum)
+  const [yellow, setYellow] = useWatchModeValues('yellow', yellowAudio, modeEnum)
+  console.log('here', 'here')
+  useLogValue(modeEnum)
+  // useLogValue(index)
+  // useLogValue(playArray[index], 'playArrayVal', playArray)
+  // useLogValue(lightUpArray[index], 'lightUpArrayVal', lightUpArray )
+
+  // IDLE
+  // useEffect(() => {
+  //   if (modeEnum === "IDLE") {
+      
+  //   }
+  // }, [modeEnum])
+
+  // GAME OVER
   useEffect(() => {
-    if ((modeEnum === "PLAY") && (playArray.length !== 0) && (i <= playArray.length - 1)) {
-      if (playArray[i] !== lightUpArray[i]) {
-        setModeEnum("IDLE")
-      }
-      setI(i => ++i)
+    if (modeEnum === "GAME OVER") {
+      setIndex(-1)
+      setLightUpArray(initialLightUpArray)
+      setPlayArray([])
     }
-  }, [playArray, lightUpArray, i, modeEnum])
+  }, [modeEnum])
+
+  // PLAY
 
   useEffect(() => {
     let timeoutId
-    if (playArray.length === lightUpArray.length && modeEnum === "PLAY") {
-      new Promise(function(resolve) {
-      timeoutId = setTimeout(function(){
+    if ((modeEnum === "PLAY") && (playArray.length !== 0) && (index < lightUpArray.length)) {
+      console.log('playArrayIndex', playArray[index])
+      console.log('lightUpArrayIndex', lightUpArray[index])
+      if (playArray[index] !== lightUpArray[index]) {
+        new Promise(function(resolve) {
+        timeoutId = setTimeout(function(){
+            setModeEnum("GAME OVER")
+            resolve()
+            }, 300)
+          })
+      } else if (isEqual(playArray, lightUpArray)) {
         setLevel(level => ++level)
-        setI(0)
+        setIndex(-1)
+        setModeEnum("WATCH") 
         setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
         setPlayArray([])
-        setModeEnum("WATCH") 
-        resolve()
-        }, 200)
-      })
-    }
+      }
+}
+  }, [playArray, lightUpArray, index, modeEnum])
 
-    return () => clearTimeout(timeoutId)
-  }, [playArray, lightUpArray])
+  // useEffect(() => {
+  //   let timeoutId
+  //   if (isEqual(playArray, lightUpArray) && modeEnum === "PLAY") {
+  //     console.log('here')
+         
+  //   }
 
-  useEffect(() => {
-    // console.log('isGameOver', isGameOver)
-    // console.log('playArray', playArray)
-    // console.log('lightUpArray', lightUpArray)
-    console.log('modeEnum', modeEnum)
-  }, [modeEnum
-    // isGameOver, playArray, lightUpArray
-  ])
-
-  useEffect(() => {
-    if (modeEnum === "IDLE") {
-      setPlayArray([])
-      setLightUpArray(initialLightUpArray)
-    }
-  }, [modeEnum])
+  //   return () => clearTimeout(timeoutId)
+  // }, [playArray, lightUpArray])
 
   useEffect(() => {
     let timeoutId;
     let intervalId;
+    
     function pauseBetween(resolve) {
       timeoutId = setTimeout(resolve, 1000);
     }
@@ -124,9 +142,8 @@ export function GameContainerGenerator(){
       if (next.done) {
         clearInterval(intervalId);
         setModeEnum("PLAY")
-
       }
-    }, 1000);
+    }, 500);
   }
   
     return () => {
@@ -164,6 +181,7 @@ export function GameContainerGenerator(){
                     fill={"lime"}
                     handleColorSetter={setLime}
                     setPlayArray={setPlayArray}
+                    setIndex={setIndex}
                     // toggle={limeToggle}
 
                     // // handleClick={handleClick}
@@ -179,6 +197,7 @@ export function GameContainerGenerator(){
                     fill={"red"}
                     handleColorSetter={setRed}
                     setPlayArray={setPlayArray}
+                    setIndex={setIndex}
 
                     // toggle={redToggle}
 
@@ -188,10 +207,11 @@ export function GameContainerGenerator(){
                   />
                   <br />
                   <div
-                    onClick={() => setModeEnum("WATCH")}
+                    onClick={modeEnum === 'GAME OVER' ? () => setModeEnum('IDLE') : () => setModeEnum("WATCH")}
                     className={styles["start-button"]}
                   >
                     {modeEnum === "IDLE" ? "START" : null}
+                    {modeEnum === "GAME OVER" ? "GAME OVER" : null}
                   </div>
                   <GameBoardPieceGenerator
                     modeEnum={modeEnum}
@@ -201,6 +221,7 @@ export function GameContainerGenerator(){
                     fill={"yellow"}
                     handleColorSetter={setYellow}
                     setPlayArray={setPlayArray}
+                    setIndex={setIndex}
 
                     // toggle={yellowToggle}
                     // // handleClick={handleClick}
@@ -216,6 +237,7 @@ export function GameContainerGenerator(){
                     fill={"blue"}
                     handleColorSetter={setBlue}
                     setPlayArray={setPlayArray}
+                    setIndex={setIndex}
 
 
                     // toggle={blueToggle}
