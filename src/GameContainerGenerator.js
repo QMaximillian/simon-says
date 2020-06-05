@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { GameBoardPieceGenerator } from './svgs/v2/GameBoardPieceGenerator.js'
-import greenAudio from './audio/FirstNote.mp3'
+import limeAudio from './audio/FirstNote.mp3'
 import redAudio from './audio/SecondNote.mp3'
 import yellowAudio from './audio/ThirdNote.mp3'
 import blueAudio from './audio/FourthNote.mp3'
@@ -9,17 +9,66 @@ import { useWatchModeValues } from './hooks/v2/useWatchModeValues'
 import styles from './styles/GameContainer.module.css'
 
 
-
+let initialLightUpArray = ["red", 
+"lime", "yellow", "blue"
+]
 export function GameContainerGenerator(){
-  const [isWatchMode, setIsWatchMode] = useState(false)
-  const [isPlayMode, setIsPlayMode] = useState(false)
-  const [isGameOver, setIsGameOver] = useState(false)
-  const [lightUpArray, _] = useState(["red", "blue", "red", "blue"]);
   
-  const [red, setRed, redSound] = useWatchModeValues('red', redAudio, isWatchMode)
-  const [blue, setBlue, blueSound] = useWatchModeValues('blue', blueAudio, isWatchMode)
-  const [green, setGreen, greenSound] = useWatchModeValues('green', greenAudio, isWatchMode)
-  const [yellow, setYellow, yellowSound] = useWatchModeValues('yellow', yellowAudio, isWatchMode)
+  const [modeEnum, setModeEnum] = useState("IDLE")
+
+
+  const [lightUpArray, setLightUpArray] = useState(initialLightUpArray)
+  const [playArray, setPlayArray] = useState([]);
+  const [level, setLevel] = useState(1);
+  const [i, setI] = React.useState(0)
+  
+  const [red, setRed, redSound] = useWatchModeValues('red', redAudio, modeEnum)
+  const [blue, setBlue, blueSound] = useWatchModeValues('blue', blueAudio, modeEnum)
+  const [lime, setLime, limeSound] = useWatchModeValues('lime', limeAudio, modeEnum)
+  const [yellow, setYellow, yellowSound] = useWatchModeValues('yellow', yellowAudio, modeEnum)
+  
+  useEffect(() => {
+    if ((modeEnum === "PLAY") && (playArray.length !== 0) && (i <= playArray.length - 1)) {
+      if (playArray[i] !== lightUpArray[i]) {
+        setModeEnum("IDLE")
+      }
+      setI(i => ++i)
+    }
+  }, [playArray, lightUpArray, i, modeEnum])
+
+  useEffect(() => {
+    let timeoutId
+    if (playArray.length === lightUpArray.length && modeEnum === "PLAY") {
+      new Promise(function(resolve) {
+      timeoutId = setTimeout(function(){
+        setLevel(level => ++level)
+        setI(0)
+        setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
+        setPlayArray([])
+        setModeEnum("WATCH") 
+        resolve()
+        }, 200)
+      })
+    }
+
+    return () => clearTimeout(timeoutId)
+  }, [playArray, lightUpArray])
+
+  useEffect(() => {
+    // console.log('isGameOver', isGameOver)
+    // console.log('playArray', playArray)
+    // console.log('lightUpArray', lightUpArray)
+    console.log('modeEnum', modeEnum)
+  }, [modeEnum
+    // isGameOver, playArray, lightUpArray
+  ])
+
+  useEffect(() => {
+    if (modeEnum === "IDLE") {
+      setPlayArray([])
+      setLightUpArray(initialLightUpArray)
+    }
+  }, [modeEnum])
 
   useEffect(() => {
     let timeoutId;
@@ -32,48 +81,50 @@ export function GameContainerGenerator(){
       let i = 0;
       while (lightUpArray.length !== i) {
         if (lightUpArray[i] === 'red') {
-          setRed({ lightUp: true, sound: true });
-          console.log(`redOn`);
+          setRed(color => ({...color, lightUp: true, sound: true }));
+          // console.log(`redOn`);
           yield;
-          console.log(`redOff`);
-          setRed({ lightUp: false, sound: false });
+          // console.log(`redOff`);
+          setRed(color => ({...color, lightUp: false, sound: false }));
           yield new Promise(resolve => pauseBetween(resolve));
         }
-        if (lightUpArray[i] === 'green') {
-          setGreen({ lightUp: true, sound: true });
-          console.log(`greenOn`);
+        if (lightUpArray[i] === 'lime') {
+          setLime(color => ({...color, lightUp: true, sound: true }));
+          // console.log(`limeOn`);
           yield;
-          console.log(`greenOff`);
-          setGreen({ lightUp: false, sound: false });
+          // console.log(`limeOff`);
+          setLime(color => ({...color, lightUp: false, sound: false }));
           yield new Promise(resolve => pauseBetween(resolve));
         }
         if (lightUpArray[i] === 'blue') {
-          setBlue({ lightUp: true, sound: true });
-          console.log(`blueOn`);
+          setBlue(color => ({...color, lightUp: true, sound: true }));
+          // console.log(`blueOn`);
           yield;
-          console.log(`blueOff`);
-          setBlue({ lightUp: false, sound: false });
+          // console.log(`blueOff`);
+          setBlue(color => ({...color, lightUp: false, sound: false }));
           yield new Promise(resolve => pauseBetween(resolve));
         }
         if (lightUpArray[i] === 'yellow') {
-          setYellow({ lightUp: true, sound: true });
-          console.log(`yellowOn`);
+          setYellow(color => ({...color, lightUp: true, sound: true }));
+          // console.log(`yellowOn`);
           yield;
-          console.log(`yellowOff`);
-          setYellow({ lightUp: false, sound: false });
+          // console.log(`yellowOff`);
+          setYellow(color => ({...color, lightUp: false, sound: false }));
           yield new Promise(resolve => pauseBetween(resolve));
         }
         i++;
       }
     }
 
-  if (isWatchMode) {
+  if (modeEnum === "WATCH") {
     const iterable = generator(lightUpArray);
     var next;
     intervalId = setInterval(function run() {
       next = iterable.next();
       if (next.done) {
         clearInterval(intervalId);
+        setModeEnum("PLAY")
+
       }
     }, 1000);
   }
@@ -82,25 +133,15 @@ export function GameContainerGenerator(){
       clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
-  }, [lightUpArray, isWatchMode]);
+  }, [lightUpArray, modeEnum]);
 
-  useEffect(() => {
-    // 1. When an item is added to the clickActionArray,
-    // check to make sure the indexes of the lightUpArray and clickActionArray match
-    // 2. If they don't gameOver
-    // 4. Choose one of the four colors randomly and add it to the lightUpArray
-    // 5. Clear the clickActionArray
-  })
 
-  useEffect(() => {
-    // 2.If the length of the lightUpArray and the clickAction array match, and all of the values are the same, 
-    // level up
-  })
 
   return (
 
             <div className={styles["game-top"]}>
               <div className={styles["bulletin-container"]}>
+                {level}
                 {/* <GameBulletin
                   levelUp={levelUp}
                   levelNumber={levelNumber}
@@ -115,25 +156,30 @@ export function GameContainerGenerator(){
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div style={{ position: "relative" }}>
                   <GameBoardPieceGenerator
-                    isWatchMode={isWatchMode}
-                    lightUp={green.lightUp}
-                    isPlayMode={isPlayMode}
+                    modeEnum={modeEnum}
+                    lightUp={lime.lightUp}
+                    
                     transform={"rotate(0deg)"}
                     dataId={"1"}
                     fill={"lime"}
-                    // toggle={greenToggle}
+                    handleColorSetter={setLime}
+                    setPlayArray={setPlayArray}
+                    // toggle={limeToggle}
 
                     // // handleClick={handleClick}
                     // // windowWidth={windowWidth}
 
                   />
                   <GameBoardPieceGenerator
-                    isWatchMode={isWatchMode}
+                    modeEnum={modeEnum}
                     lightUp={red.lightUp}
-                    isPlayMode={isPlayMode}
+                    
                     transform={"rotate(90deg)"}
                     dataId={"2"}
                     fill={"red"}
+                    handleColorSetter={setRed}
+                    setPlayArray={setPlayArray}
+
                     // toggle={redToggle}
 
                     // // handleClick={handleClick}
@@ -142,31 +188,35 @@ export function GameContainerGenerator(){
                   />
                   <br />
                   <div
-                    onClick={() => setIsWatchMode(true)}
+                    onClick={() => setModeEnum("WATCH")}
                     className={styles["start-button"]}
                   >
-                    {!isWatchMode && !isPlayMode && !isGameOver ? "START" : null}
+                    {modeEnum === "IDLE" ? "START" : null}
                   </div>
                   <GameBoardPieceGenerator
-                    isWatchMode={isWatchMode}
+                    modeEnum={modeEnum}
                     lightUp={yellow.lightUp}
-                    isPlayMode={isPlayMode}
                     transform={"rotate(270deg)"}
                     dataId={"3"}
                     fill={"yellow"}
+                    handleColorSetter={setYellow}
+                    setPlayArray={setPlayArray}
+
                     // toggle={yellowToggle}
                     // // handleClick={handleClick}
                     // // windowWidth={windowWidth}
 
                   />
                   <GameBoardPieceGenerator
-                    isWatchMode={isWatchMode}
-
+                    modeEnum={modeEnum}
                     lightUp={blue.lightUp}
-                    isPlayMode={isPlayMode}
+                    
                     transform={"rotate(180deg)"}
                     dataId={"4"}
                     fill={"blue"}
+                    handleColorSetter={setBlue}
+                    setPlayArray={setPlayArray}
+
 
                     // toggle={blueToggle}
                     // // handleClick={handleClick}

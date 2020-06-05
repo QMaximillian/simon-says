@@ -1,21 +1,23 @@
 import React from 'react'
 
 
-export const GameBoardPieceGenerator = ({ isWatchMode, lightUp, isPlayMode, fill, dataId, transform }) => {
-  
+export const GameBoardPieceGenerator = ({  modeEnum, lightUp, fill, dataId, transform, handleColorSetter, setPlayArray }) => {
+
 
   // if (windowWidth < 755) {
         return (
           <svg  className="green" pointerEvents="none" width="230" height="230">
-            <rect onClick={() => {} 
-            // isPlayMode
-            //   ?
-            //   event => {
-            //     toggle()
-            //     handleClick(Number(event.target.dataset.id))
-            //   }
-            //   : null
-            }
+            <rect onClick={
+            modeEnum === 'PLAY'
+              ? () => {
+                handleColorSetter(color => ({...color, sound: true, lightUp: true})) 
+                setPlayArray(curr => [...curr, fill])
+              }
+                : null }
+                // sound.play()
+                // toggle()
+                // handleClick(Number(event.target.dataset.id))
+
               x="10" y="10" width="210" height="210" pointerEvents="all"  stroke={lightUp ? "gold" : "black"} strokeWidth={lightUp ? "8px" : "1px"} fill={fill} data-id={dataId} />
             </svg>
         )
