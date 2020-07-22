@@ -31,20 +31,9 @@ export function GameContainerGenerator(){
   const [blue, setBlue] = useWatchModeValues('blue', blueAudio, modeEnum)
   const [lime, setLime] = useWatchModeValues('lime', limeAudio, modeEnum)
   const [yellow, setYellow] = useWatchModeValues('yellow', yellowAudio, modeEnum)
-  console.log('here', 'here')
+
   useLogValue(modeEnum)
-  // useLogValue(index)
-  // useLogValue(playArray[index], 'playArrayVal', playArray)
-  // useLogValue(lightUpArray[index], 'lightUpArrayVal', lightUpArray )
 
-  // IDLE
-  // useEffect(() => {
-  //   if (modeEnum === "IDLE") {
-      
-  //   }
-  // }, [modeEnum])
-
-  // GAME OVER
   useEffect(() => {
     if (modeEnum === "GAME OVER") {
       setIndex(-1)
@@ -58,8 +47,8 @@ export function GameContainerGenerator(){
   useEffect(() => {
     let timeoutId
     if ((modeEnum === "PLAY") && (playArray.length !== 0) && (index < lightUpArray.length)) {
-      console.log('playArrayIndex', playArray[index])
-      console.log('lightUpArrayIndex', lightUpArray[index])
+      // console.log('playArrayIndex', playArray[index])
+      // console.log('lightUpArrayIndex', lightUpArray[index])
       if (playArray[index] !== lightUpArray[index]) {
         new Promise(function(resolve) {
         timeoutId = setTimeout(function(){
@@ -67,25 +56,22 @@ export function GameContainerGenerator(){
             resolve()
             }, 300)
           })
-      } else if (isEqual(playArray, lightUpArray)) {
-        setLevel(level => ++level)
-        setIndex(-1)
-        setModeEnum("WATCH") 
-        setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
-        setPlayArray([])
+      } else if (isEqual(playArray, lightUpArray)) {      
+            timeoutId = setTimeout(() => {
+                setLevel(level => ++level)
+                setIndex(-1)
+                setModeEnum("WATCH") 
+                setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
+                setPlayArray([])
+
+            }, 500)
+      }
+
+      return () => {
+        clearTimeout(timeoutId)
       }
 }
   }, [playArray, lightUpArray, index, modeEnum])
-
-  // useEffect(() => {
-  //   let timeoutId
-  //   if (isEqual(playArray, lightUpArray) && modeEnum === "PLAY") {
-  //     console.log('here')
-         
-  //   }
-
-  //   return () => clearTimeout(timeoutId)
-  // }, [playArray, lightUpArray])
 
   useEffect(() => {
     let timeoutId;
@@ -117,7 +103,7 @@ export function GameContainerGenerator(){
         if (lightUpArray[i] === 'blue') {
           setBlue(color => ({...color, lightUp: true, sound: true }));
           // console.log(`blueOn`);
-          yield;
+            yield;
           // console.log(`blueOff`);
           setBlue(color => ({...color, lightUp: false, sound: false }));
           yield new Promise(resolve => pauseBetween(resolve));
