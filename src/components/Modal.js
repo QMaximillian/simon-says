@@ -25,7 +25,6 @@ export default function Modal (props){
                                 onClick={onClose}
                                 className={styles['default-close']}
                             >
-                                {/* <div className={styles.close}>Play Again?</div> */}
                             </div>
                         )}
                     </div>

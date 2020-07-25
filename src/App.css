@@ -7,7 +7,6 @@
   background: grey;
   color: white;
   text-shadow: 1px 1px teal;
-  font-style: italic;
 }
 
 
@@ -15,12 +14,4 @@ div {
   text-align: center;
 }
 
-.fade {
-  opacity: 1;
-}
-
-.fade.hide-opacity {
-  opacity: 0;
-  -o-transition: opacity 3s ease-in-out;
-}
 
