@@ -1,4 +1,12 @@
 .start-button {
+  border: 2px solid black;
+  border-radius: 5px;
+  background: white;
+  padding: .5rem 2.5rem;
+  font-style: normal;
+}
+
+.start-button-container {
   position: absolute;
   top: 50%;
   left: 0;
@@ -6,30 +14,17 @@
   transform: translateY(-50%);
   z-index: 10;
   font-size: 2em;
+  display: flex;
+  justify-content: center;
 }
-
-@media screen and (max-width: 755px) {
-  .start-button {
-    position: absolute;
-    top: 0;
-    padding-bottom: 40px;
-    transform: translateY(-50%);
-    z-index: 10;
-    font-size: 2em;
-}
-}
-
-
-/* .start-button-container {
-  display: flex
-} */
 
 .game-top {
   height: 100vh; 
   width: 100vw; 
   display: flex; 
   flex-direction: column; 
-  justify-content: space-around;
+  justify-content: space-evenly;
+  background: beige;
 }
 
 .bulletin-container {

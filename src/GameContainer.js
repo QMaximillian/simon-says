@@ -1,112 +1,49 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { GameBoardPiece } from './svgs/GameBoardPiece.js'
-import greenSound from './audio/FirstNote.mp3'
-import redSound from './audio/SecondNote.mp3'
-import yellowSound from './audio/ThirdNote.mp3'
-import blueSound from './audio/FourthNote.mp3'
+import React, { useState, useEffect } from 'react'
+import { GameBoardPiece } from './svgs/v2/GameBoardPiece.js'
 import GameBulletin from './components/GameBulletin'
-import GameOverModal from './components/GameOverModal'
 import Modal from './components/Modal'
-import wrongSound from './audio/Incorrect.wav'
-import BackgroundTransition from './components/BackgroundTransition'
+import GameOverModal from './components/GameOverModal'
+
+import limeAudio from './audio/FirstNote.mp3'
+import redAudio from './audio/SecondNote.mp3'
+import yellowAudio from './audio/ThirdNote.mp3'
+import blueAudio from './audio/FourthNote.mp3'
+import incorrectAudio from './audio/Incorrect.wav'
+
+import { useWatchModeValues } from './hooks/v2/useWatchModeValues'
+
+import isEqual from 'lodash.isequal'
+import {debounce} from './lib/debounce'
+
 import styles from './styles/GameContainer.module.css'
 
 
-import {
-  playModeReducer,
-  NEXT_LEVEL,
-  CLICK,
-  RESET_LEVEL_UP,
-  RESET_GAME_DISPATCH,
-  GREEN_ON,
-  YELLOW_ON,
-  RED_ON,
-  BLUE_ON,
-  PLAY_MODE,
-  WATCH_MODE,
-  COLOR_BUTTON_OFF,
-  GAME_OVER_TOGGLE,
-  RESET_GAME,
-  SET_WINDOW_WIDTH,
-  SOUND_ON,
-  debounce,
-  useAudio, 
-  initialState
-} from "./hooks/gameReducer";
+export default function GameContainer(){
+  
+  let initialLightUpArray = ["red", "lime", "yellow", "blue"]
+  
+  const [modeEnum, setModeEnum] = useState(() => "IDLE")
+  const [lightUpArray, setLightUpArray] = useState(() => initialLightUpArray)
+  const [playArray, setPlayArray] = useState(() => []);
+  const [level, setLevel] = useState(() => 1);
+  const [index, setIndex] = useState(() => -1)
+  const [windowWidth, setWindowWidth] = useState(() => window.innerWidth)
+  
+  const [red, setRed] = useWatchModeValues('red', redAudio, modeEnum)
+  const [blue, setBlue] = useWatchModeValues('blue', blueAudio, modeEnum)
+  const [lime, setLime] = useWatchModeValues('lime', limeAudio, modeEnum)
+  const [yellow, setYellow] = useWatchModeValues('yellow', yellowAudio, modeEnum)
+  const incorrectSound = new Audio(incorrectAudio)
 
-
-
-
-
-// Eliminate read-only rule in ESLint for adding methods to prototype class
-
-/*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
-/*eslint eqeqeq: 0*/
-
-
-Array.prototype.equals = function (array) {
-    // if the other array is a falsy value, return
-    if (!array)
-        return false;
-
-    // compare lengths - can save a lot of time
-    if (this.length !== array.length)
-        return false;
-
-    for (var i = 0, l = this.length; i < l; i++) {
-        // Check if we have nested arrays
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            // recurse into the nested arrays
-            if (!this[i].equals(array[i]))
-                return false;
-        }
-        else if (this[i] !== array[i]) {
-            // Warning - two different object instances will never be equal: {x:20} != {x:20}
-            return false;
-        }
-    }
-    return true;
-}
-
-// TO-DO
-
-// September 7th, 2019: Update
-
-// 1. Get sound and light up to fire at the same time, combine actions in reducer, useEffect to play the sound in GameContainer
-       // a. Create dispatch events that run a COLOR AND SOUND TOGETHER and then COLOR_OFF
-
-
-
-
-
-
-
-
-
-function GameContainer(props) {
-
-
-  const [greenToggle] = useAudio(greenSound)
-  const [redToggle] = useAudio(redSound)
-  const [blueToggle] = useAudio(blueSound)
-  const [yellowToggle] = useAudio(yellowSound)
-
-  const [state, dispatch] = useReducer(playModeReducer, initialState)
-
-  const [intervalTime, setIntervalTime] = useState(400)
-  const [fasterDuration, setFasterDuration] = useState(300)
-  const [showFasterAnimation, setShowFasterAnimation] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  let dimensionUpdater = debounce(() => 
-      dispatch({type: SET_WINDOW_WIDTH, value: window.innerWidth})
+  let dimensionUpdater = debounce(() => {
+      setWindowWidth(window.innerWidth)
+    }, 200 
   )
 
-
-  useEffect(() => {
-    setIsLoading(false)
-  }, [isLoading])
-
-
+  function resetGame(){
+    setModeEnum("WATCH")
+  }
+  
   useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
 
@@ -114,247 +51,181 @@ function GameContainer(props) {
       window.removeEventListener('resize', dimensionUpdater)
     }
     
-  }, [window.innerWidth])
+  }, [])
+  
+  // GAME OVER
+  useEffect(() => {
+    if (modeEnum === "GAME OVER") {
+      incorrectSound.play()
+      setIndex(-1)
+      setLightUpArray(initialLightUpArray)
+      setPlayArray([])
+      setLevel(1);
+    }
+  }, [modeEnum])
+
+  // PLAY MODE
 
   useEffect(() => {
-    const { levelNumber, gameOver } = state
+    let timeoutId
+    if ((modeEnum === "PLAY") && (playArray.length !== 0) && (index < lightUpArray.length)) {
+      if (playArray[index] !== lightUpArray[index]) {
+        timeoutId = setTimeout(function(){
+            setModeEnum("GAME OVER")
+            }, 300)
+      } else if (isEqual(playArray, lightUpArray)) {   
+            timeoutId = setTimeout(function() {
+                setLevel(level => ++level)
+                setIndex(-1)
+                setModeEnum("WATCH") 
+                setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
+                setPlayArray([])
 
-    if (levelNumber === 4) {
-      setIntervalTime(400)
-    } 
-    else if (levelNumber === 5) {
-      setFasterDuration(400)
-      setShowFasterAnimation(true)
-    }
-    else if (levelNumber === 9) {
-      setIntervalTime(100);
-    }
-    else if (levelNumber === 10) {
-      setShowFasterAnimation(true);
-      setFasterDuration(300);
-    }
-    else if (levelNumber === 14) {
-      setIntervalTime(75)
-    }
-    else if (levelNumber === 15) {
-      setFasterDuration(200);
-      setShowFasterAnimation(true);
-    }
-    
-    if (gameOver) {
-      setIntervalTime(500)
-    }
-  }, [state.levelNumber, state.gameOver])
-
-  useEffect(() => {
-    const { gameOver, playMode, watchMode, gameArray, levelNumber, level, index, available } = state
-      
-
-
-    if (watchMode && gameArray.length == 0 && levelNumber == 1){
-    } 
-    else if (playMode && gameArray.equals(level) && gameArray.length == level.length) {
-      dispatch({ type: NEXT_LEVEL })
-      dispatch({ type: RESET_LEVEL_UP })
-      dispatch({ type: WATCH_MODE })
-    } 
-    else if (playMode && gameArray[index] != level[index]
-    ) {
-      const wrong = new Audio(wrongSound)
-      wrong.play()
-      dispatch({ type: GAME_OVER_TOGGLE })
-    }
-
-    if (!gameOver && watchMode && available) {
-            dispatchLightUpPatternWithState()
-    }
-  }, [state.gameArray, state.watchMode, state.playMode, state.available, state.levelUp])
-
-
-  
-  function handleClick(number) {
-    if (state.watchMode) return
-    dispatchClickAction(number)
-  }
-
-  function resetGame() {
-    dispatch({ type: RESET_GAME, value: initialState })
-  }
-
-
-  function dispatchLightUpPatternWithState() {
-
-    const { level, gameDispatch } = state
-      level.forEach((num) => {
-        
-        gameDispatch.push(
-            { type: SOUND_ON, value: getSound(num)},
-            { type: getColor(num) },
-            { type: COLOR_BUTTON_OFF }
-          );
-    })
-
-    
-      playSeq(gameDispatch)
-      dispatch({type: RESET_GAME_DISPATCH})
-
-  }
-
-
-
-  function dispatchClickAction(svgId) {
-    var dispatchArray = [];
-
-    if (playMode && svgId) {
-      dispatchArray.push(
-        { type: CLICK, value: svgId },
-        { type: getColor(svgId) },
-        { type: COLOR_BUTTON_OFF }
-      );
-    }
-    playSeq(dispatchArray, 50);
-  }
-  
-
-  function getColor(id) {
-    switch (true) {
-      case id == 1:
-        return GREEN_ON
-      case id == 2:
-        return RED_ON
-      case id == 3:
-        return YELLOW_ON
-      case id == 4:
-        return BLUE_ON
-      default:
-        break;
-    }
-  }
-  
-  function getSound(id) {
-    switch (true) {
-      case id === 1:
-        return greenToggle 
-      case id === 2:
-        return redToggle 
-      case id === 3:
-        return yellowToggle 
-      case id === 4:
-        return blueToggle 
-      default:
-        break;
-    }
-  }
-
-  
-
-function playSeq(sequence, clickDispatch = intervalTime) {
-    let i = 0;
-
-  var interval = setInterval(() => {
-    dispatch(sequence[i]);
-    i++;
-    
-    if(i >= sequence.length){
-      if (state.watchMode) {
-        dispatch({ type: PLAY_MODE })
+            }, 200)
       }
-      
-      clearInterval(interval)
+
+      return function cleanup(){
+        clearTimeout(timeoutId)
+      }
+}
+  }, [playArray, lightUpArray, index, modeEnum])
+
+  useEffect(() => {
+    let timeoutId;
+    let intervalId;
+    
+    function pauseBetween(resolve) {
+      timeoutId = setTimeout(resolve, 1000);
     }
-  }, clickDispatch)  
-};
+  
+    function* generator() {
+      let i = 0;
+      while (lightUpArray.length !== i) {
+        if (lightUpArray[i] === 'red') {
+          setRed(color => ({...color, lightUp: true, sound: true }));
+          
+          yield;
+
+          setRed(color => ({...color, lightUp: false, sound: false }));
+          yield new Promise(resolve => pauseBetween(resolve));
+        }
+        if (lightUpArray[i] === 'lime') {
+          setLime(color => ({...color, lightUp: true, sound: true }));
+
+          yield;
+
+          setLime(color => ({...color, lightUp: false, sound: false }));
+          yield new Promise(resolve => pauseBetween(resolve));
+        }
+        if (lightUpArray[i] === 'blue') {
+          setBlue(color => ({...color, lightUp: true, sound: true }));
+
+            yield;
+
+          setBlue(color => ({...color, lightUp: false, sound: false }));
+          yield new Promise(resolve => pauseBetween(resolve));
+        }
+        if (lightUpArray[i] === 'yellow') {
+          setYellow(color => ({...color, lightUp: true, sound: true }));
+
+          yield;
+
+          setYellow(color => ({...color, lightUp: false, sound: false }));
+          yield new Promise(resolve => pauseBetween(resolve));
+        }
+        i++;
+      }
+    }
+
+    // WATCH MODE
+  if (modeEnum === "WATCH") {
+    const iterable = generator(lightUpArray);
+    var next;
+    intervalId = setInterval(function run() {
+      next = iterable.next();
+      if (next.done) {
+        clearInterval(intervalId);
+        setModeEnum("PLAY")
+      }
+    }, 500);
+  }
+  
+    return function cleanup () {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [lightUpArray, modeEnum]);
 
 
 
-    const { windowWidth, fade, levelNumber, levelUp, gameOver, playMode, lightUpGreen, lightUpBlue, lightUpRed, lightUpYellow} = state
+  return (
 
-
-
-        return isLoading ? null : (
-          <div>
-            <BackgroundTransition
-              levelUp={state.levelUp}
-              watchMode={state.watchMode}
-            />
             <div className={styles["game-top"]}>
               <div className={styles["bulletin-container"]}>
                 <GameBulletin
-                  levelUp={levelUp}
-                  levelNumber={levelNumber}
-                  fade={fade}
-                  gameOver={gameOver}
-                  resetGame={resetGame}
-                  duration={fasterDuration}
-                  setShowFasterAnimation={setShowFasterAnimation}
-                  showFasterAnimation={showFasterAnimation}
+                  levelNumber={level}
                 />
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div style={{ position: "relative" }}>
                   <GameBoardPiece
-                    toggle={greenToggle}
-                    watchMode={state.watchMode}
-                    transform={{ transform: "rotate(0deg" }}
-                    lightUp={lightUpGreen}
-                    handleClick={handleClick}
-                    playMode={playMode}
+                    modeEnum={modeEnum}
+                    lightUp={lime.lightUp}
+                    transform={{transform: "rotate(0deg)"}}
+                    fill={"lime"}
+                    handleColorSetter={setLime}
+                    setPlayArray={setPlayArray}
+                    setIndex={setIndex}
                     windowWidth={windowWidth}
-                    color={"lime"}
-                    dataId={1}
                   />
                   <GameBoardPiece
-                    toggle={redToggle}
-                    watchMode={state.watchMode}
-                    transform={{ transform: "rotate(90deg" }}
-                    lightUp={lightUpRed}
-                    handleClick={handleClick}
-                    playMode={playMode}
+                    modeEnum={modeEnum}
+                    lightUp={red.lightUp}
+                    transform={{transform: "rotate(90deg)"}}
+                    fill={"red"}
+                    handleColorSetter={setRed}
+                    setPlayArray={setPlayArray}
+                    setIndex={setIndex}
                     windowWidth={windowWidth}
-                    color={"red"}
-                    dataId={2}
                   />
                   <br />
                   <div
-                    onClick={() => dispatch({ type: WATCH_MODE })}
-                    className={styles["start-button"]}
+                    onClick={modeEnum === 'GAME OVER' ? () => setModeEnum('IDLE') : () => setModeEnum("WATCH")}
+                    className={styles["start-button-container"]}
                   >
-                    {!state.watchMode && !playMode && !gameOver ? "START" : null}
+                    {modeEnum === "IDLE" ? <span className={styles['start-button']}>START</span> : null}
+                    {modeEnum === "GAME OVER" ? <span className={styles['start-button']}>GAME OVER</span> : null}
                   </div>
                   <GameBoardPiece
-                    toggle={yellowToggle}
-                    watchMode={state.watchMode}
-                    transform={{ transform: "rotate(270deg" }}
-                    lightUp={lightUpYellow}
-                    handleClick={handleClick}
-                    playMode={playMode}
+                    modeEnum={modeEnum}
+                    lightUp={yellow.lightUp}
+                    transform={{transform: "rotate(270deg)"}}
+                    fill={"yellow"}
+                    handleColorSetter={setYellow}
+                    setPlayArray={setPlayArray}
+                    setIndex={setIndex}
                     windowWidth={windowWidth}
-                    color={"yellow"}
-                    dataId={3}
                   />
                   <GameBoardPiece
-                    toggle={blueToggle}
-                    watchMode={state.watchMode}
-                    transform={{ transform: "rotate(180deg" }}
-                    lightUp={lightUpBlue}
-                    handleClick={handleClick}
-                    playMode={playMode}
+                    modeEnum={modeEnum}
+                    lightUp={blue.lightUp}
+                    
+                    transform={{transform: "rotate(180deg)"}}
+                    fill={"blue"}
+                    handleColorSetter={setBlue}
+                    setPlayArray={setPlayArray}
+                    setIndex={setIndex}
                     windowWidth={windowWidth}
-                    color={"blue"}
-                    dataId={4}
                   />
                 </div>
-              </div>
-              <Modal
+                <Modal
                 overlayClickable={true}
-                open={gameOver}
-                children={<GameOverModal resetGame={resetGame} levelNumber={levelNumber} />}
+                open={modeEnum === "GAME OVER"}
+                children={<GameOverModal resetGame={resetGame} levelNumber={level} />}
                 onClose={resetGame}
               />
-            </div>
-          </div>
-        );
-      }
+                </div>
+                </div>
 
-
-export default GameContainer 
+  )
+}

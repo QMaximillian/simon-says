@@ -13,15 +13,15 @@ const createApolloClient = () => {
     link: new HttpLink({
       uri: "https://simon-says-endpoint.herokuapp.com/v1alpha1/graphql"
     }),
-    // headers: {
-      // 'content-type': 'application/json',
-      // "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET
-    // },
+    headers: {
+      'content-type': 'application/json',
+      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET
+    },
     cache: new InMemoryCache()
   });
 }
 
-const App = (props) => {
+const App = () => {
 
   const client = createApolloClient()
     return (

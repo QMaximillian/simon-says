@@ -12,11 +12,11 @@
     "apollo-link-http": "^1.5.14",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
+    "lodash.isequal": "^4.5.0",
     "react": "^16.8.2",
     "react-apollo": "^2.5.5",
     "react-dom": "^16.8.2",
-    "react-scripts": "2.1.5",
-    "react-spring": "^8.0.7"
+    "react-scripts": "2.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
