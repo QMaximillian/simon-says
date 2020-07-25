@@ -5,7 +5,7 @@ export const GameBoardPiece = ({  windowWidth, setIndex, modeEnum, lightUp, fill
 
   if (windowWidth < 755) {
         return (
-          <svg  className="green" pointerEvents="none" width="230" height="230" fillOpacity=".9">
+          <svg  className="green"  width="230" height="230" fillOpacity=".9">
             <rect onClick={
             modeEnum === 'PLAY'
               ? () => {

@@ -18,8 +18,9 @@ import {debounce} from './lib/debounce'
 import styles from './styles/GameContainer.module.css'
 
 
+
 export default function GameContainer(){
-  
+
   let initialLightUpArray = ["red", "lime", "yellow", "blue"]
   
   const [modeEnum, setModeEnum] = useState(() => "IDLE")
@@ -34,6 +35,7 @@ export default function GameContainer(){
   const [lime, setLime] = useWatchModeValues('lime', limeAudio, modeEnum)
   const [yellow, setYellow] = useWatchModeValues('yellow', yellowAudio, modeEnum)
   const incorrectSound = new Audio(incorrectAudio)
+  
 
   let dimensionUpdater = debounce(() => {
       setWindowWidth(window.innerWidth)
@@ -44,6 +46,21 @@ export default function GameContainer(){
     setModeEnum("WATCH")
   }
   
+  useEffect(() => {
+    function unlockAudioContext(audioCtx) {
+      if (audioCtx.state !== 'suspended') return;
+      const b = document.body;
+      const events = ['touchstart','touchend', 'mousedown','keydown'];
+      events.forEach(e => b.addEventListener(e, unlock, false));
+      function unlock() { audioCtx.resume().then(clean); }
+      function clean() { events.forEach(e => b.removeEventListener(e, unlock)); }
+    }
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  window.requestAnimationFrame(() => unlockAudioContext(audioCtx))
+
+  }, [])
+
   useEffect(() => {
     window.addEventListener('resize', dimensionUpdater)
 
@@ -56,6 +73,7 @@ export default function GameContainer(){
   // GAME OVER
   useEffect(() => {
     if (modeEnum === "GAME OVER") {
+      incorrectSound.volume = .1;
       incorrectSound.play()
       setIndex(-1)
       setLightUpArray(initialLightUpArray)
