@@ -69,6 +69,11 @@ export default function GameContainer(){
     }
     
   }, [])
+
+  useEffect(() => {
+    console.log('playArray', playArray)
+    console.log('lightUpArray', lightUpArray)
+  }, [playArray,lightUpArray])
   
   // GAME OVER
   useEffect(() => {
@@ -96,7 +101,7 @@ export default function GameContainer(){
                 setLevel(level => ++level)
                 setIndex(-1)
                 setModeEnum("WATCH") 
-                setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 5)]])
+                setLightUpArray(curr => [...curr, initialLightUpArray[Math.floor(Math.random() * 4)]])
                 setPlayArray([])
 
             }, 200)
