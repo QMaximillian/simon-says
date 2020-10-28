@@ -1,4 +1,4 @@
-import { useState, useEffect}  from 'react'
+import { useState, useEffect, useRef }  from 'react'
 
 export function useWatchModeValues(colorName, colorAudio, modeEnum) {
   const [color, setColor] = useState({
@@ -6,28 +6,28 @@ export function useWatchModeValues(colorName, colorAudio, modeEnum) {
     lightUp: false,
     sound: false
   });
-  const [sound] = useState(new Audio(colorAudio));
+  const sound = useRef(new Audio(colorAudio));
 
   let timeoutId;
 
   useEffect(() => {
     if (modeEnum === "WATCH") {
       if (color.sound) {
-        sound.play();
+        sound.current.play();
       }
   
       if (!color.sound) {
-        sound.pause();
-        sound.currentTime = 0;
+        sound.current.pause();
+        sound.current.currentTime = 0;
       }
     }
     
     if ((modeEnum === "PLAY") && color.sound) {
-        sound.play()
+        sound.current.play()
         new Promise(function(resolve) {
           timeoutId = setTimeout(function(){
-            sound.pause()
-            sound.currentTime = 0;
+            sound.current.pause()
+            sound.current.currentTime = 0;
             setColor(color => ({...color, lightUp: false, sound: false}))
             resolve()
           }, 200)

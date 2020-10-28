@@ -23,12 +23,12 @@ export default function GameContainer(){
 
   let initialLightUpArray = ["red", "lime", "yellow", "blue"]
   
-  const [modeEnum, setModeEnum] = useState(() => "IDLE")
-  const [lightUpArray, setLightUpArray] = useState(() => initialLightUpArray)
-  const [playArray, setPlayArray] = useState(() => []);
-  const [level, setLevel] = useState(() => 1);
-  const [index, setIndex] = useState(() => -1)
-  const [windowWidth, setWindowWidth] = useState(() => window.innerWidth)
+  const [modeEnum, setModeEnum] = useState("IDLE")
+  const [lightUpArray, setLightUpArray] = useState(initialLightUpArray)
+  const [playArray, setPlayArray] = useState([]);
+  const [level, setLevel] = useState(1);
+  const [index, setIndex] = useState(-1)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   
   const [red, setRed] = useWatchModeValues('red', redAudio, modeEnum)
   const [blue, setBlue] = useWatchModeValues('blue', blueAudio, modeEnum)
@@ -69,11 +69,6 @@ export default function GameContainer(){
     }
     
   }, [])
-
-  useEffect(() => {
-    console.log('playArray', playArray)
-    console.log('lightUpArray', lightUpArray)
-  }, [playArray,lightUpArray])
   
   // GAME OVER
   useEffect(() => {
