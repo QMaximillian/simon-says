@@ -27,12 +27,12 @@ export const GameBoardPiece = ({  windowWidth, setIndex, modeEnum, lightUp, fill
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', handleUseKeys)
+    window.addEventListener('keydown', handleUseKeys)
 
     return function cleanup(){
-      document.removeEventListener('keydown', handleUseKeys)
+      window.removeEventListener('keydown', handleUseKeys)
     }
-  }, [])
+  })
 
   if (windowWidth < 755) {
         return (
