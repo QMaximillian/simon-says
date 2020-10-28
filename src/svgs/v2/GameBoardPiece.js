@@ -32,7 +32,7 @@ export const GameBoardPiece = ({  windowWidth, setIndex, modeEnum, lightUp, fill
     return function cleanup(){
       document.removeEventListener('keydown', handleUseKeys)
     }
-  })
+  }, [])
 
   if (windowWidth < 755) {
         return (
