@@ -1,6 +1,6 @@
 # Simon Says
 
-[Play It!](http://vast-falls-04014.herokuapp.com/)
+[Play It!](https://simon-says-qmax.herokuapp.com/)
 
 A recreation of the popular Simon Says game built with React.
 
