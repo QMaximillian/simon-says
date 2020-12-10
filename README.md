@@ -1,8 +1,8 @@
-# Simon Says w/ Hooks
+# Simon Says
 
 [Play It!](http://vast-falls-04014.herokuapp.com/)
 
-A recreation of the popular Simon Says game built with React primarily using the React Hooks API
+A recreation of the popular Simon Says game built with React.
 
 ## Description
 
